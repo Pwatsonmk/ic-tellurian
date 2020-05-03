@@ -1,0 +1,22 @@
+Updated 4/19/2019 by Bchamp
+
+- Improve AI aggression. Add randomness for more aggressive and economy focused AI. 
+- Set AI "UnderAttack" functions to better deal with being attacked
+- Can specific AI files be played on specific maps in Multiplayer mode?
+- Add randomization
+
+- Add support for Amphib Rushes at L2 rank2rush (done 4/19)
+- Increase minimum group sizes for attacking (done 4/17)
+- Incorporate soundbeams into flee value (done 4/17)
+- Creature Chambers built at workshops. (I don't think we can do this)
+- Change resource bonus for Hard AI (done 4/17)
+- Build second CC for rank2rush expert AI (done 4/17)
+
+- Consider for AI team games during late game to have less hench per coal pile to account for high probability for sharing coal while allies still alive.
+
+- Don't build 2nd Research Clinic in a 1v1 on small maps?
+- Make sure has units or timer hits before going L4 on 1v1s. (done 4/19)
+
+- Rank2Rush and Economy Rush use Henchmen Threshold instead of a number in order to account for Easy or normal AI being forced to use tactic. Also for 4 vs 5 vs 6 starting coal piles. (done 4/19)
+
+- Spam Offset (done 4/19)
