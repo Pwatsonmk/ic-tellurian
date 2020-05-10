@@ -1,0 +1,24 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Ignore by filetype
+*.ebp
+*.sgm
+*.lsc
+*.scr
+*.scb
+*.bmp
+*.png
+
+
+# Ignore by path
+data/art/ebps/sigmad
+data/art/ebps/stock/stock.txt
+data/decals
+data/defprofile/multiplayer
+data/defprofile/singleplayer
+data/islands
+data/scenarios
+data/sigma/prebuiltarmy
+data/ui/ingame
+data/ui/screens/attribute_icons
+data/ui/screens/textures
