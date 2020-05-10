@@ -1,24 +1,34 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Ignore by filetype
-*.ebp
-*.sgm
-*.lsc
-*.scr
-*.scb
+*.army
 *.bmp
+*.ebp
+*.events
+*.ini
+*.jpg
+*.lsc
+*.max
+*.mp3
+*.pat
 *.png
+*.psd
+*.scb
+*.scr
+*.sgb
+*.sgm
+*.smp
+*.spt
+*.tga
+*.txr
+*.wav
 
+
+# Ignore by name
+*/toolconfig.lua
 
 # Ignore by path
-data/art/ebps/sigmad
-data/art/ebps/stock/stock.txt
-data/decals
-data/defprofile/multiplayer
-data/defprofile/singleplayer
-data/islands
-data/scenarios
-data/sigma/prebuiltarmy
-data/ui/ingame
-data/ui/screens/attribute_icons
-data/ui/screens/textures
+data/art/ebps/nis/*
+data/art/font/*
+data/scenarios/*
+data/islands/*
