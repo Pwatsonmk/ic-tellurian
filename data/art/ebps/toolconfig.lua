@@ -1,0 +1,4 @@
+MissionEditor =
+{
+	scanEBPs = 0,
+};

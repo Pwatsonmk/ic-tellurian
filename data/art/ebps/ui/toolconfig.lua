@@ -1,0 +1,4 @@
+MissionEditor =
+{
+	ignoreDir = 1,
+};
