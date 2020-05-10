@@ -27,8 +27,10 @@
 -- 5 - research clinic
 -- 6 - lab
 -- 7 - build menu
+-- 8 - foundry
+-- 9 - landing pad
 
-keybindingversion = 56
+keybindingversion = 64
 keygroups = 
 {
 	systemcommands = 
@@ -38,10 +40,10 @@ keygroups =
 			escape			= {"Escape",52011},
 			accept			= {"Enter",52121},
 			commandqueue	= {"Shift",52012},
-			pause		= {"Pause", 52124},	
+			pause			= {"Pause", 52124},	
 		},
 		locid = 52000,
-		grouptype = 1,
+		grouptype = 2,
 		overlapid = 0,
 		overlapfamily = 0,
 	},
@@ -66,8 +68,8 @@ keygroups =
 			nextgroundcombiner		= {"Control+C",52114},
 			nextwatercombiner		= {"Control+W",52115},
 			nextaircombiner			= {"Control+A",52116},
-			lab					= {"Control+Z",52023},
-			rex					= {"F1",52295},
+			lab						= {"Control+Z",52023},
+			rex						= {"F1",52295},
 			lucy					= {"F2",52296},
 			nextsubselect			= {"Tab",52270},
 			unassignallgroups 		= {"Control+U", 	52117},
@@ -83,12 +85,12 @@ keygroups =
 		keys = 
 		{
 			stop 				= {"S",	52013},
-			move 			= {"M",	52014},
+			move 				= {"M",	52014},
 			kill 				= {"Delete",52015},
-			attack			= {"A",	52034},
+			attack				= {"A",	52034},
 			buildmenu			= {"B",	52052},
 			buildmenuadvanced	= {"N",	52081},
-			gather			= {"W",	52056},
+			gather				= {"W",	52056},
 			repair				= {"R",	52053},
 			
 		},
@@ -160,6 +162,7 @@ keygroups =
 			research_towerupgrade		= {"M",52171},
 			research_strengthenfences	= {"Comma",52172},
 			research_strengthenelecgrid	= {"Period",52173},
+			research_labdefense	= {"L",52185},
 		},
 		locid = 52201,
 		grouptype = 0,
@@ -174,7 +177,7 @@ keygroups =
 			showpausemenu		= {"F10"		,52018},
 			showallymenu		= {"F9"			,52019},
 			showarmybuilder		= {"F12"		,52020},
-			-- showdiplomacymenu= {"F7"			,52021},
+			-- showdiplomacymenu	= {"F7"			,52021},
 			showobjectivesmenu	= {"F11"		,52022},
 			gotolastevent		= {"Space"		,52024},
 			teamobjective		= {"F8"			,52090},
@@ -206,7 +209,30 @@ keygroups =
 		overlapfamily = 2,
 	},
 	
+	soundbeamcommands = 
+	{
+		keys = 
+		{
+			sonicboom = {"B",52299},
+		},
+		locid = 52207,
+		grouptype = 0,
+		overlapid = 2,
+		overlapfamily = 3,
+	},
 
+	antiaircommands = 
+	{
+		keys = 
+		{
+			airburst = {"B",52300},
+		},
+		locid = 52208,
+		grouptype = 0,
+		overlapid = 2,
+		overlapfamily = 3,
+	},
+	
 	creaturecommands = 
 	{
 		keys = 
@@ -225,9 +251,15 @@ keygroups =
 			special_quill		= {"Q",	52080},
 			special_frenzy		= {"F",	52046},
 			special_digin		= {"D",	52047},
+			special_soiledland	= {"N", 52305},
 			--special_digout		= {"D",	52047},
+			special_jumping		= {"J", 52048},
 			special_sonar		= {"O",	52050},
 			special_plague		= {"U",	52051},
+			special_web			= {"W", 52301},
+			special_assassinate	= {"K", 52302},
+			special_flash		= {"F", 52303},
+			special_infestation	= {"I", 52304},
 		},
 		locid = 52005,
 		grouptype = 0,
@@ -257,12 +289,12 @@ keygroups =
 		{
 			lightning		= {"L",52058},
 			electrical		= {"G",52059},
-			bramble		= {"F",52060},
-			remote		= {"C",52061},
-			water		= {"W",52062},
-			aviary		= {"A",52063},
+			bramble			= {"F",52060},
+			remote			= {"C",52061},
+			water			= {"W",52062},
+			aviary			= {"A",52063},
 			vetclinic		= {"R",52064},
-			foundry		= {"O",52065},
+			foundry			= {"O",52065},
 			soundbeamtower	= {"S",52067},
 			antiairtower	= {"T",52066},
 			landingpad		= {"P",52150},
@@ -306,16 +338,18 @@ keygroups =
 	{
 		keys = 
 		{
-			createhenchman	= {"C",	52076},
-			releaserex		= {"Semicolon",	52077},
-			releaselucy		= {"Apostrophe", 52078},
-			radarpulse		= {"P",	52079},
+			createhenchman			= {"C",	52076},
+			releaserex				= {"Semicolon",	52077},
+			releaselucy				= {"Apostrophe", 52078},
+			radarpulse				= {"P",	52079},
 			research_advancedstruct	= {"Z",52160},
-			research		= {"R", 52016},
-	--		research_rank2		= {"R",52161},
-	--		research_rank3		= {"R",52162},
-	--		research_rank4		= {"R",52163},
-	--		research_rank5		= {"R",52164},
+			defenseturnon			= {"D",52297},
+			defenseturnoff			= {"D",52298},
+			research				= {"R", 52016},
+	--		research_rank2			= {"R",52161},
+	--		research_rank3			= {"R",52162},
+	--		research_rank4			= {"R",52163},
+	--		research_rank5			= {"R",52164},
 		},
 		locid = 52010,
 		grouptype = 0,
@@ -323,6 +357,21 @@ keygroups =
 		overlapfamily = 2,
 	},
 
+	foundrycommands = 
+	{
+		keys = 
+		{
+			electocoal100	= {"W", 52307},
+			electocoal500	= {"E", 52308},
+			coaltoelec100	= {"X", 52309},
+			coaltoelec500	= {"C", 52310},
+		},
+		locid = 52306,
+		grouptype = 0,
+		overlapid = 8,
+		overlapfamily = 2,
+	},
+	
 	landingpadcommands = 
 	{
 		keys = 
@@ -347,7 +396,7 @@ keygroups =
 		overlapid = 0,
 		overlapfamily = 0,
 	},
-	
+
 	hotkeygroups = 
 	{
 		keys = 
