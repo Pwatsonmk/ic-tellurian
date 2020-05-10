@@ -7,20 +7,20 @@ dofilepath("data:art/ebps/defperson.lua")
 ext = gameattributes;
 
 -- healthextinfo
-ext.hitpoints = 750
+ext.hitpoints = 500
 
-ext.sight_radius1 = 25
+ext.sight_radius1 = 40
 
 -- costextinfo
-ext.cost = 100
-ext.costrenew = 50
-ext.constructionticks = 80
+ext.cost = 200
+ext.costrenew = 100
+ext.constructionticks = 160
 
 -- movingextinfo
 ext.is_land = 1
 ext.is_flyer = 0
 ext.speed_max = 0
-ext.airspeed_max = 42
+ext.airspeed_max = 35
 ext.waterspeed_max = 0
 ext.entity_move_ap = 4.0
 

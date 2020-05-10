@@ -30,6 +30,65 @@
 
 AbilitiesList = 
 {
+	-- bodypart is required for compatibility sakes.
+	-- Updated abilities body part toggle (such as stink which we want on either the tail or torso depending on the animal)
+	-- will be read from the creatures lua file instead of this file.
+	AutoDefense = 
+	{
+		gameattributename 	= "AutoDefense",
+		bodypart		= part_tail,
+		name			= 37515,
+		shortdesc		= 37516,
+		showonlyincombiner	= 0,
+	},
+	Loner = 
+	{
+		gameattributename 	= "loner",
+		bodypart		= part_tail,
+		name			= 37510,
+		shortdesc		= 37511,
+		showonlyincombiner	= 0,
+	},
+	DeflectionArmour = 
+	{
+		gameattributename 	= "deflection_armour",
+		bodypart		= part_torso,
+		name			= 37500,
+		shortdesc		= 37501,
+		showonlyincombiner	= 0,
+	},	
+	Assassinate = 
+	{
+		gameattributename 	= "assassinate",
+		bodypart		= part_tail,
+		name			= 37525,
+		shortdesc		= 37526,
+		showonlyincombiner	= 0,
+	},
+	Flash = 
+	{
+		gameattributename 	= "flash",
+		bodypart		= part_tail,
+		name			= 37530,
+		shortdesc		= 37531,
+		showonlyincombiner	= 0,
+	},
+	Infestation = 
+	{
+		gameattributename 	= "infestation",
+		bodypart		= part_head,
+		name			= 37535,
+		shortdesc		= 37536,
+		showonlyincombiner	= 0,
+	},
+	Jumping = 
+	{
+		gameattributename 	= "can_SRF",
+		bodypart		= part_torso,
+		name			= 37540,
+		shortdesc		= 37541,
+		showonlyincombiner	= 0,
+	},
 	HighEndurance =
 	{
 		gameattributename 	= "end_bonus",
@@ -94,7 +153,7 @@ AbilitiesList =
 		shortdesc		= 6046,
 		showonlyincombiner	= 0,
 	},
-	Poison_touch =
+	PoisonTouch =
 	{
 		gameattributename 	= "poison_touch",
 		bodypart		= part_tail,
@@ -117,23 +176,7 @@ AbilitiesList =
 		name			= 6060,
 		shortdesc		= 6061,
 		showonlyincombiner	= 0,
-	},	
-	Swimmer_tail = 
-	{
-		gameattributename 	= "is_swimmer",
-		bodypart		= part_tail,
-		name			= 6065,
-		shortdesc		= 6066,
-		showonlyincombiner	= 1,
-	},	
-	Swimmer_torso = 
-	{
-		gameattributename 	= "is_swimmer",
-		bodypart		= part_torso,
-		name			= 6065,
-		shortdesc		= 6066,
-		showonlyincombiner	= 1,
-	},	
+	},
 	Flyer = 
 	{
 		gameattributename 	= "is_flyer",
@@ -146,26 +189,10 @@ AbilitiesList =
 	{
 		gameattributename 	= "can_dig",
 		bodypart		= part_front_legs,
-		name			= 6075,
-		shortdesc		= 6076,
+		name			= 37505,
+		shortdesc		= 37506,
 		showonlyincombiner	= 0,
-	},	
---	Nocturnal_Stealth = 
---	{
---		gameattributename 	= "night_is_stealthy",
---		bodypart		= part_creature,
---		name			= 6080,
---		shortdesc		= 6081,
---		showonlyincombiner	= 0,
---	},	
---	Nocturnal_Sight = 
---	{
---		gameattributename 	= "nocturnal_sight",
---		bodypart		= part_head,
---		name			= 6085,
---		shortdesc		= 6086,
---		showonlyincombiner	= 0,
---	},	
+	},
 	Charge = 
 	{
 		gameattributename 	= "charge_attack",
@@ -174,7 +201,7 @@ AbilitiesList =
 		shortdesc		= 6091,
 		showonlyincombiner	= 0,
 	},	
-	Leap_Attack = 
+	LeapAttack = 
 	{
 		gameattributename 	= "leap_attack",
 		bodypart		= part_back_legs,
@@ -182,15 +209,15 @@ AbilitiesList =
 		shortdesc		= 6101,
 		showonlyincombiner	= 0,
 	},	
-	Frenzy_Attack = 
+	FrenzyAttack = 
 	{
 		gameattributename 	= "frenzy_attack",
-		bodypart		= part_creature,
+		bodypart		= part_torso,
 		name			= 6105,
 		shortdesc		= 6106,
 		showonlyincombiner	= 0,
 	},
-	Plague_Attack = 
+	PlagueAttack = 
 	{
 		gameattributename 	= "plague_attack",
 		bodypart		= part_head,
@@ -198,12 +225,44 @@ AbilitiesList =
 		shortdesc		= 6111,
 		showonlyincombiner	= 0,
 	},
-	Quill_Attack =
+	QuillAttack =
 	{
 		gameattributename 	= "quill_burst",
 		bodypart		= part_torso,
 		name			= 6215,
 		shortdesc		= 6216,
+		showonlyincombiner	= 0,
+	},
+	SwimmerTail = 
+	{
+		gameattributename 	= "is_swimmer",
+		bodypart		= part_tail,
+		name			= 6065,
+		shortdesc		= 6066,
+		showonlyincombiner	= 1,
+	},
+	SwimmerTorso = 
+	{
+		gameattributename 	= "is_swimmer",
+		bodypart		= part_torso,
+		name			= 6065,
+		shortdesc		= 6066,
+		showonlyincombiner	= 1,
+	},	
+	WebThrow =
+	{
+		gameattributename 	= "web_throw",
+		bodypart		= part_tail,
+		name			= 37520,
+		shortdesc		= 37521,
+		showonlyincombiner	= 0,
+	},
+	SoiledLand =
+	{
+		gameattributename 	= "soiled_land",
+		bodypart		= part_back_legs,
+		name			= 37537,
+		shortdesc		= 37538,
 		showonlyincombiner	= 0,
 	},
 }
@@ -227,7 +286,7 @@ DamageModifyingAbilitiesList =
 		name			= 6205,
 		shortdesc		= 6206,
 	},
-	Barrier_Destruction =
+	BarrierDestruction =
 	{
 		dmgtype 		= DT_BarrierDestroy,
 		name			= 6210,

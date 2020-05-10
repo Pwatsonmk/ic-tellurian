@@ -149,6 +149,14 @@ prerequisites =
 		reqitem = AntiAirTower_EC,
 	},
 
+	labdefense = 
+	{
+		newtype = TYPE_Command,
+		newitem = CMD_LabDefenseTurnOff,
+		reqtype = TYPE_Research,
+		reqitem = RESEARCH_LabDefense,
+	},
+	
 	vetclinic = 
 	{
 		newtype = TYPE_Structure,
@@ -213,4 +221,19 @@ prerequisites =
 		reqitem = RESEARCH_Rank2,
 	},
 
+	sonic_boom = 
+	{
+		newtype = TYPE_Command,
+		newitem = CMD_SonicBoom,
+		reqtype = TYPE_Research,
+		reqitem = RESEARCH_TowerUpgrade,
+	},
+	
+	air_burst = 
+	{
+		newtype = TYPE_Command,
+		newitem = CMD_AirBurst,
+		reqtype = TYPE_Research,
+		reqitem = RESEARCH_TowerUpgrade,
+	},
 }

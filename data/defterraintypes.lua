@@ -1,15 +1,19 @@
 
 -- all the different terrain types
+-- it is important that the order of these remains untouched
+-- so that is it synced up with the order in the code
 
 TT_UNKNOWN=0
 TT_Grass=1
 TT_Snow=2
 TT_DirtSand=3
 TT_Rock=4
+TT_Swamp=5
+TT_SlowSwamp=6
 
 -- terrain type definitions
 
-numtypes=5
+numtypes=7
 types = {}
 
 types.t0 = {}
@@ -46,3 +50,17 @@ types.t4.type    = TT_Rock
 types.t4.colourR = 160
 types.t4.colourG = 160
 types.t4.colourB = 160
+
+types.t5 = {}
+types.t5.name    = "Swamp"
+types.t5.type    = TT_Swamp
+types.t5.colourR = 0
+types.t5.colourG = 174
+types.t5.colourB = 255
+
+types.t6 = {}
+types.t6.name    = "SlowSwamp"
+types.t6.type    = TT_SlowSwamp
+types.t6.colourR = 0
+types.t6.colourG = 78
+types.t6.colourB = 255

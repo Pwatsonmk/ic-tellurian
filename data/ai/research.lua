@@ -13,7 +13,7 @@ function init_research()
 	sg_research[RESEARCH_HenchmanMotivationalSpeech] = 1
 	sg_research[RESEARCH_StrengthenFences] = 0
 	sg_research[RESEARCH_StrengthenElectricalGrid] = 1
-	sg_research[RESEARCH_IncBuildingIntegrity] = 0
+	sg_research[RESEARCH_IncBuildingIntegrity] = 1
 	sg_research[RESEARCH_HenchmanImprovedHealing] = 0
 	sg_research[RESEARCH_TowerUpgrade] = 1
 	

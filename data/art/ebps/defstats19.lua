@@ -20,6 +20,15 @@ ext.flyerDmgMult = 0.1	-- dmg to flyers = attackDmg * flyerDmgMult
 ext.sight_radius1 = 40
 ext.keen_sense = 1
 
+-- towerburstextinfo
+ext.burstRechargeTicks	= 400
+ext.burstRadius			= 20.0
+ext.burstDamage			= 250.0
+ext.burstDmgAirMult		= 0.1
+ext.burstDmgGroundMult	= 1.0
+ext.burstCostRenew		= 1000
+ext.burstCostGather		= 0
+
 -- not used anymore
 ext.attackRadius = 27	-- distance at which it can shoot at
 ext.coneAngle = 75	-- angle of attack cone
@@ -29,4 +38,6 @@ ext.stayInPathfindingAfterDead = 0
 -- allows off-screen towers to properly point their effects
 ext.update_bones_when_invisible = 1
 
+-- infestationextinfo
+ext.dmg_infestation_multiplier = 0.2
 -- end of file

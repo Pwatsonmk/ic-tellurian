@@ -30,7 +30,7 @@
 	HK_Generic_Event			= "keygroups.gamecommands.keys.gotolastevent"
 	HK_Generic_TeamObjective	= "keygroups.gamecommands.keys.teamobjective"
 	HK_Generic_RecallSpeech		= "keygroups.gamecommands.keys.recallspeech"
-	
+
 	-- ARMY BUTTONS
 	HK_Build_Creature_1		= "keygroups.chambercommands.keys.buildcreature1"
 	HK_Build_Creature_2		= "keygroups.chambercommands.keys.buildcreature2"
@@ -43,17 +43,17 @@
 	HK_Build_Creature_9		= "keygroups.chambercommands.keys.buildcreature9"
 
 	-- CREATURE
-	HK_Generic_Attack			= "keygroups.basicunitcommands.keys.attack"
-	HK_Generic_Guard			= "keygroups.creaturecommands.keys.guard"
-	HK_Generic_Patrol			= "keygroups.creaturecommands.keys.patrol"
+	HK_Generic_Attack		= "keygroups.basicunitcommands.keys.attack"
+	HK_Generic_Guard		= "keygroups.creaturecommands.keys.guard"
+	HK_Generic_Patrol		= "keygroups.creaturecommands.keys.patrol"
 	HK_Creature_NoStance		= "keygroups.creaturecommands.keys.stance_none"
-	HK_Creature_Passive			= "keygroups.creaturecommands.keys.stance_passive"
+	HK_Creature_Passive		= "keygroups.creaturecommands.keys.stance_passive"
 	HK_Creature_Territorial		= "keygroups.creaturecommands.keys.stance_territorial"
 	HK_Creature_Aggressive		= "keygroups.creaturecommands.keys.stance_aggressive"
 	HK_Creature_RangeAttack		= "keygroups.creaturecommands.keys.rangeattack"
 	HK_Creature_Special_Stink	= "keygroups.creaturecommands.keys.special_stink"
 	HK_Creature_Special_Burst	= "keygroups.creaturecommands.keys.special_burst"
-	HK_Creature_Special_Quill   = "keygroups.creaturecommands.keys.special_quill"
+	HK_Creature_Special_Quill   	= "keygroups.creaturecommands.keys.special_quill"
 	HK_Creature_Special_Frenzy	= "keygroups.creaturecommands.keys.special_frenzy"
 	HK_Creature_Special_Digin	= "keygroups.creaturecommands.keys.special_digin"
 	HK_Creature_Special_Digout	= "keygroups.creaturecommands.keys.special_digin"
@@ -61,6 +61,11 @@
 	HK_Creature_Special_Dam		= "keygroups.creaturecommands.keys.special_dam"
 	HK_Creature_Special_Sonar	= "keygroups.creaturecommands.keys.special_sonar"
 	HK_Creature_Special_Plague	= "keygroups.creaturecommands.keys.special_plague"
+	HK_Creature_Special_Web		= "keygroups.creaturecommands.keys.special_web"
+	HK_Creature_Special_Assassinate	= "keygroups.creaturecommands.keys.special_assassinate"
+	HK_Creature_Special_Flash	= "keygroups.creaturecommands.keys.special_flash"
+	HK_Creature_Special_Infestation	= "keygroups.creaturecommands.keys.special_infestation"
+	HK_Creature_Special_SoiledLand	= "keygroups.creaturecommands.keys.special_soiledland"
 
 	-- HENCHMEN
 	HK_Henchman_Build			= "keygroups.basicunitcommands.keys.buildmenu"
@@ -96,7 +101,7 @@
 
 	-- LUCY
 	HK_Lucy_Repair			= "keygroups.basicunitcommands.keys.repair"
-	HK_Lucy_Garrison			= "keygroups.lucycommands.keys.garrison"
+	HK_Lucy_Garrison		= "keygroups.lucycommands.keys.garrison"
 	HK_Lucy_Build			= "keygroups.basicunitcommands.keys.buildmenu"
 	HK_Lucy_BuildAdvanced	= "keygroups.basicunitcommands.keys.buildmenuadvanced"
 	HK_Lucy_GatherTech		= "keygroups.lucycommands.keys.gathertech"
@@ -108,6 +113,14 @@
 	HK_Lab_ReleaseRex		= "keygroups.labcommands.keys.releaserex"
 	HK_Lab_ReleaseLucy		= "keygroups.labcommands.keys.releaselucy"
 	HK_Lab_RadarPulse		= "keygroups.labcommands.keys.radarpulse"
+	HK_Lab_DefenseTurnOn	= "keygroups.labcommands.keys.defenseturnon"
+	HK_Lab_DefenseTurnOff	= "keygroups.labcommands.keys.defenseturnoff"
+
+	-- FOUNDRY
+	HK_Foundry_ElecToCoal100 = "keygroups.foundrycommands.keys.electocoal100"
+	HK_Foundry_ElecToCoal500 = "keygroups.foundrycommands.keys.electocoal500"
+	HK_Foundry_CoaltoElec100 = "keygroups.foundrycommands.keys.coaltoelec100"
+	HK_Foundry_CoaltoElec500 = "keygroups.foundrycommands.keys.coaltoelec500"
 
 	-- LANDINGPAD
 	HK_LandingPad_CreateGyrocopter = "keygroups.landingpadcommands.keys.creategyrocopter"
@@ -163,7 +176,7 @@
 	
 	-- research clinic
 	HK_Research_HenchmanBinoculars	= "keygroups.researchcliniccommands.keys.research_henchmanbinoculars"
-	HK_Research_HenchmanTag		= "keygroups.researchcliniccommands.keys.research_henchmantag"
+	HK_Research_HenchmanTag			= "keygroups.researchcliniccommands.keys.research_henchmantag"
 	HK_Research_HenchmanYoke		= "keygroups.researchcliniccommands.keys.research_henchmanyoke"
 	HK_Research_HenchmanHeal		= "keygroups.researchcliniccommands.keys.research_henchmanheal"
 	HK_Research_HenchmanMotSpeech	= "keygroups.researchcliniccommands.keys.research_henchmanmotspeech"
@@ -171,6 +184,13 @@
 	HK_Research_TowerUpgrade		= "keygroups.researchcliniccommands.keys.research_towerupgrade"
 	HK_Research_StrengthenFences	= "keygroups.researchcliniccommands.keys.research_strengthenfences"
 	HK_Research_StrengthenElecGrid	= "keygroups.researchcliniccommands.keys.research_strengthenelecgrid"
+	HK_Research_LabDefense			= "keygroups.researchcliniccommands.keys.research_labdefense"
+	
+	-- sound beam tower
+	HK_SoundBeam_SonicBoom			= "keygroups.soundbeamcommands.keys.sonicboom"
+	
+	-- anti air tower
+	HK_AntiAir_AirBurst				= "keygroups.antiaircommands.keys.airburst"
 	
 	-- electrical generator
 	HK_AddOn_EGen1			= "keygroups.egencommands.keys.research"
@@ -181,7 +201,7 @@
 	HK_Upgrade_Defense			= "keygroups.geneticamplifiercommands.keys.upgrade_defense"
 	HK_Upgrade_Speed			= "keygroups.geneticamplifiercommands.keys.upgrade_speed"
 	HK_Upgrade_MeleeDamage		= "keygroups.geneticamplifiercommands.keys.upgrade_meleedamage"
-	HK_Upgrade_HitPoints			= "keygroups.geneticamplifiercommands.keys.upgrade_hitpoints"
+	HK_Upgrade_HitPoints		= "keygroups.geneticamplifiercommands.keys.upgrade_hitpoints"
 	HK_Upgrade_SightRadius		= "keygroups.geneticamplifiercommands.keys.upgrade_sightradius"
 	HK_Upgrade_RangedDamage		= "keygroups.geneticamplifiercommands.keys.upgrade_rangeddamage"
 	HK_Upgrade_SplashDamage		= "keygroups.geneticamplifiercommands.keys.upgrade_splashdamage"
@@ -252,13 +272,13 @@
 	--
 	menu_commands = 
 	{
-		{ 40950, HK_Generic_Menu,			42380, },
-		{ 40951, HK_Generic_ArmyBuilder,	42381, }, 
-		{ 40952, HK_Generic_Players,		42383, },
-		{ 40953, HK_Generic_Ally,			42382, }, 
-		{ 40954, HK_Generic_Objectives,		42384, },
-		{ 40955, HK_Generic_TeamObjective,	42385, },
-		{ 40956, HK_Generic_RecallSpeech,	42386, },
+		{ 40950, HK_Generic_Menu,		42380, },
+		{ 40951, HK_Generic_ArmyBuilder,42381, }, 
+		{ 40952, HK_Generic_Players,	42383, },
+		{ 40953, HK_Generic_Ally,		42382, }, 
+		{ 40954, HK_Generic_Objectives,	42384, },
+		{ 40955, HK_Generic_TeamObjective, 42385, },
+		{ 40956, HK_Generic_RecallSpeech, 42386, },
 	}
 
 	-- scrap,electricity,population cap
@@ -291,7 +311,7 @@
 
 	creature_commands = 
 	{
-		{ 40850,	HK_Generic_Move,	42320,	"ui/ingame/waypoints.tga" },
+		{ 40850,	HK_Generic_Move,		42320,	"ui/ingame/waypoints.tga" },
 		{ 40851,	HK_Generic_Guard,		42323,	"ui/ingame/guard.tga" },
 		{ 40852,	HK_Generic_Patrol,		42331,	"ui/ingame/patrol.tga" },
 		{ 40853,	HK_Generic_Stop,		42326,	"ui/ingame/stop.tga" },
@@ -313,20 +333,26 @@
 	--       the SpecialAbilities enumerated type
 	ability_commands = 
 	{
-		{ 40893,	HK_Creature_Special_Frenzy,	42423, "ui/ingame/frenzy_attack.tga",	Ability_Frenzy,		0	},
-		{ 40910,	HK_Creature_Special_Sonar,	42440, "ui/ingame/sonar_attack.tga",	Ability_SonarPulse,	1	},
-		{ 40894,	HK_Creature_Special_Digin,	42424, "ui/ingame/digin.tga",			Ability_Digin,		0	},
-		{ 40898,	HK_Creature_Special_Digout,	42428, "ui/ingame/digout.tga",			Ability_Digout,		0	},
+		{ 40893,	HK_Creature_Special_Frenzy,		42423, "ui/ingame/frenzy_attack.tga",	Ability_Frenzy,		0	},
+		{ 40910,	HK_Creature_Special_Sonar,		42440, "ui/ingame/sonar_attack.tga",	Ability_SonarPulse,	1	},
+		{ 40903,	HK_Creature_Special_SoiledLand,	42433, "ui/ingame/soiled_land.tga",		Ability_SoiledLand,	0	},
+		{ 40912,	HK_Creature_Special_Jumping,	42442, "ui/ingame/jumping.tga",			Ability_Jumping,	1	},
+		{ 40894,	HK_Creature_Special_Digin,		42424, "ui/ingame/digin.tga",			Ability_Digin,		0	},
+		{ 40898,	HK_Creature_Special_Digout,		42428, "ui/ingame/digout.tga",			Ability_Digout,		0	},
 	}
 
 	modal_special_commands =
 	{
 		-- Modal Special commands
-		{ 40911,	HK_Creature_Special_Plague,	42441, "ui/ingame/plague.tga",			ATTACKTRG_Plague		},
-		{ 40891,	HK_Creature_Special_Burst,	42421, "ui/ingame/burst_attack.tga",	ATTACKTRG_ElectricBurst },
-		{ 40897,	HK_Creature_Special_Quill,	42427, "ui/ingame/quill_attack.tga",	ATTACKTRG_QuillBurst	},
-		{ 40890,	HK_Creature_Special_Stink,	42420, "ui/ingame/stink_attack.tga",	ATTACKTRG_StinkBurst	},
-		{ 40833,	HK_Lucy_Sabotage,			42344, "ui/ingame/sabotage.tga",		ATTACKTRG_Sabotage		},
+		{ 40911,	HK_Creature_Special_Plague,         42441, "ui/ingame/plague.tga",		    ATTACKTRG_Plague		},
+		{ 40891,	HK_Creature_Special_Burst,          42421, "ui/ingame/burst_attack.tga",	ATTACKTRG_ElectricBurst },
+		{ 40897,	HK_Creature_Special_Quill,          42427, "ui/ingame/quill_attack.tga",	ATTACKTRG_QuillBurst	},
+		{ 40890,	HK_Creature_Special_Stink,          42420, "ui/ingame/stink_attack.tga",	ATTACKTRG_StinkBurst	},
+		{ 40899,	HK_Creature_Special_Web,            42429, "ui/ingame/web_throw.tga",	    ATTACKTRG_WebThrow		},
+		{ 40900,	HK_Creature_Special_Assassinate,    42430, "ui/ingame/assassinate.tga",	    ATTACKTRG_Assassinate	},
+		{ 40901,	HK_Creature_Special_Flash,          42431, "ui/ingame/flash.tga",	        ATTACKTRG_Flash			},
+		{ 40902,	HK_Creature_Special_Infestation,	42432, "ui/ingame/infestation.tga",		ATTACKTRG_Infestation	},
+		{ 40833,	HK_Lucy_Sabotage,                   42344, "ui/ingame/sabotage.tga",	    ATTACKTRG_Sabotage		},
 	}
 
 	rex_commands = 
@@ -366,7 +392,29 @@
 	}
 
 	radarpulsecommand = 
-	{ 42444,	HK_Lab_RadarPulse,		42443, "ui/ingame/radar_pulse.tga" }
+	{ 42444,	HK_Lab_RadarPulse,		42443,	"ui/ingame/radar_pulse.tga" }
+
+	soundbeamcommand =
+	{ 42464,	HK_SoundBeam_SonicBoom,	42463,	"ui/ingame/tower_boost.tga" }
+	
+	antiaircommand =
+	{ 42466,	HK_AntiAir_AirBurst,	42465,	"ui/ingame/tower_boost.tga" }
+	
+	labcommands = 
+	{
+		-- Name		Hokey					TT Text		Texture									Command
+		{ 42462,	HK_Lab_DefenseTurnOff,	42461,		"ui/ingame/lab_defense_stop.tga",		0 },
+		{ 42460,	HK_Lab_DefenseTurnOn,	42459,		"ui/ingame/lab_defense.tga",			1 },
+	}
+
+	foundry_commands = 
+	{
+		-- Name		Hotkey							TT Text		Texture							TypeID
+		{ 40940,	HK_Foundry_ElecToCoal100,		42467,		"ui/ingame/electocoal100.tga",	RESOURCECONV_ElecToCoal100 },
+		{ 40941,	HK_Foundry_ElecToCoal500,		42468,		"ui/ingame/electocoal500.tga",	RESOURCECONV_ElecToCoal500 },
+		{ 40942,	HK_Foundry_CoaltoElec100,		42469,		"ui/ingame/coaltoelec100.tga",	RESOURCECONV_CoalToElec100 },
+		{ 40943,	HK_Foundry_CoaltoElec500,		42470,		"ui/ingame/coaltoelec500.tga",	RESOURCECONV_CoalToElec500 },
+	}
 
 	togglebuildmenucommands = 
 	{ 
@@ -432,21 +480,30 @@
 	creature_abilitymodalmodes = 
 	{
 		{ MM_None,		MC_None },
-		{ MM_Cursor,		MC_SonarPulse },
+		{ MM_Cursor,	MC_SonarPulse },
 		{ MM_None,		MC_None },
+		{ MM_Cursor,	MC_Jumping },
 		{ MM_None,		MC_None },
 		{ MM_None,		MC_None },
 	}
 
+	-- Note: the entries in creature_specialmodalmodes MUST follow the order of
+	--       the modal_special_commands enumerated type
 	creature_specialmodalmodes = 
 	{
 		{ MM_Cursor,	MC_Plague },
 		{ MM_Cursor,	MC_ElectricalBurst },
 		{ MM_Cursor,	MC_QuillBurst },
 		{ MM_Cursor,	MC_StinkBurst },
+		{ MM_Cursor,	MC_WebThrow },
+		{ MM_Cursor,	MC_Assassinate },
+		{ MM_Cursor,	MC_Flash },
+		{ MM_Cursor,	MC_Infestation },
 		{ MM_Cursor,	MC_Sabotage },
 	}
 
+	-- Note: the entries in rex_modalmodes MUST follow the order of
+	--       the rex_commands enumerated type
 	rex_modalmodes = 
 	{
 		{ MM_Cursor,	MC_Move },
@@ -454,8 +511,11 @@
 		{ MM_None,		MC_None },			-- stop
 		{ MM_Cursor,	MC_Heal },
 		{ MM_Cursor,	MC_GatherAnimal },
+		{},	-- placeholder
 	}
 
+	-- Note: the entries in lucy_modalmodes MUST follow the order of
+	--       the lucy_commands enumerated type
 	lucy_modalmodes = 
 	{
 		{ MM_Cursor,	MC_Move },
@@ -516,6 +576,7 @@
 		{RESEARCH_TowerUpgrade,				HK_Research_TowerUpgrade, 42284 },
 		{RESEARCH_StrengthenFences,			HK_Research_StrengthenFences, 42272 },
 		{RESEARCH_StrengthenElectricalGrid,		HK_Research_StrengthenElecGrid, 42273 },
+		{RESEARCH_LabDefense,				HK_Research_LabDefense, 42458 },
 	}
 
 	foundaryresearch = 
@@ -700,7 +761,7 @@ cleartaskbar = function()
 
 	-- infocenter
 	infocenter()
-	
+
 	-- playback buttons
 	if FastSpeedAllowed() == 1 then
 	
@@ -872,7 +933,7 @@ infocentercreatureupgrade = function( id, enabled )
 	BindLabelToCreatureUpgradeProgress ( "buildque_progress_label", id )
 	BindLabelToInCreatureUpgrade	( "buildque_name_label", id )
 	BindButtonToInCreatureUpgrade	( "buildque_icon00", "", "docancelcreatureupgrade", "", id, enabled )
-	BindBarToCreatureUpgrade	( "buildque_progress_statbar", id )
+	BindBarToCreatureUpgrade		( "buildque_progress_statbar", id )
 
 end
 
@@ -893,7 +954,7 @@ infocenteraddon = function( id, enabled )
 	BindLabelToInAddOn ( "buildque_name_label", id )
 	BindButtonToInAddOn( "buildque_icon00", "", "docanceladdon", "", id, enabled )
 	BindBarToAddOn     ( "buildque_progress_statbar", id )
-	BindLabelToAddOn     ( "buildque_progress_label", id )
+	BindLabelToAddOn   ( "buildque_progress_label", id )
 
 end
 
@@ -934,14 +995,6 @@ infocenterbuildqueue = function( id, enabled )
 	BindLabelToBuildQueue   ( "buildque_name_label", id, 0 )
 	BindLabelToBuildProgress( "buildque_progress_label", id )
 	BindBarToBuildQueue     ( "buildque_progress_statbar", id )
-
-end
-
---
-infocentertower = function( id )
-
-	BindLabelToTowerRange  ( "textlabel_infoline01", id )
-	BindLabelToTowerDamage ( "textlabel_infoline02", id )
 
 end
 
@@ -1142,7 +1195,7 @@ infocenterhenchman = function( id )
 	if EntityHasTagReload( id ) == 1 then
 
 		BindLabelToText		    ( "textlabel_infoline01", 40780 )
-		BindBarToEntityTagReload( "buildprogress_statbar", id )
+		BindBarToEntityTagReload( "progress_statbar01", id )
 
 	end
 
@@ -1157,7 +1210,7 @@ infocentergyrocopter = function( id )
 	if EntityHasTagReload( id ) == 1 then
 
 		BindLabelToText		    ( "textlabel_infoline01", 40780 )
-		BindBarToEntityTagReload( "buildprogress_statbar", id )
+		BindBarToEntityTagReload( "progress_statbar01", id )
 
 	end
 
@@ -1171,7 +1224,7 @@ infocenterrex = function( id )
 	if EntityHasTagReload( id ) == 1 then
 
 		BindLabelToText		    ( "textlabel_infoline01", 40782 )
-		BindBarToEntityTagReload( "buildprogress_statbar", id )
+		BindBarToEntityTagReload( "progress_statbar01", id )
 
 	end
 
@@ -1202,16 +1255,61 @@ infocenterrex = function( id )
 end
 
 --
+infocentersoundbeamtower = function( id )
+
+	infocentertower( id )
+
+	-- sonic boom
+	if SonicBoomIsOpen() == 1 then
+
+		BindLabelToText		    ( "textlabel_infoline01", 40784 )
+		BindBarToSonicBoomRecharge( "progress_statbar01", id )
+
+	end
+
+end
+
+--
+infocenterantiairtower = function( id )
+
+	infocentertower( id )
+
+	-- air burst
+	if AirBurstIsOpen() == 1 then
+
+		BindLabelToText		    ( "textlabel_infoline01", 40785 )
+		BindBarToAirBurstRecharge( "progress_statbar01", id )
+
+	end
+
+end
+
+--
+infocentertower = function( id )
+
+	BindLabelToTowerRange  ( "textlabel_infoline04", id )
+	BindLabelToTowerDamage ( "textlabel_infoline05", id )
+
+end
+
+--
 infocenterlab = function( id )
 
 	-- radar pulse
 	if RadarPulseIsOpen() == 1 then
 
 		BindLabelToText		    ( "textlabel_infoline01", 40781 )
-		BindBarToRadarPulseRecharge( "buildprogress_statbar", id )
+		BindBarToRadarPulseRecharge( "progress_statbar01", id )
 
 	end
 
+	-- lab defense
+	if IsLabDefenseEnabled( id ) == 1 then
+
+		BindLabelToText		    ( "textlabel_infoline03", 40786 )
+		BindBarToLabDefense( "progress_statbar02", id )
+	
+	end
 end
 
 --
@@ -1221,7 +1319,7 @@ infocenterlucy = function( id )
 	if EntityHasTagReload( id ) == 1 then
 
 		BindLabelToText		( "textlabel_infoline01", 40783 )
-		BindBarToEntityTagReload( "buildprogress_statbar", id )
+		BindBarToEntityTagReload( "progress_statbar01", id )
 
 	end
 
@@ -1450,14 +1548,18 @@ infocentersingle = function( id )
 
 		infocenterlab( id )
 
+	elseif EntityType( id ) == SoundBeamTower_EC then
+	
+		infocentersoundbeamtower( id )
+	
+	elseif EntityType( id ) == AntiAirTower_EC then
+	
+		infocenterantiairtower( id )
+		
 	elseif EntityInCreatureUpgrade( id ) == 1 then
 
 		infocentercreatureupgrade( id, 1 )
 
-	elseif (EntityType( id ) == SoundBeamTower_EC) or (EntityType( id ) == AntiAirTower_EC) then
-	
-		infocentertower( id )
-		
 	end
 
 end
@@ -1617,15 +1719,51 @@ commandstooltip = function( enabled, index )
 end
 
 --
+foundrytooltip = function( enabled, index )
+
+	tooltip_command( enabled, index, foundry_commands )
+
+end
+
+--
+sonicboomtooltip = function( enabled, ebpid )
+
+	if enabled == 0 then
+		HelpTextSonicBoomPrerequisite()
+	end
+
+	HelpTextTitle( soundbeamcommand[1] )
+	HelpTextSonicBoomCost(ebpid)
+	HelpTextTextWithRequirements( soundbeamcommand[3] )
+	HelpTextShortcut( soundbeamcommand[2] )
+
+end
+
+--
+airbursttooltip = function( enabled, ebpid )
+
+	if enabled == 0 then
+		HelpTextAirBurstPrerequisite()
+	end
+
+	HelpTextTitle( antiaircommand[1] )
+	HelpTextAirBurstCost(ebpid)
+	HelpTextTextWithRequirements( antiaircommand[3] )
+	HelpTextShortcut( antiaircommand[2] )
+
+end
+
+--
 tooltip_radarpulse = function( enabled, ebpid )
 
 	if enabled == 0 then
 		HelpTextRadarPulsePrerequisite()
 	end
-		HelpTextTitle( radarpulsecommand[1] )
-		HelpTextRadarPulseCost(ebpid)
-		HelpTextTextWithRequirements( radarpulsecommand[3] )
-		HelpTextShortcut( radarpulsecommand[2] )
+
+	HelpTextTitle( radarpulsecommand[1] )
+	HelpTextRadarPulseCost(ebpid)
+	HelpTextTextWithRequirements( radarpulsecommand[3] )
+	HelpTextShortcut( radarpulsecommand[2] )
 
 end
 
@@ -1634,6 +1772,75 @@ radarpulsetooltip = function( enabled, ebpid )
 
 	tooltip_radarpulse( enabled, ebpid )
 
+end
+
+--
+dolabdefense_turnoff_tooltip = function( enabled, index, ebpid )
+
+-- do appopriate tool tip info
+
+	HelpTextTitle( labcommands[1][1] )
+	HelpTextTextWithRequirements( labcommands[1][3] )
+	HelpTextShortcut( labcommands[1][2] )
+
+end
+
+dolabdefense_turnon_tooltip = function( enabled, index, ebpid )
+
+-- do appopriate tool tip info	
+
+	HelpTextTitle( labcommands[2][1] )
+	
+	if enabled == 0 then
+		HelpTextLabDefensePrerequisite()
+	end
+	
+	HelpTextLabDefenseCost( ebpid )
+	HelpTextTextWithRequirements( labcommands[2][3] )
+	HelpTextShortcut( labcommands[2][2] )
+
+end
+
+--
+soundbeamtowerselection = function()
+
+	local id = SelectionId( 0 )
+	
+	--
+	cleartaskbar()
+	
+	-- background
+	ShowBitmapLabel( "command_bigicon_back" )
+	
+	-- sonicboom on sound team tower
+	if SonicBoomIsAllowed( id ) == 1 then
+		BindButtonToSonicBoom( "command_big_icon01", soundbeamcommand[2], "dosonicboom", "sonicboomtooltip", soundbeamcommand[4], id )
+	end
+	
+	-- kill building button
+	BindButton( "command_formation_icon01", commands[4][2],  "dokillconfirm", "commandstooltip", commands[4][4], 4 )
+	
+end
+
+--
+antiairtowerselection = function()
+
+	local id = SelectionId( 0 )
+	
+	--
+	cleartaskbar()
+	
+	-- background
+	ShowBitmapLabel( "command_bigicon_back" )
+	
+	-- airburst on anti air tower
+	if AirBurstIsAllowed( id ) == 1 then
+		BindButtonToAirBurst( "command_big_icon01", antiaircommand[2], "doairburst", "airbursttooltip", antiaircommand[4], id )
+	end
+
+	-- kill building button
+	BindButton( "command_formation_icon01", commands[4][2],  "dokillconfirm", "commandstooltip", commands[4][4], 4 )
+	
 end
 
 --
@@ -1680,6 +1887,15 @@ labselection = function()
 
 		BindButtonToRadarPulse( "command_big_icon08", radarpulsecommand[2], "doradarpulse", "radarpulsetooltip", radarpulsecommand[4], id )
 
+	end
+	
+	-- lab defense
+	if IsLabDefenseOn( id ) == 1 then
+		-- Show turn off button (current state = on)
+		BindButtonToLabDefense( "command_big_icon09", labcommands[1][2], "dolabdefense", "dolabdefense_turnoff_tooltip", labcommands[1][4], 0, id )
+	else
+		-- Show turn on button (current state = off)
+		BindButtonToLabDefense( "command_big_icon09", labcommands[2][2], "dolabdefense", "dolabdefense_turnon_tooltip", labcommands[2][4], 1, id )
 	end
 
 end
@@ -2042,6 +2258,12 @@ henchmantooltip = function( enabled, index )
 end
 
 --
+unloadtooltip = function( enabled )
+
+	tooltip_command( enabled, 11, henchman_commands )
+
+end
+--
 henchmanselection = function( id )
 
 	-- command area
@@ -2075,15 +2297,99 @@ henchmanselection = function( id )
 end
 
 --
+selectpassenger = function( id )
+
+	-- Check to see if there's no active modal cursor
+	if ( GetModalCommandMode() == 0 ) then
+	
+		DoPendingUnload( id, 1 );			-- clear pending list and add passenger in
+		dohenchmanmodal( 11 )				-- do unload modal
+		
+		local gyro_id = GetVehicleId( id )
+		
+	else
+	
+		local result = DoPendingUnload( id, 0 );
+	
+		-- we have deselected last of the passengers, quit the modal UI
+		if (result == 0) then
+			-- stop ui
+			dounloadmodalcancel()
+		end
+	
+	end
+end
+
+--
+selectallpassenger = function( gyro_id )
+
+	local count = PassengerCount( gyro_id )
+
+	-- Process in the first passenger
+	local first_id = PassengerId( gyro_id, 0 )
+	DoPendingUnload( first_id, 1 );			-- clear pending list and add passenger in
+
+	-- Do the rest of the passengers
+	for i = 1, count - 1
+	do
+
+		local id = PassengerId( gyro_id, i )
+		DoPendingUnload( id, 0 );
+
+	end
+	
+	dohenchmanmodal( 11 )		-- do unload modal mode
+end
+
+--
+gyrocopterpassengermulti = function( gyro_id )
+
+	-- gyro passenger multi list
+	local multibuttons =
+	{
+		{ "multiselect_icon15",	"multiselect_statbar15" },
+		{ "multiselect_icon16",	"multiselect_statbar16" },
+		{ "multiselect_icon17",	"multiselect_statbar17" },
+		{ "multiselect_icon18",	"multiselect_statbar18" },
+
+		{ "multiselect_icon24",	"multiselect_statbar24" },
+		{ "multiselect_icon25",	"multiselect_statbar25" },
+		{ "multiselect_icon26",	"multiselect_statbar26" },
+		{ "multiselect_icon27", "multiselect_statbar27" },
+
+		{ "multiselect_icon33", "multiselect_statbar33" },
+		{ "multiselect_icon34", "multiselect_statbar34" },
+		{ "multiselect_icon35", "multiselect_statbar35" },
+		{ "multiselect_icon36", "multiselect_statbar36" },
+	}
+
+	local count = PassengerCount( gyro_id )
+
+	if  count > getn( multibuttons ) then
+		
+		count = getn( multibuttons )
+
+	end
+
+	for i = 0, count - 1
+	do
+
+		local id = PassengerId( gyro_id, i )
+		
+		BindButtonToUnloadPassenger( multibuttons[ i + 1 ][ 1 ], "", "selectpassenger", "", id, gyro_id )
+		BindBarToEntityHealth( multibuttons[ i + 1 ][ 2 ], id, "", 0 );
+
+	end
+
+end
+
+--
 gyrocopterselection = function( id )
 
 	-- command area
 	BindButton( "command_modal_icon01",		henchman_commands[ 1][2],  "dohenchmanmodal",	"henchmantooltip", henchman_commands[ 1][4],  1 )		-- move
-	BindButton( "command_modal_icon02",		henchman_commands[ 2][2],  "dohenchmanmodal",	"henchmantooltip", henchman_commands[ 2][4],  2 )		-- gather
-	BindButton( "command_modal_icon03",		henchman_commands[ 3][2],  "dohenchmanmodal",	"henchmantooltip", henchman_commands[ 3][4],  3 )		-- guard
-	BindButton( "command_modal_icon04",		henchman_commands[ 4][2],  "dohenchmanmodal",	"henchmantooltip", henchman_commands[ 4][4],  4 )		-- repair
 	BindButton( "command_modal_icon07",		henchman_commands[ 5][2],  "dostop",			"henchmantooltip", henchman_commands[ 5][4],  5 )		-- stop
-
+	
 	if ( CanBuild( id ) == 1 ) then
 		BindButtonToHenchmanBuild( "command_normal_icon01",	henchman_commands[ 6][2],  "buildbasicbuildingsmenu",	"henchmantooltip", henchman_commands[ 6][4],  6 )		-- build
 		BindButton( "command_normal_icon02",	henchman_commands[ 7][2],  "buildadvancedbuildingsmenu","henchmantooltip", henchman_commands[ 7][4],  7 )		-- build
@@ -2096,15 +2402,29 @@ gyrocopterselection = function( id )
 		BindButtonToTag( "command_normal_icon04",	henchman_commands[ 9][2],  "dohenchmanmodal", "henchmantooltip", henchman_commands[ 9][4],  id, 9 )		-- tag
 		BindButtonToTag( "command_normal_icon05",	henchman_commands[14][2],  "dohenchmanmodal", "henchmantooltip", henchman_commands[14][4],  id, 14 )		-- untag
 	end
-
+	
 	if ( CanUnload( id ) == 1 ) then
-		BindButtonToUnload( "command_normal_icon03",	henchman_commands[11][2],  "dohenchmanmodal", "henchmantooltip", henchman_commands[11][4], id, 11 )		-- unload
+		BindButtonToUnload( "command_normal_icon03",	henchman_commands[11][2],  "selectallpassenger", "unloadtooltip", henchman_commands[11][4], id, 11 )		-- unload
+		
+		if SelectionCount() == 1 then
+			gyrocopterpassengermulti( id )	-- passenger multiselection UI
+		end
+		
+		-- Disable these buttons only if we currently do not carry any passengers
+		BindButtonDisabled( "command_modal_icon02",		henchman_commands[ 2][2],  "dohenchmanmodal",	"henchmantooltip", henchman_commands[ 2][4],  2 )		-- gather
+		BindButtonDisabled( "command_modal_icon03",		henchman_commands[ 3][2],  "dohenchmanmodal",	"henchmantooltip", henchman_commands[ 3][4],  3 )		-- guard
+		BindButtonDisabled( "command_modal_icon04",		henchman_commands[ 4][2],  "dohenchmanmodal",	"henchmantooltip", henchman_commands[ 4][4],  4 )		-- repair
 	else 
 		if ( CanAirlift( id ) == 1 ) then
 			BindButtonToAirlift( "command_normal_icon03",	henchman_commands[13][2],  "dohenchmanmodal", "henchmantooltip", henchman_commands[13][4], id, 13 )		-- airlift
 		else
 			BindButtonDisabled( "command_normal_icon03",	henchman_commands[13][2],  "dohenchmanmodal", "henchmantooltip", henchman_commands[13][4], 13 )			-- disable airlift
 		end
+
+		-- Enable these buttons only if we currently do not carry any passengers
+		BindButton( "command_modal_icon02",		henchman_commands[ 2][2],  "dohenchmanmodal",	"henchmantooltip", henchman_commands[ 2][4],  2 )		-- gather
+		BindButton( "command_modal_icon03",		henchman_commands[ 3][2],  "dohenchmanmodal",	"henchmantooltip", henchman_commands[ 3][4],  3 )		-- guard
+		BindButton( "command_modal_icon04",		henchman_commands[ 4][2],  "dohenchmanmodal",	"henchmantooltip", henchman_commands[ 4][4],  4 )		-- repair
 	end
 
 	if ( IsHudEnabled( ENABLE_HenchmanKill ) == 1 ) then 
@@ -2282,12 +2602,14 @@ end
 mcqualifier_henchman = function( id )
 
 	local type = EntityType( id )
-	if 	type == Henchman_EC or
-	   	type == Gyrocopter_EC 
-	then
+	if 	(type == Henchman_EC) then
 		return 1
+	elseif (type == Gyrocopter_EC) then
+		if (UpdatePendingUnloadGroup( id ) == 1) then
+			return 1
+		end
 	end
-
+	
 	return 0
 
 end
@@ -2305,8 +2627,16 @@ dohenchmanmodal = function( index )
 	-- let henchman modal commands be queued
 	CommandQueueEnable( HK_System_CommandQueue, "commandqueuecancel" )
 
-	--
-	local result = ModalUIBegin( "domodalclick", "domodalcancel", mode, command )
+	-- inplace commands
+	local result = 0
+	
+	if (command == MC_Unload) then
+	
+		result = ModalUIBegin( "domodalclick", "dounloadmodalcancel", mode, command )
+	else
+	
+		result = ModalUIBegin( "domodalclick", "domodalcancel", mode, command )
+	end
 
 	if result == 0 then
 
@@ -2315,16 +2645,31 @@ dohenchmanmodal = function( index )
 
 		-- command area
 		
-			-- inplace commands
+		-- inplace commands
 		if (command == MC_Unload) then
 
+			-- Need to refresh passenger icons on the left-hand-side hud
+			-- Get selection id's (there should only be one entity selected)
+			local count = SelectionCount()
+			local id = SelectionId( 0 )
+			
+			-- Make sure it is a gyrocopter and only one selection
+			local type = EntityType( id )
+			if (type == Gyrocopter_EC) and (count == 1) then
+				gyrocopterpassengermulti( id );
+			end
+		
 			local t = henchman_commands[ index ];
 			BindButton( "command_normal_icon03", t[2], "dohenchmanunloadnow", "henchmantooltip", t[4], index )
-
-		end
+					
 			-- cancel button
-		BindButton( "command_formation_icon07", HK_System_Escape, "domodalcancel", "", "UI/InGame/Cancel.tga", 0 )
-
+			BindButton( "command_formation_icon07", HK_System_Escape, "dounloadmodalcancel", "", "UI/InGame/Cancel.tga", 0 )
+		
+		else
+			-- cancel button
+			BindButton( "command_formation_icon07", HK_System_Escape, "domodalcancel", "", "UI/InGame/Cancel.tga", 0 )
+		end
+		
 	else
 
 		-- failed
@@ -2415,8 +2760,6 @@ end
 --
 dospecial = function( type )
 
-	print( "Do Special" )
-	
 	if ability_commands[type][6] == 0 then
 
 		CommandQueueEnable( HK_System_CommandQueue, "commandqueuecancel" )
@@ -2446,8 +2789,6 @@ dospecial = function( type )
 		local mode		= creature_abilitymodalmodes[ type ][1];
 		local command	= creature_abilitymodalmodes[ type ][2];
 		
-		print( "Starting Modal UI", mode, command )
-
 		CommandQueueEnable( HK_System_CommandQueue, "commandqueuecancelignore" )
 		
 		--
@@ -2523,11 +2864,10 @@ dospecialmodal = function( index )
 			
 			-- inplace attack
 
-		-- no inplace attack for plague and sabotage
+		-- no inplace attack for plague, assassinate & sabotage
 		local inplace = 1
 
-		if 	command ~= MC_Plague and
-			command ~= MC_Sabotage
+		if 	command ~= MC_Plague and command ~= MC_Sabotage and command ~= MC_Assassinate and command ~= MC_Infestation
 		then
 			BindButton( "command_formation_icon01", t[2], "domodalnow", "modalspecialstooltip", t[4], index )
 		end
@@ -2559,8 +2899,7 @@ modalspecialstooltip = function( enabled, index )
 end
 
 --
--- pass in 1 for 'allDugIn' if all selected entities are dug into the ground
-specialselection = function( allDugIn )
+specialselection = function( )
 
 	-- clear the special selection index
 	special_modal_index = -1
@@ -2585,15 +2924,11 @@ specialselection = function( allDugIn )
 	while idxSpecial <= countSpecial and idxButton <= countButton
 	do
 
-		if allDugIn == 0 or ability_commands[ idxSpecial ][ 5 ] == Ability_Digout then
+		if SelectionHasSpecialCommand( ability_commands[ idxSpecial ][ 5 ] ) == 1 then
 
-			if SelectionHasSpecialCommand( ability_commands[ idxSpecial ][ 5 ] ) == 1 then
+			BindButtonToTriggeredAbility( buttons[ idxButton ], ability_commands[ idxSpecial ][2],  "dospecial",	"specialstooltip", ability_commands[ idxSpecial ][4], ability_commands[ idxSpecial ][ 5 ], idxSpecial )
 
-				BindButtonToTriggeredAbility( buttons[ idxButton ], ability_commands[ idxSpecial ][2],  "dospecial",	"specialstooltip", ability_commands[ idxSpecial ][4], ability_commands[ idxSpecial ][ 5 ], idxSpecial )
-
-				idxButton = idxButton  + 1
-
-			end
+			idxButton = idxButton  + 1
 
 		end
 
@@ -2602,29 +2937,25 @@ specialselection = function( allDugIn )
 	end
 
 
-	if allDugIn == 0 then
+	-- Modal Special commands
+	local countModalSpecial = getn( modal_special_commands )
 
-		-- Modal Special commands
-		local countModalSpecial = getn( modal_special_commands )
+	local idxModalSpecial = 1
 
-		local idxModalSpecial = 1
+	while idxModalSpecial <= countModalSpecial and idxButton <= countButton
+	do
 
-		while idxModalSpecial <= countModalSpecial and idxButton <= countButton
-		do
+		local t = modal_special_commands[ idxModalSpecial ]
 
-			local t = modal_special_commands[ idxModalSpecial ]
+		if SelectionHasTriggeredAbility( t[ 5 ] ) == 1 then
 
-			if SelectionHasTriggeredAbility( t[ 5 ] ) == 1 then
+			BindButtonToTriggeredAtk( buttons[ idxButton ], t[2],  "dospecialmodal", "modalspecialstooltip", t[4], t[5], idxModalSpecial )
 
-				BindButtonToTriggeredAtk( buttons[ idxButton ], t[2],  "dospecialmodal", "modalspecialstooltip", t[4], t[5], idxModalSpecial )
-
-				idxButton = idxButton  + 1
-
-			end
-
-			idxModalSpecial = idxModalSpecial + 1
+			idxButton = idxButton  + 1
 
 		end
+
+		idxModalSpecial = idxModalSpecial + 1
 
 	end
 
@@ -2656,9 +2987,9 @@ creaturemodalselection = function( id )
 		BindButton( "command_modal_icon05",		creature_commands[7][2],	"docreaturemodal",	"creaturetooltip", creature_commands[7][4], 7 )		-- attack
 
 			-- attack ground
-		if SelectionCanAttackGround( ) == 1 then 
+		if SelectionHasAttackGround( ) == 1 then 
 
-			BindButton( "command_modal_icon06",	creature_commands[5][2],	"docreaturemodal",	"creaturetooltip", creature_commands[5][4],  5 )		-- range attack
+			BindButtonToAttackGround( "command_modal_icon06",	creature_commands[5][2],	"docreaturemodal",	"creaturetooltip", creature_commands[5][4],  5 )		-- range attack
 
 		end
 
@@ -2815,7 +3146,16 @@ foundryselection = function()
 
 	commandarearesearch( id, foundaryresearch, "tooltip_foundaryresearch" )
 
-	BindButton( "command_formation_icon01", commands[4][2],  "dokillconfirm", "commandstooltip", commands[4][4], 4 )		-- kill
+	BindButton( "command_formation_icon01", commands[4][2], "dokillconfirm", "commandstooltip", commands[4][4], 4 )		-- kill
+
+	-- rally
+	BindButton( "command_modal_icon01", commands[1][2], "dospawnmodal", "commandstooltip", commands[1][4], 1 )
+
+	-- resource conversion
+	BindButtonToResourceConversion( "command_big_icon01", foundry_commands[1][2], "doresourceconversion", "foundrytooltip", foundry_commands[1][4], foundry_commands[1][5] )
+	BindButtonToResourceConversion( "command_big_icon02", foundry_commands[2][2], "doresourceconversion", "foundrytooltip", foundry_commands[2][4], foundry_commands[2][5] )
+	BindButtonToResourceConversion( "command_big_icon03", foundry_commands[3][2], "doresourceconversion", "foundrytooltip", foundry_commands[3][4], foundry_commands[3][5] )
+	BindButtonToResourceConversion( "command_big_icon04", foundry_commands[4][2], "doresourceconversion", "foundrytooltip", foundry_commands[4][4], foundry_commands[4][5] )
 
 end
 
@@ -2900,7 +3240,7 @@ buildingselection = function( id, type )
 
 	-- display building's rally point, if any
 	RallyPointShow( id )
-
+	
 	if EntityInConstruction( id ) == 1 then
 
 		-- in construction
@@ -2962,6 +3302,15 @@ buildingselection = function( id, type )
 		elseif type == GeneticAmplifier_EC then
 			
 			geneticampselection()
+			
+		elseif type == SoundBeamTower_EC then
+		
+			soundbeamtowerselection()
+			
+		elseif type == AntiAirTower_EC then
+		
+			antiairtowerselection()
+			
 		else
 			
 			miscbuildingselection()
@@ -3019,7 +3368,6 @@ friendlyselection = function()
 	gyrocopterId	= -1
 	buildingId		= -1
 	buildingType	= -1
-	allDugIn		= 1
 	showStance		= 1
 
 	-- check what's in our selection
@@ -3034,29 +3382,24 @@ friendlyselection = function()
 		if type == Henchman_EC then
 
 			henchmanId = id
-			allDugIn = 0
 
 		elseif type == Gyrocopter_EC then
 
 			gyrocopterId = id
-			allDugIn = 0
 
 		elseif type == Rex_EC then
 
 			rexId = id
-			allDugIn = 0
 
 		elseif type == Lucy_EC then
 
 			lucyId = id
-			allDugIn = 0
 
 		elseif type == Creature_EC or type == Animal_EC then
 
 			if (EntityIsDigging( id ) == 0) then
 
 				creatureId = id
-				allDugIn = 0
 
 			elseif creatureId == -1 then
 
@@ -3069,7 +3412,6 @@ friendlyselection = function()
 			-- building
 			buildingId = id
 			buildingType = type
-			allDugIn = 0
 
 		end
 
@@ -3127,7 +3469,7 @@ friendlyselection = function()
 
 		end
 
-		specialselection( allDugIn )
+		specialselection()
 
 	end
 
@@ -3448,6 +3790,63 @@ doradarpulse = function( )
 
 end
 
+--
+dosonicboom = function( )
+
+	-- fire sonic boom
+	local result = DoSonicBoom()
+
+	if result == 0 then
+		
+		-- success
+
+	else
+
+		-- failed
+		failedcommand( result )
+
+	end
+
+end
+
+--
+doairburst = function( )
+
+	-- fire air burst
+	local result = DoAirBurst()
+
+	if result == 0 then
+		
+		-- success
+
+	else
+
+		-- failed
+		failedcommand( result )
+
+	end
+
+end
+
+--
+dolabdefense = function( turnon )
+
+	-- toggle lab defense
+	local result = DoLabDefense( turnon )
+
+	if result == 0 then
+		
+		-- success
+
+	else
+
+		-- failed
+		failedcommand( result )
+
+	end
+
+end
+
 -- check to see if the given entity can call the buildunitsmenu
 mcqualifier_buildunits = function( id )
 
@@ -3724,6 +4123,25 @@ dospecialmodalclick = function( mode, x, y, z, entityID )
 
 		DoModalCommand( mode, x, y, z, entityID, queue )
 
+	elseif mode == MC_WebThrow then
+
+		DoModalCommand( mode, x, y, z, entityID, queue )
+
+	elseif mode == MC_Assassinate then
+
+		DoModalCommand( mode, 0, 0, 0, entityID, queue )
+
+	elseif mode == MC_Flash then
+
+		DoModalCommand( mode, x, y, z, entityID, queue )
+		
+	elseif mode == MC_Infestation then
+
+		DoModalCommand( mode, 0, 0, 0, entityID, queue )
+
+	elseif mode == MC_Jumping then
+
+		DoModalCommand( mode, x, y, z, entityID, queue )
 	end
 
 	-- stop ui (taskbar)
@@ -3780,10 +4198,24 @@ domodalcancel = function( dummy )
 end
 
 --
+dounloadmodalcancel = function( dummy )
+
+	-- clear out pending unload list
+	DoCancelPendingUnload()
+	
+	-- stop ui
+	ModalUIEnd()
+
+	--
+	on_selection()
+
+end
+
+--
 dohenchmanunloadnow = function( index )
 
 	-- unload
-	local result = DoUnload()
+	local result = DoUnloadHere()
 
 	if result == 0 then
 		
@@ -3801,6 +4233,13 @@ dohenchmanunloadnow = function( index )
 		failedcommand( result )
 
 	end
+
+end
+
+--
+doresourceconversion = function( type )
+
+	DoResourceConversion( type )
 
 end
 
@@ -4293,7 +4732,6 @@ selectallhenchmeninworld = function()
 end
 
 selectnextidlehenchman = function()
-	print ( "selectnextidlehenchman" )
 	SelectNextIdleHenchman()
 end
 
