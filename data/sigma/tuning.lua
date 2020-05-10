@@ -17,12 +17,20 @@ Poison =
 {
 	-- Total Time the Poison Lasts for
 	poisontime				= 10.0,
-	-- Total ammount of damage the Poison should deal
-	poisondamage			= 20.0,
-	-- The ammount to multiply the creature's speed by when poisoned
+	
+	-- Total amount of damage the Poison should deal, per attacker rank
+	poisondamage1			= 20.0,
+	poisondamage2			= 20.0,
+	poisondamage3			= 20.0,
+	poisondamage4			= 23.0,
+	poisondamage5			= 26.0,
+	
+	-- The amount to multiply the creature's speed by when poisoned
 	speedmultiplier			= 0.75,
-	-- The ammount to multiply the creature's attack damage by when poisoned
+	
+	-- The amount to multiply the creature's attack damage by when poisoned
 	damagemultiplier		= 0.75,
+	
 	-- The poisoned victom has a reduced sight radius to this value
 	poisonsightradius		= 0.0,
 }
@@ -65,13 +73,202 @@ Defense =
 	defensemax		= 0.75,
 }
 
+
+---------------------------------------------------------------------
+-- Loner Bonus
+
+Loner =
+{
+	-- The radius at which the loner bonus becomes effective (in metres)
+	lonerRadius			= 35.0,
+
+	-- Include henchmen in radius check?
+	-- yes = 1 or no = 0 (default) 
+	checkForHenchmen		= 0,
+
+	-- Artillery ranged bonus per creature size
+	-- This *is a multiplier*, e.g. a 50% bonus should be written as 1.5.
+	artilleryBonusBaseSize1		= 4.0,
+	artilleryBonusBaseSize2		= 4.0,
+	artilleryBonusBaseSize3		= 4.0,
+	artilleryBonusBaseSize4		= 4.0,
+	artilleryBonusBaseSize5		= 4.0,
+	artilleryBonusBaseSize6		= 4.0,
+	artilleryBonusBaseSize7		= 4.0,
+	artilleryBonusBaseSize8		= 4.0,
+	artilleryBonusBaseSize9		= 4.0,
+	artilleryBonusBaseSize10	= 4.0,
+
+	-- Artillery bonus modifier per creature rank (+/-)
+	-- This is a modifier to the above base percentage.
+	artilleryBonusModRank1		= 0.0,
+	artilleryBonusModRank2		= 0.0,
+	artilleryBonusModRank3		= 0.0,
+	artilleryBonusModRank4		= 0.0,
+	artilleryBonusModRank5		= 0.0,
+
+	-- Direct ranged bonus per creature size
+	-- This *is a multiplier*, e.g. a 50% bonus should be written as 1.5.
+	rangedBonusBaseSize1		= 5.0,
+	rangedBonusBaseSize2		= 5.0,
+	rangedBonusBaseSize3		= 5.0,
+	rangedBonusBaseSize4		= 5.0,
+	rangedBonusBaseSize5		= 5.0,
+	rangedBonusBaseSize6		= 5.0,
+	rangedBonusBaseSize7		= 5.0,
+	rangedBonusBaseSize8		= 5.0,
+	rangedBonusBaseSize9		= 5.0,
+	rangedBonusBaseSize10		= 5.0,
+
+	-- Ranged bonus modifier per creature rank (+/-)
+	-- This is a modifier to the above base percentage.
+	rangedBonusModRank1		= 0.0,
+	rangedBonusModRank2		= 0.0,
+	rangedBonusModRank3		= 0.0,
+	rangedBonusModRank4		= 0.0,
+	rangedBonusModRank5		= 0.0,
+
+	-- Melee bonus per creature size
+	-- This *is a multiplier*, e.g. a 50% bonus should be written as 1.5.
+	meleeBonusBaseSize1		= 6.0,
+	meleeBonusBaseSize2		= 6.0,
+	meleeBonusBaseSize3		= 6.0,
+	meleeBonusBaseSize4		= 6.0,
+	meleeBonusBaseSize5		= 6.0,
+	meleeBonusBaseSize6		= 6.0,
+	meleeBonusBaseSize7		= 6.0,
+	meleeBonusBaseSize8		= 6.0,
+	meleeBonusBaseSize9		= 6.0,
+	meleeBonusBaseSize10		= 6.0,
+
+	-- Melee bonus modifier per creature rank (+/-)
+	-- This is a modifier to the above base percentage.
+	meleeBonusModRank1		= 0.0,
+	meleeBonusModRank2		= 0.0,
+	meleeBonusModRank3		= 0.0,
+	meleeBonusModRank4		= 0.0,
+	meleeBonusModRank5		= 0.0,
+
+	-- Damage Reduction
+	-- The is the percentage of damage reduction a loner creature has
+	-- valid range: 0.0 - 1.0  = 0% reduction to 100% reduction
+	damageReductionBaseSize1	= 0.75,
+	damageReductionBaseSize2	= 0.75,
+	damageReductionBaseSize3	= 0.75,
+	damageReductionBaseSize4	= 0.75,
+	damageReductionBaseSize5	= 0.75,
+	damageReductionBaseSize6	= 0.75,
+	damageReductionBaseSize7	= 0.75,
+	damageReductionBaseSize8	= 0.75,
+	damageReductionBaseSize9	= 0.75,
+	damageReductionBaseSize10	= 0.75,
+	
+	-- Damage reduction modifier per creature rank (+/-)
+	-- This is a modifier to the above base percentage.
+	damageReductionModRank1		= 0.0,
+	damageReductionModRank2		= 0.0,
+	damageReductionModRank3		= 0.0,
+	damageReductionModRank4		= 0.0,
+	damageReductionModRank5		= 0.0,
+
+	-- Build speed modifier per creature rank (multiplies to base tick)
+	buildSpeedModRank1			= 1.0,
+	buildSpeedModRank2			= 1.5,
+	buildSpeedModRank3			= 2.0,
+	buildSpeedModRank4			= 2.5,
+	buildSpeedModRank5			= 3.0,
+	
+	-- Speed increase 
+	--This *is a multiplier*, e.g. a 50% bonus should be written as 1.5.
+	speedMultiplier		= 1.0,
+
+	-- Sight radius increase 
+	-- This *is a multiplier*, e.g. a 50% bonus should be written as 1.5.
+	sightRadiusMultiplier		= 1.5,
+}
+
+
+---------------------------------------------------------------------
+-- Deflection Tuning values
+
+Deflection = 
+{
+	-- Next 3 sub-sections are normalised chances of deflection.
+	-- Valid range is 0.0 (0% - never deflect) to 1.0 (100% - always deflect)
+
+	-- Base deflection chance per creature size
+	deflectionBaseSize1	= 0.35,
+	deflectionBaseSize2	= 0.35,
+	deflectionBaseSize3	= 0.35,
+	deflectionBaseSize4	= 0.35,
+	deflectionBaseSize5	= 0.35,
+	deflectionBaseSize6	= 0.35,
+	deflectionBaseSize7	= 0.35,
+	deflectionBaseSize8	= 0.35,
+	deflectionBaseSize9	= 0.35,
+	deflectionBaseSize10	= 0.35,
+
+	-- Deflection modifier per creature rank (+/-)
+	deflectionModRank1	= 0.0,
+	deflectionModRank2	= 0.0,
+	deflectionModRank3	= 0.0,
+	deflectionModRank4	= 0.05,
+	deflectionModRank5	= 0.1,
+	
+	-- Deflection modifier per defenders attack type (+/-)
+	-- Order of preference (artillery, direct ranged, melee)
+	deflectionModArtillery	= 0.0,
+	deflectionModRanged	= -0.1,
+	deflectionModMelee	= 0.0,
+
+	-- Deflect sonic attacks?
+	-- yes = 1 (default) or no = 0 
+	deflectSonicAttack	= 1,
+}
+
+
+---------------------------------------------------------------------
+-- Flash Tuning values
+
+Flash = 
+{
+	-- Endurance cost
+	enduranceCost		= 100.0,
+	
+	-- Duration in game ticks
+	duration		= 80.0, -- about 10 seconds
+
+	-- Flash Radius in metres (based on flashing creatures' size)
+	effectiveRadiusSize1	= 40.0,
+	effectiveRadiusSize2	= 40.0,
+	effectiveRadiusSize3	= 40.0,
+	effectiveRadiusSize4	= 40.0,
+	effectiveRadiusSize5	= 40.0,
+	effectiveRadiusSize6	= 40.0,
+	effectiveRadiusSize7	= 40.0,
+	effectiveRadiusSize8	= 40.0,
+	effectiveRadiusSize9	= 40.0,
+	effectiveRadiusSize10	= 40.0,
+
+	-- Reduced size radius in metres
+	reducedSightRadius 	= 12.0,
+
+	-- Height above the ground that initial effect will happen (in metres)
+	fxTargetHeight		= 8.0,
+}
+
+
 ---------------------------------------------------------------------
 -- Health Regeneration Tuning values
 
 HealthRegen =
 {
-	-- the ammount of health that regenerates per second
-	regenammount		= 1.25,
+	-- the amount of health that regenerates per second, by creature rank
+	regenamount1		= 1.25,
+	regenamount2		= 1.25,
+	regenamount3		= 1.5,
+	regenamount4		= 1.75,
+	regenamount5		= 2.0,
 }
 
 ---------------------------------------------------------------------
@@ -93,7 +290,7 @@ PackBonus =
 	minentitycount			= 4.0,
 
 	-- the base damage modifier, new damage is this * normal damage
-	basedamagemodifier		= 1.50,
+	basedamagemodifier		= 1.40,
 
 	-- the base defense modifier, new defense is this * normal damage
 	basedefensemodifier		= 1.50,
@@ -113,12 +310,15 @@ Building =
 	-- value for decreasing additional henchman to build a structure [0.0,1.0]
 	buildDecrease			= 0.01,
 
-	-- value for decreasing additional henchman to build a structure [0.0,1.0]
-	repairDecrease			= 0.01,
+	-- value for decreasing additional henchman to repair a structure [0.0,1.0]
+	repairDecrease			= 0.08,
 
 	-- amount of health a single henchman repairs [1.0, 1000.0]
 	repairHealth			= 1.0,
 
+	-- repair multiplier for labs
+	repairLabMult			= 2.5,
+	
 	-- how far away does a structure have to be away from a resource before it can be built, in meters
 	-- it will make buildings not placeable within a square around the resource of this size
 	resourceNoBuildSize		= 22.0,
@@ -147,7 +347,7 @@ ResearchBonus =
 
 	-- hitpoint bonus to give to bramble fences with the strengthen-fences 
 	-- research
-	strengthenFenceMultiplier		= 2.0,
+	strengthenFenceMultiplier		= 4.0,
 
 	-- collection rate bonus to give to all electricity collectors with the 
 	-- strengthen-electrical-grid research
@@ -170,11 +370,19 @@ SiteDecal =
 	coalDecalName			= "coal_01.tga",
 	coalDecalScale			= 1.75,
 
+	-- soiled land decal info
+	soiledLandDecalName			= "Data:Sigma/Decals/soiled_land_decal.tga",
+	soiledLandDecalScale		= 2.0,
+	
+	-- soiled land in water decal info
+	soiledLandInWaterDecalName		= "Data:Sigma/Decals/soiled_water_decal.tga",
+	soiledLandInWaterDecalScale		= 2.0,
+	
 	-- fade-in and fade-out times for live and dead building decals
-	liveDecalFadeInTime		= 0.0,
+	liveDecalFadeInTime			= 0.0,
 	liveDecalFadeOutTime		= 1.0,
-	deadDecalFadeInTime		= 1.0,
-	deadDecalLifeTime		= 5.0,
+	deadDecalFadeInTime			= 1.0,
+	deadDecalLifeTime			= 5.0,
 	deadDecalFadeOutTime		= 1.0,
 }
 
@@ -186,8 +394,12 @@ StinkCloud =
 	-- the minimum number of entities needed for the bonus to kick in
 	enduranceCost			= 75.0,
 
-	-- 
-	duration				= 80.0, -- about 10 seconds
+	-- how long the cloud lasts, in ticks, per creature rank
+	duration1				= 80.0, 
+	duration2				= 96.0, 
+	duration3				= 112.0, -- about 10 seconds
+	duration4				= 128.0, 
+	duration5				= 144.0, 
 
 	-- damage radius = radiusOffset + creature size (in meters) * radiusScale
 	radiusOffset			= 11.0,
@@ -214,7 +426,8 @@ ElectricBurst =
 	-- the minimum number of entities needed for the bonus to kick in
 	enduranceCost			= 75.0,
 
-	-- the base damage modifier, new damage is this * normal damage
+	-- this is the duration of the attack in ticks, and modifies the base damage
+	-- new damage is this * dmgPerTick (see below)
 	duration				= 6.0,
 
 	-- damage radius : C = (creature size (in meters)) O = offset, S = scale
@@ -222,10 +435,15 @@ ElectricBurst =
 	radiusOffset			= 9.0,
 	radiusScale				= 0.0,
 
-	-- 
-	dmgPerTick				= 20.0,
+	-- damage per tick
+	-- new damage is this * duration (see above)
+	dmgPerTick1				= 20.0,
+	dmgPerTick2				= 20.0,
+	dmgPerTick3				= 20.0,
+	dmgPerTick4				= 28.0,
+	dmgPerTick5				= 39.0,
 
-	--
+	-- not used!
 	dmgToBuilding			= .10
 }
 
@@ -238,19 +456,95 @@ QuillBurst =
 	enduranceCost			= 60.0,
 
 	-- this is the duration of the attack in ticks, and modifies the base damage
-	-- new damage is this * normal damage
+	-- new damage is this * dmgPerTick (see below)
 	duration				= 4.0,
 
 	-- damage radius : C = (creature size (in meters)) O = offset, S = scale
 	-- Final radius = O + C*S  (where O is the minimum radius)
-	radiusOffset			= 8.0,
+	radiusOffset			= 9.0,
 	radiusScale				= 0.0,
 
-	-- 
-	dmgPerTick				= 12.0,
+	-- damage per tick
+	-- new damage is this * duration (see above)
+	dmgPerTick1				= 12.0,
+	dmgPerTick2				= 12.0,
+	dmgPerTick3				= 16.0,
+	dmgPerTick4				= 24.0,
+	dmgPerTick5				= 34.0,
 
-	--
+	-- not used
 	dmgToBuilding			= 0
+}
+
+---------------------------------------------------------------------
+-- WebThrow
+
+WebThrow =
+{
+	-- the minimum number of entities needed for the bonus to kick in
+	enduranceCost			= 100.0,
+
+	-- this is the duration of the attack in ticks, and modifies the base damage
+	-- new damage is this * normal damage
+	duration				= 88.0,
+
+	-- attack range : C = (creature size (in meters)) O = offset, S = scale
+	-- Final radius = O + C*S  (where O is the minimum radius)
+	rangeOffset				= 12.0,
+	rangeScale				= 0.0,
+
+	-- damage radius : C = (creature size (in meters)) O = offset, S = scale
+	-- Final radius = O + C*S  (where O is the minimum radius)
+	radiusOffset			= 9.0,
+	radiusScale				= 0.0,
+	
+	-- height above the ground that the initial web effect will happen
+	effectTargetHeight		= 8.0,
+}
+
+
+---------------------------------------------------------------------
+-- Assassinate
+
+Assassinate =
+{
+	-- Endurance cost
+	enduranceCost		= 100.0,
+
+	-- Attack damage done by the assassination attempt.
+	-- This is a percentage of the victims maximum hitpoints and it ignores
+	-- all defenses and damage reduction (valid values 0.0 to 1.0).
+	damageTotalBaseSize1	= 0.75,
+	damageTotalBaseSize2	= 0.75,
+	damageTotalBaseSize3	= 0.75,
+	damageTotalBaseSize4	= 0.65,
+	damageTotalBaseSize5	= 0.65,
+	damageTotalBaseSize6	= 0.65,
+	damageTotalBaseSize7	= 0.50,
+	damageTotalBaseSize8	= 0.50,
+	damageTotalBaseSize9	= 0.50,
+	damageTotalBaseSize10	= 0.50,
+}
+
+---------------------------------------------------------------------
+-- Infestation
+
+Infestation =
+{
+	-- Endurance cost to use this ability
+	enduranceCost		= 50.0,
+
+	-- Duration of the attack in ticks, and modifies the base damage
+	-- new damage is this * normal damage
+	duration				= 500.0,
+	
+	-- Damage per tick to the bulding
+	dmgPerTick				= 4.25,
+	
+	-- Is infestation fully effective on building with struture defence ON?
+	-- 1 = YES, infest with full damage ; 0 = NO, cannot infest
+	canInfestOnStructureDefence	= 1;
+	
 }
 
 ---------------------------------------------------------------------
@@ -267,23 +561,29 @@ Night =
 
 Gyrocopter =
 {
-	-- the number of seconds it take to lift a creature
-	airliftTime			= 4.0,
+	-- the number of seconds it take to lift a crate (animation tweak)
+	airliftTime			= 2.5,
 
 	-- the number of seconds it takes the passenger to fade out
 	liftFadeTime		= 2.0,
 
-	-- the number of seconds it take to drop a creature
-	dropTime			= 4.0,
+	-- the number of seconds it take to drop a crate (animation tweak)
+	dropTime			= 5.0, --was 3
 
 	-- the number of seconds it take to during the drop animation before the creature appears
-	dropFadeTime		= 2.0,
+	dropFadeTime		= 4.0, --was 2
 
+	-- the number of seconds it take before validating pending pick up passengers
+	pendingAirliftTime	= 2.0,
+	
+	-- the radius around gyrocopter that will pick up incoming pending passengers
+	pendingAirliftRadius	=	15.0,
+	
 	-- the number of health point the gyro is repaired per second when landed on the pad
-	landedRepairPerSecond = 5.0,
+	landedRepairPerSecond	=	3.0,
 
 	-- the number of seconds it takes the gyrocopter to land once it is over the pad
-	landingSeconds		= 3.0
+	landingSeconds			=	3.0
 }
 
 
@@ -296,19 +596,27 @@ Digging =
 	speedMultiplier			= 1.0,
 
 	-- the scalar that will be applied to all sight radius when underground
-	sightMultiplier			= 0.5,
+	sightMultiplier			= 0.1,
 
 	-- the defense bonus that will be applied when the creatures is underground 0.0 to 1.0
 	defenseBonus			= 0.5,
 
 	-- the amount of time to get underground
-	digDownTime				= .1,
+	digDownTime			= .1,
 
 	-- the amount of time to get out of underground
-	digUpTime				= .1,
+	digUpTime			= .1,
 	
 	-- the image file to use for the digging
-	dugDecal				= "Data:Sigma/Decals/dug_in_ring.tga"
+	dugDecal			= "Data:Sigma/Decals/dug_in_ring.tga",
+	
+	-- a multiplier for endurance regeneration when underground
+	-- e.g. 0.5 means half, 2.0 means double
+	enduranceRegenMultiplier 	= 0.75,
+	
+	-- a multiplier for health regeneration when underground
+	-- e.g. 0.5 means half, 2.0 means double
+	healthRegenMultiplier		= 0.75,
 }
 ---------------------------------------------------------------------
 -- Effect
@@ -385,6 +693,14 @@ Effect =
 	henchmandmg_fx = "henchmen_combat_impact_combo",
 	henchmandmg_location = "random",
 	henchmandmg_count = 1,
+
+	loner_fx = "lonercombo02",
+	loner_location = "centre",
+	loner_count = 1,
+
+	flash_fx =  "flash_combo_head",
+	flash_location = "head",
+	flash_count = 2,
 }
 
 
@@ -424,7 +740,7 @@ AttackBonus =
 	artilleryBuildingMult			= 1.0,
 
 	-- multiplier of damage applied to a flyer when it is attacked by a non-flyer unit using a direct ranged attack
-	nonFlyerToFlyerDirectRangeDamageMult	= 1.3,
+	nonFlyerToFlyerDirectRangeDamageMult	= 1.4,
 
 	-- fraction of a flyer's defense to remove when it is attacked by a non-flyer unit using a direct ranged attack
 	nonFlyerToFlyerDirectRangeDefenseMult	= 0.0,
@@ -451,7 +767,16 @@ SonicAttack =
 	speedReduction  = 0.02,
 
 	-- how much percent of your speed can be reduced to
-	speedminpercentage = 0.5,
+	speedMinPercentage = 0.5,
+	
+	-- reduction per hit for loner unit
+	speedReductionForLoner  = 0.10,
+
+	-- how much percent of loner's speed can be reduced to
+	speedMinPercentageForLoner = 0.3,
+	
+	-- damage multiplier for loner unit (1.0 is par value)
+	dmgMultiplierForLoner = 2.0,
 }
 
 ---------------------------------------------------------------------
@@ -555,7 +880,7 @@ Henchman =
 	motivatedWaterSpeedBonus = 10.0,
 
 	-- damage multiplier henchman do against other henchman
-	henchmanDmgBonus = 2.0,
+	henchmanDmgBonus = 1.5,
 
 	-- damage multiplier for sonic attack on henchman
 	sonicDmgMult = 0.25,
@@ -614,24 +939,70 @@ SonarPulse =
 }
 
 ---------------------------------------------------------------------
+-- SoiledLand
+
+SoiledLand =
+{
+	-- Endurance cost per tick for the soiled mode
+	endurancePerTick			= 0.7,
+	
+	-- Endurance cost per tick for the soiled mode
+	endurancePerTickForFlyer	= 1.2,
+	
+	-- Random drop zone size for flyer soiling land 
+	-- (1=1x1 cell, 2=2x2 cells, 3=3x3 cells, etc around the position of the flyer)
+	dropZoneSize		= 3,
+	
+	-- Number of misses before another soiled land generated from flyers
+	dropMiss			= 1,
+
+	-- Soiled land will damage creatures within this effective radius
+	findTargetRadius	= 1.5,
+	
+	-- 1 = Percentage based damage (range 0-100) ; 0 = point based damage
+	dmgIsPercentage		= 1,
+	
+	-- Damage (percentage or point-based) received by the soiled victim per tick
+	dmgPerTick			= 1.2,
+	
+	-- The amount to multiply the creature's speed by when soiled (normal speed = 1.0)
+	speedMultiplier		= 0.5,
+	
+	-- The time (in ticks) it takes the soiled damage on animal to expire 
+	-- after leaving the soiled land
+	durationDmg			= 50,
+
+	-- The time (in ticks) it takes for the soiled land to expire 
+	-- and change back to normal land
+	durationLand		= 500,
+
+	-- Minimum amount of endurance needed to trigger soiled land
+	enduranceMinimum	= 35,
+}
+
+---------------------------------------------------------------------
 -- Plague
 
 Plague =
 {
-	-- How much damage per second does the plague do
-	damagePerSecond		= 5.0,
+	-- How much damage the plague does per second, per attacker rank
+	damagePerSecond1	= 6.0,
+	damagePerSecond2	= 7.0,
+	damagePerSecond3	= 8.0,
+	damagePerSecond4	= 9.0,
+	damagePerSecond5	= 10.0,
 	
 	-- How long (seconds) does the plague last
 	timeSeconds			= 10.0,
 
 	-- How far does a plagued entity search to spread the plague
-	spreadRadius		= 8.0,
+	spreadRadius		= 12.5,
 
 	-- How much endurance does the plague use
 	enduranceCost		= 100.0,
 
 	-- plague will transfer every this number of seconds
-	transferRateSeconds	= 2.0
+	transferRateSeconds	= 1.5
 }
 
 ---------------------------------------------------------------------
@@ -760,6 +1131,10 @@ Flyer =
 
 	-- value to increase the min range of ranged attacks
 	minRangeOffset = 0.0,
+	
+	-- damage multiplier for damage done to henchman during melee attack
+	-- e.g. A value of 0.25 means henchmen receive 25% damage 
+	meleeDmgMultHenchman = 0.5,	
 }
 
 ---------------------------------------------------------------------
@@ -888,4 +1263,122 @@ UI =
 	btrackTimeMin     = 30,
 	btrackCountBegin  = 10,
 	btrackCountEnd    =  5,
+}
+
+---------------------------------------------------------------------
+-- AutoDefense
+
+AutoDefense =
+{
+	radius = 4.0,
+	rechargeTicks = 64,
+	durationTicks = 64,
+}
+
+---------------------------------------------------------------------
+-- Swamp Slowdown
+
+SwampSlow =
+{
+	-- Swamp slowdown multiplier per size
+	-- Valid range is  > 0.0 (terrain is impassible) 
+	--                <= 1.0 (no slowdown)
+	-- e.g. 0.75 is slowdown to 75% of previous speed
+	slowdown1		= 1.0,
+	slowdown2		= 1.0,
+	slowdown3		= 1.0,
+	slowdown4		= 0.9,
+	slowdown5		= 0.8,
+	slowdown6		= 0.7,
+	slowdown7		= 0.6,
+	slowdown8		= 0.4,
+	slowdown9		= 0.2,
+	slowdown10		= 0.1,
+}
+
+---------------------------------------------------------------------
+-- Jumping (Short Range Flight)
+
+Jumping =
+{
+	-- Endurance cost to use this ability
+	enduranceCost		= 50.0,
+	
+	-- Maximum jump distance 
+	maxDistance			= 100.0,
+		
+	-- Speed while jumping, in meters per tick
+	speed				= 0.8,
+	
+	-- Height at the top of the parabola 
+	maxHeight			= 7.0,
+		
+	-- The maximum distance of horizontal deviation from a straight line path
+	-- (since the flight path is erratic)
+	maxPathDeviation	= 1.5,
+	
+	-- A multiplier for the amplitude of the vertical wave-like flight behaviour 
+	-- Valid range is >= 0.0 (no wave)
+	--                <= 1.0 (hitting the ground)
+	amplitudeMultiplier	= 0.25,
+	
+	-- Ther period of the vertical wave-like flight behaviour
+	-- e.g. 8 means there it takes 8 ticks per wave
+	periodTicks			= 8,
+}
+
+---------------------------------------------------------------------
+-- Resource Conversion
+
+ResourceConversion =
+{
+	-- A multiplier for the conversion of electricity to coal
+	-- e.g. 0.25 means 50 electricity -> 12.5 coal
+	elecToCoal = 0.30,
+	
+	-- A multiplier for the conversion of coal to electricity
+	-- e.g. 0.25 means 50 coal -> 12.5 electricity
+	coalToElec = 0.30,
+}
+
+---------------------------------------------------------------------
+-- Friendly Fire
+
+FriendlyFire =
+{
+	-- These are multipliers for damage reduction for friendly fire
+	-- e.g. A value of 0.25 means friendly units receive 25% damage
+	-- valid range is >= 0.0 (no damage received) 
+	--                <= 1.0 (usual damaged received)
+	
+	-- burst attacks
+	electricBurstMultiplier	= 0.5,
+	quillBurstMultiplier	= 0.5,
+	
+	-- artillery attacks
+	rockMultiplier			= .5,
+	waterSpitMultiplier		= .5,
+	chemSprayMultiplier		= .5,
+}
+
+---------------------------------------------------------------------
+-- Chemical Spray
+
+ChemicalSpray = 
+{
+	-- A multiplier for damage reduction for the first strike
+	-- e.g. A value of 0.25 means 25% of usual damage on the first strike
+	-- valid range is >= 0.0 (no damage received on first strike)
+	--                <= 1.0 (same damage as usual on first strike)
+	firstStrikeMultiplier = 1.0,
+}
+
+---------------------------------------------------------------------
+-- Movement
+
+Movement = 
+{
+	-- valid range is >= 1.0 ( minimun min speed all units can move)
+	--                <= 20.0 (maximum min speed all units can move)
+	minMoveSpeed = 3.0,
 }

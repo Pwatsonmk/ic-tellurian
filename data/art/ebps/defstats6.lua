@@ -30,3 +30,7 @@ ext.hitpoints = 500
 ext.orientation = 1
 
 ext.stayInPathfindingAfterDead = 0
+
+-- infestationextinfo
+ext.dmg_infestation_multiplier = 0.4
+-- end of file

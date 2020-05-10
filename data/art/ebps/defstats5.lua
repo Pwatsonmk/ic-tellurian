@@ -16,7 +16,7 @@ ext.spawngatherer = 1
 ext.renewstorage = 500
 
 -- healthextinfo
-ext.hitpoints = 8000
+ext.hitpoints = 6000
 
 -- costextinfo
 ext.cost = 1000
@@ -38,3 +38,32 @@ ext.radarPulse_costRenew = 1000
 ext.radarPulse_costGather = 0
 
 ext.stayInPathfindingAfterDead = 0
+
+-- infestationextinfo
+ext.dmg_infestation_multiplier = 1.5
+
+-- structure defense ext info
+--
+-- cost of activation
+ext.renewCost = 200.0
+
+-- electricity drainingRate per tick
+ext.drainRate = 4.4
+
+-- amount of damage reduced to
+ext.damageMin = 1.0
+
+-- number of game ticks to fill the whole temperature bar
+ext.barFillTicks = 2000
+
+-- number of game ticks to drain the whole temperature bar
+ext.barDrainTicks = 2800
+
+-- percentage lower bound of warning status (orange colour)
+ext.barWarning = 0.6
+
+-- percentage lower bound of critical status (red colour)
+ext.barCritical = 0.8
+
+-- percentage upper bound to relief critical cool down back to normal operation
+ext.barCoolDown = 0.4

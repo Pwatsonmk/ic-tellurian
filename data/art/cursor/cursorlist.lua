@@ -335,4 +335,52 @@ cursorlist =
 		XHotspot	=	0,
 		YHotspot	=	0,
 	},
+	C55 =
+	{
+		TGAName		=	"modal_web_throw",
+		XHotspot	=	0,
+		YHotspot	=	0,
+	},
+	C56 =
+	{
+		TGAName		=	"modal_assassinate",
+		XHotspot	=	0,
+		YHotspot	=	0,
+	},
+	C57 =
+	{
+		TGAName		=	"modal_assassinate_cancel",
+		XHotspot	=	0,
+		YHotspot	=	0,
+	},
+	C58 =
+	{
+		TGAName		=	"modal_flash_burst",
+		XHotspot	=	0,
+		YHotspot	=	0,
+	},
+	C59 =
+	{
+		TGAName		=	"modal_infestation",
+		XHotspot	=	0,
+		YHotspot	=	0,
+	},
+	C60 =
+	{
+		TGAName		=	"modal_infestation_cancel",
+		XHotspot	=	0,
+		YHotspot	=	0,
+	},
+	C61 =
+	{
+		TGAName		=	"modal_jumping",
+		XHotspot	=	0,
+		YHotspot	=	0,
+	},
+	C62 =
+	{
+		TGAName		=	"modal_jumping_cancel",
+		XHotspot	=	0,
+		YHotspot	=	0,
+	},
 }

@@ -11,11 +11,16 @@ AnalyzeArmy = function()
 	rank5 = false
 
 	-- movement types
+	
 	flyerFound = false
 	landFound = false
 	swimmerFound = false
 	amphibFound = false
 	amphibCount = 0
+	
+	-- New movement types for creature pack
+	
+	jumpFound = false
 
 	-- special abilities
 	rangeFound = false
@@ -25,7 +30,14 @@ AnalyzeArmy = function()
 	pierceFound = false
 	immuneFound = false
 	barrierFound = false
-	
+
+	--New Abilities for Creature pack
+
+	packherdFound = false
+	webFound = false
+        --autoFound = false
+	asslonerFound = false
+
 	-- creature cost, rank, and attribute totals
 	totalElec = 0
 	totalCoal = 0
@@ -120,7 +132,12 @@ AnalyzeArmy = function()
 			(GetCreatureAttrib( creatureID, "is_land") == 0) then
 				swimmerFound = true
 		end
-		
+	
+		-->>>>>>>>>>New movement types for Creature Pack
+
+		if (GetCreatureAttrib( creatureID, "can_SRF") == 1) then
+			jumpFound = true
+		end
 
 		-- check special abilities
 		if (GetCreatureAttrib( creatureID, "can_dig") == 1 or GetCreatureAttrib( creatureID, "is_stealthy") == 1) then
@@ -149,7 +166,28 @@ AnalyzeArmy = function()
 		if (GetCreatureAttrib( creatureID, "poison_touch") == 1) then
 			totalChemical = totalChemical + 1
 		end
-
+                if (GetCreatureAttrib( creatureID, "soiled_land") == 1) then
+			totalChemical = totalChemical + 1
+		end
+		-->>>>>>>>>>>New abilities for Creature Pack
+		if (GetCreatureAttrib( creatureID, "pack_hunter") == 1 or GetCreatureAttrib( creatureID, "herding") == 1 or GetCreatureAttrib( creatureID, "AutoDefense") == 1) then
+			packherdFound = true
+		end
+		if (GetCreatureAttrib( creatureID, "web_throw") == 1) then
+			webFound = true
+		end
+                --if (GetCreatureAttrib( creatureID, "AutoDefense") == 1) then
+		--	autoFound = true
+		--end  
+		if (GetCreatureAttrib( creatureID, "deflection_armour") == 1) then
+			artilleryFound = true
+		end
+                if (GetCreatureAttrib( creatureID, "flash") == 1) then
+			artilleryFound = true
+		end       
+                if (GetCreatureAttrib( creatureID, "assassinate") == 1 or GetCreatureAttrib( creatureID, "loner") == 1) then
+			asslonerFound = true
+		end
 		-- Check for Piercing abilities
 		local melee_dmgtype = GetCreatureAttrib(creatureID, "melee_dmgtype")
 		if (math_and( melee_dmgtype , DT_HornNegateArmour ) == DT_HornNegateArmour) then
@@ -166,7 +204,7 @@ AnalyzeArmy = function()
 
 		-- Check for Barrier Destroy abilities
 		local melee_dmgtype = GetCreatureAttrib(creatureID, "melee_dmgtype")
-		if (math_and( melee_dmgtype , DT_BarrierDestroy ) == DT_BarrierDestroy) then
+		if (math_and( melee_dmgtype , DT_BarrierDestroy ) == DT_BarrierDestroy) or (GetCreatureAttrib( creatureID, "infestation") == 1) then
 			barrierFound = true
 		end
 		
@@ -192,7 +230,7 @@ AnalyzeArmy = function()
 			else
 				rangeFound = true
 			end
-		end
+                end
 
 		-- melee damage assessment
 		if (rank == 1) and
@@ -464,7 +502,7 @@ AnalyzeArmy = function()
 	
 	-- Creatures in Army?
 	if (creatureCount == 0) then
-		AddItem( 30100)
+		AddItem(56100)
 	else
 
 		-- Defining Average Costs, Rank, and attributes
@@ -480,247 +518,274 @@ AnalyzeArmy = function()
 
 		-- Average Coal Cost
 		if (avgCoal > 250) then
-			AddItem( 30102)
+			AddItem( 56102)
 		elseif (avgCoal < 150) then
-			AddItem( 30104)
+			AddItem( 56104)
 		else
-			AddItem( 30106)
+			AddItem( 56106)
 		end
 	
 		-- Average Electricity Cost
 		if (avgElec > 100) then
-			AddItem( 30108)
+			AddItem( 56108)
 		elseif (avgElec < 50) then
-			AddItem( 30110)
+			AddItem( 56110)
 		else
-			AddItem( 30112)
+			AddItem( 56112)
 		end
 
 		-- Research Level Distribution
 		if (avgRank < 2.5) then
-			AddItem( 30114)
+			AddItem( 56114)
 		elseif (avgRank > 3.2) then
-			AddItem( 30116)
+			AddItem( 56116)
 		else
-			AddItem( 30118)
+			AddItem( 56118)
 		end
 		
 		-- Requirements
 		if (swimmerFound == true) or (amphibFound == true) and
 		(flyerFound == false) then
-			AddItem( 30120)
+			AddItem( 56120)
 		end
 		if (swimmerFound == false) and (amphibFound == false) then
 			if (flyerFound == true) then
-				AddItem( 30122)
+				AddItem( 56122)
 			end
 		end
 		if (swimmerFound == true) or (amphibFound == true) and
 		(flyerFound == true) then
-			AddItem( 30124)
+			AddItem( 56124)
 		end
 
 		-- Speed Assessment
 		if (avgSpeed > 27) then
-			AddItem( 30144)
+			AddItem( 56144)
 		elseif (avgSpeed < 20) then
-			AddItem( 30146)
+			AddItem( 56146)
 		else
-			AddItem( 30148)
+			AddItem( 56148)
 		end
 
 		-- Defense Assessment
 		if (avgDefense > 0.50) then
-			AddItem( 30150)
+			AddItem( 56150)
 		elseif (avgDefense < 0.35) then
-			AddItem( 30152)
+			AddItem( 56152)
 		else
-			AddItem( 30154)
+			AddItem( 56154)
 		end
 
 		-- Melee Assessment
 		if (avgMelee > 18) then
-			AddProItem( 30156)
+			AddProItem( 56156)
 		elseif (avgMelee < 9) then
-			AddConItem( 30158)
+			AddConItem( 56158)
 		end
 
 
 
 		-- Melee Damage Assessment by rank
 		if (meleeLowRank == true) then
-			AddItem( 30126)
+			AddItem( 56126)
 		end
 		if (meleeAvgRank == true) then
-			AddItem( 30128)
+			AddItem( 56128)
 		end
 		if (meleeHighRank == true) then
-			AddItem( 30130)
+			AddItem( 56130)
 		end
 
 		-- Range Damage Assessment by rank
 		if (rangeLowRank == true) then
-			AddItem( 30132)
+			AddItem( 56132)
 		end
 		if (rangeAvgRank == true) then
-			AddItem( 30134)
+			AddItem( 56134)
 		end
 		if (rangeHighRank == true) then
-			AddItem( 30136)
+			AddItem( 56136)
 		end
 
 		-- Artillery Damage Assessment by rank
 		if (artLowRank == true) then
-			AddItem( 30138)
+			AddItem( 56138)
 		end
 		if (artAvgRank == true) then
-			AddItem( 30140)
+			AddItem( 56140)
 		end
 		if (artHighRank == true) then
-			AddItem( 30142)
+			AddItem( 56142)
 		end
 
 		-- What ranks are strong?
 		if (totalRank1 > 2) then
-			AddItem( 30166)
+			AddItem( 56166)
 		end
 		if (totalRank2 > 2) then
-			AddItem( 30168)
+			AddItem( 56168)
 		end
 		if (totalRank3 > 2) then
-			AddItem( 30170)
+			AddItem( 56170)
 		end
 		if (totalRank4 > 2) then
-			AddItem( 30172)
+			AddItem( 56172)
 		end
 		if (totalRank5 > 2) then
-			AddItem( 30174)
+			AddItem( 56174)
 		end
 
 
 
 		-- rank 1 creatures present?
 		if (rank1 == true) then
-			AddProItem( 30010)
+			AddProItem( 56010)
 		else
-			AddConItem( 30012)
+			AddConItem( 56012)
 		end
 	
 		-- rank 2 creatures present?
 		if (rank2 == true) then
-			AddProItem( 30014)
+			AddProItem( 56014)
 		else
-			AddConItem( 30016)
+			AddConItem( 56016)
 		end
 	
 		-- rank 3 creatures present?
 		if (rank3 == true) then
-			AddProItem( 30018)
+			AddProItem( 56018)
 		else
-			AddConItem( 30020)
+			AddConItem( 56020)
 		end
 	
 		-- rank 4 creatures present?
 		if (rank4 == true) then
-			AddProItem( 30022)
+			AddProItem( 56022)
 		else
-			AddConItem( 30024)
+			AddConItem( 56024)
 		end
 	
 		-- rank 5 creatures present?
 		if (rank5 == true) then
-			AddProItem( 30026)
+			AddProItem( 56026)
 		else
-			AddConItem( 30028)
+			AddConItem( 56028)
 		end
 	
 	
 		-- too many of a rank?
 		if (totalLowRank > 4) then
-			AddConItem( 30176)
+			AddConItem( 56176)
 		end
 		if (totalHighRank > 3) then
-			AddConItem( 30178)
+			AddConItem( 56178)
 		end
 		if (totalRank1 > 4) then
-			AddConItem( 30180)
+			AddConItem( 56180)
 		end
 		if (totalRank2 > 4) then
-			AddConItem( 30182)
+			AddConItem( 56182)
 		end
 		if (totalRank3 > 4) then
-			AddConItem( 30184)
+			AddConItem( 56184)
 		end
 		if (totalRank4 > 4) then
-			AddConItem( 30186)
+			AddConItem( 56186)
 		end
 		if (totalRank5 > 4) then
-			AddConItem( 30188)
+			AddConItem( 56188)
 		end
 
 
 		-- check movement types
 		if (flyerFound == true) then
-			AddProItem( 30030)
+			AddProItem( 56030)
 		else
-			AddConItem( 30032)
+			AddConItem( 56032)
 		end
 	
 		if (landFound == false) then
-			AddConItem( 30036)
+			AddConItem( 56036)
 		end
 	
 		if (amphibFound == false) then
-			AddConItem( 30044)
+			AddConItem( 56044)
 		end
 	
 	
 		-- special abilities
 		if (pierceFound == true) then
-			AddProItem( 30220)
+			AddProItem( 56220)
 		else
-			AddConItem( 30222)
+			AddConItem( 56222)
 		end
 		
 		if (rangeFound == true) then
-			AddProItem( 30046)
+			AddProItem( 56046)
 		else
-			AddConItem( 30048)
+			AddConItem( 56048)
 		end
 	
 		if (artilleryFound == true) then
-			AddProItem( 30058)
+			AddProItem( 56058)
 		else
-			AddConItem( 30060)
+			AddConItem( 56060)
 		end
 
 		if (immuneFound == true) then
-			AddProItem( 30160)
+			AddProItem( 56160)
 		else
-			AddConItem( 30162)
+			AddConItem( 56162)
 		end
 
 		if (totalChemical > 2) then
-			AddConItem( 30164)
+			AddConItem( 56164)
 		end
 
 		if (covertFound == true) then
-			AddProItem( 30050)
+			AddProItem( 56050)
 		else
-			AddConItem( 30052)
+			AddConItem( 56052)
 		end
 	
 		if (barrierFound == true) then
-			AddProItem( 30224)
+			AddProItem( 56224)
 		else
-			AddConItem( 30226)
+			AddConItem( 56226)
 		end
 
 		if (senseFound == true) then
-			AddProItem( 30054)
+			AddProItem( 56054)
 		else
-			AddConItem( 30056)
+			AddConItem( 56056)
 		end
+		-->>>>>>>New abilities
+		if (jumpFound == true) then
+			AddProItem( 56228)
+		else
+			AddConItem( 56230)
+		end
+
+		if (packherdFound == true) then
+			AddProItem( 56232)
+		else
+			AddConItem( 56234)
+		end
+                if (webFound == true) then
+			AddProItem( 56236)
+		else
+			AddConItem( 56238)
+		end
+		--if (autoFound == true) then
+		--	AddProItem( 30232)
+		--else
+		--	AddConItem( 30233)
+		--end
+		if (asslonerFound == true) then
+			AddProItem(56240)
+		else
+			AddConItem(56242)
+		end	
 	end
 
 end

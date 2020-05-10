@@ -64,4 +64,6 @@ minimap_teamcolour = 1,
 -- shadows
 nospotshadow = 1,
 
+-- infestationextinfo
+dmg_infestation_multiplier = 1.0
 }

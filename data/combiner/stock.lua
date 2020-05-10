@@ -2,6 +2,26 @@
 
 -- Use the short filename of the animals
 stock = {
+
+-- ICXP ANIMALS 
+	"ANACONDA",
+	"BEHEMOTH",
+	"BLACK_WIDOW",
+	"BOMBARDIER_BEETLE",
+	"COCKROACH",
+	"CONDOR",
+	"FIRE_FLY",
+	"GARDEN_SPIDER",
+	"GIANT_ANTEATER",
+	"HERCULES_BEETLE",
+	"SPIDER_WASP",
+	"STINK_BUG",
+	"STICK_BUG",
+	"TARANTULA",
+	"TERMITE",
+
+
+-- ICPC ANIMALS 
 	"ANT",
 	"ARCHERFISH",
 	"ARMADILLO",
