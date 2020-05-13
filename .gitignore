@@ -1,0 +1,35 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Ignore by filetype
+*.army
+*.bmp
+*.ebp
+*.events
+*.ini
+*.jpg
+*.lsc
+*.max
+*.mp3
+*.pat
+*.png
+*.psd
+*.scb
+*.scr
+*.sfk
+*.sgb
+*.sgm
+*.smp
+*.spt
+*.tga
+*.txr
+*.wav
+
+
+# Ignore by name
+*/toolconfig.lua
+
+# Ignore by path
+data/art/ebps/nis/*
+data/art/font/*
+data/scenarios/*
+data/islands/*
