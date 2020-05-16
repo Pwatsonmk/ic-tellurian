@@ -34,12 +34,12 @@ OrbitRateMouse=-3
 --	left-right
 
 --	Distance ranges in meters (may be influenced by selected object size)
-DistMin=6
-DistMax=55
+DistMin=3
+DistMax=300
 
 --	This is as close to the terrain that the eye can get, unless focused on a
 --	point that is closer to the terrain than this.
-DistGroundMin=3.0
+DistGroundMin=1.0
 
 --	When focused onto a point on the terrain this is the ammount (in meters)
 --	that the target is raised above the terrain by.
@@ -51,14 +51,14 @@ DistMinGround=1.0
 
 --	Declination range : max angle you can look at a target from above/below
 DeclAbove=80.000000
-DeclBelow=-45.000000
+DeclBelow=-80.000000
 
 --	Pan scaling : panning velocity scaling
 
 -- Panning speed at the default zoom height.
-PanScaleMouseDefZ=120
-PanScaleKeyboardDefZ=43
-PanScaleScreenDefZ=53
+PanScaleMouseDefZ=180
+PanScaleKeyboardDefZ=63
+PanScaleScreenDefZ=73
 
 -- Panning speed at the minimum zoom height.
 PanScaleMouseMinZ=60
@@ -75,7 +75,7 @@ PanMaxSpeedScalar=3.0
 
 --	General camera parameters
 --	How wide the view is.
-FieldOfView=70.000000
+FieldOfView=100.000000
 --	How close things can be to the camera (in meters, should not go below 1)
 ClipNear=0.1
 --	How far away we can see (in meters)
@@ -89,7 +89,7 @@ EntityMinViewAngle=0.03		--	in radians
 
 	
 -- The default height or distance from the ground or target that the camera starts at.
-DefaultHeight = 32
+DefaultHeight = 140
 
 -- The default declination that the camera starts it.  This is in degrees from the ground (0 would be pointed at the horizon)
 DefaultDeclination = 53

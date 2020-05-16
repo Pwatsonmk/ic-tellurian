@@ -25,28 +25,28 @@ creatureupgrade =
 		{
 			-- level 1
 			{
-				cost		= 50,
-				costrenew	= 0,
+				cost		= 100,
+				costrenew	= 15,
 			},
 			-- level 2
 			{
-				cost		= 125,
-				costrenew	= 50,
+				cost		= 175,
+				costrenew	= 100,
 			},
 			-- level 3
 			{
-				cost		= 150,
-				costrenew	= 75,
+				cost		= 200,
+				costrenew	= 125,
 			},
 			-- level 4
 			{
-				cost		= 250,
-				costrenew	= 150,
+				cost		= 300,
+				costrenew	= 200,
 			},
 			-- level 5
 			{
-				cost		= 300,
-				costrenew	= 200,
+				cost		= 400,
+				costrenew	= 300,
 			},
 		},
 	},
@@ -56,7 +56,7 @@ creatureupgrade =
 		upgrade		= CREATUREUPGRADE_Speed,
 		name		= 40268,
 		icon		= "ui/ingame/upgradeSpeed.tga",
-		upgradeticks	= 160,
+		upgradeticks	= 80,
 		structure	= GeneticAmplifier_EC,
 
 		level = 
@@ -68,22 +68,22 @@ creatureupgrade =
 			},
 			-- level 2
 			{
-				cost		= 150,
+				cost		= 100,
 				costrenew	= 25,
 			},
 			-- level 3
 			{
-				cost		= 150,
+				cost		= 125,
 				costrenew	= 50,
 			},
 			-- level 4
 			{
-				cost		= 200,
+				cost		= 150,
 				costrenew	= 125,
 			},
 			-- level 5
 			{
-				cost		= 250,
+				cost		= 200,
 				costrenew	= 150,
 			},
 		},
@@ -94,35 +94,35 @@ creatureupgrade =
 		upgrade		= CREATUREUPGRADE_MeleeDamage,
 		name		= 40269,
 		icon		= "ui/ingame/upgradeMeleeDamage.tga",
-		upgradeticks	= 160,
+		upgradeticks	= 240,
 		structure	= GeneticAmplifier_EC,
 
 		level = 
 		{
 			-- level 1
 			{
-				cost		= 50,
-				costrenew	= 0,
+				cost		= 125,
+				costrenew	= 25,
 			},
 			-- level 2
 			{
-				cost		= 125,
+				cost		= 200,
 				costrenew	= 50,
 			},
 			-- level 3
 			{
-				cost		= 150,
-				costrenew	= 75,
+				cost		= 235,
+				costrenew	= 100,
 			},
 			-- level 4
 			{
-				cost		= 250,
-				costrenew	= 150,
+				cost		= 325,
+				costrenew	= 125,
 			},
 			-- level 5
 			{
-				cost		= 300,
-				costrenew	= 200,
+				cost		= 450,
+				costrenew	= 250,
 			},
 		},
 	},
@@ -139,28 +139,28 @@ creatureupgrade =
 		{
 			-- level 1
 			{
-				cost		= 50,
-				costrenew	= 0,
+				cost		= 100,
+				costrenew	= 15,
 			},
 			-- level 2
 			{
-				cost		= 125,
+				cost		= 175,
 				costrenew	= 50,
 			},
 			-- level 3
 			{
-				cost		= 150,
-				costrenew	= 75,
+				cost		= 200,
+				costrenew	= 125,
 			},
 			-- level 4
 			{
-				cost		= 250,
-				costrenew	= 150,
+				cost		= 300,
+				costrenew	= 200,
 			},
 			-- level 5
 			{
-				cost		= 300,
-				costrenew	= 200,
+				cost		= 400,
+				costrenew	= 300,
 			},
 		},
 	},
@@ -170,7 +170,7 @@ creatureupgrade =
 		upgrade		= CREATUREUPGRADE_SightRadius,
 		name		= 40271,
 		icon		= "ui/ingame/upgradeSightRadius.tga",
-		upgradeticks	= 160,
+		upgradeticks	= 80,
 		structure	= GeneticAmplifier_EC,
 
 		level = 
@@ -208,35 +208,35 @@ creatureupgrade =
 		upgrade		= CREATUREUPGRADE_RangedDamage,
 		name		= 40272,
 		icon		= "ui/ingame/upgradeRangedDamage.tga",
-		upgradeticks	= 160,
+		upgradeticks	= 280,
 		structure	= GeneticAmplifier_EC,
 
 		level = 
 		{
 			-- level 1
 			{
-				cost		= 50,
-				costrenew	= 0,
+				cost		= 125,
+				costrenew	= 25,
 			},
 			-- level 2
 			{
-				cost		= 125,
-				costrenew	= 50,
+				cost		= 225,
+				costrenew	= 65,
 			},
 			-- level 3
 			{
-				cost		= 150,
-				costrenew	= 75,
+				cost		= 250,
+				costrenew	= 115,
 			},
 			-- level 4
 			{
-				cost		= 250,
+				cost		= 360,
 				costrenew	= 150,
 			},
 			-- level 5
 			{
-				cost		= 300,
-				costrenew	= 200,
+				cost		= 500,
+				costrenew	= 260,
 			},
 		},
 	},
@@ -253,8 +253,8 @@ creatureupgrade =
 		{
 			-- level 1
 			{
-				cost		= 0,
-				costrenew	= 0,
+				cost		= 100,
+				costrenew	= 25,
 			},
 			-- level 2
 			{
