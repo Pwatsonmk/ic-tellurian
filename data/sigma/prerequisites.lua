@@ -89,13 +89,13 @@ prerequisites =
 		reqitem = RESEARCH_Rank2,
 	},
 
-	aviary = 
-	{
-		newtype = TYPE_Structure,
-		newitem = Aviary_EC,
-		reqtype = TYPE_Research,
-		reqitem = RESEARCH_Rank3,
-	},
+--	remote_chamber = 
+--	{
+--		newtype = TYPE_Structure,
+--		newitem = RemoteChamber_EC,
+--		reqtype = TYPE_Research,
+--		reqitem = RESEARCH_AdvancedStructure,
+--	},
 
 	antiair_tower = 
 	{
@@ -103,6 +103,30 @@ prerequisites =
 		newitem = AntiAirTower_EC,
 		reqtype = TYPE_Research,
 		reqitem = RESEARCH_AdvancedStructure,
+	},
+
+--	soundbeam_tower = 
+--	{
+--		newtype = TYPE_Structure,
+--		newitem = SoundBeamTower_EC,
+--		reqtype = TYPE_Structure,
+--		reqitem = ResourceRenew_EC,
+--	},
+
+--	foundry = 
+--	{
+--		newtype = TYPE_Structure,
+--		newitem = Foundry_EC,
+--		reqtype = TYPE_Structure,
+--		reqitem = ResourceRenew_EC,
+--	},
+
+	genetic_amplifier = 
+	{
+		newtype = TYPE_Structure,
+		newitem = GeneticAmplifier_EC,
+		reqtype = TYPE_Research,
+		reqitem = RESEARCH_Rank2,
 	},
 
 	landingpad = 
@@ -122,6 +146,16 @@ prerequisites =
 		reqitem = LandingPad_EC,
 		limit   = 1,
 	},
+	
+	cliniclimit = 
+	{
+		newtype = TYPE_Limit,
+		newitem = VetClinic_EC,
+		reqtype = TYPE_Limit,
+		reqitem = VetClinic_EC,
+		limit   = 2,
+	},
+
 
 	gyrocopterlimit = 
 	{
@@ -141,6 +175,24 @@ prerequisites =
 		limit   = 4,
 	},
 
+--	antiairtowerlimit = 
+--	{
+--		newtype = TYPE_Limit,
+--		newitem = AntiAirTower_EC,
+--		reqtype = TYPE_Limit,
+--		reqitem = AntiAirTower_EC,
+--		limit   = 35,
+--	},
+
+--	soundbeamtowerlimit = 
+--	{
+--		newtype = TYPE_Limit,
+--		newitem = SoundBeamTower_EC,
+--		reqtype = TYPE_Limit,
+--		reqitem = SoundBeamTower_EC,
+--		limit   = 15,
+--	},
+
 	radarpulse = 
 	{
 		newtype = TYPE_Command,
@@ -156,7 +208,15 @@ prerequisites =
 		reqtype = TYPE_Research,
 		reqitem = RESEARCH_LabDefense,
 	},
-	
+
+--	labdefense_research= 
+--	{
+--		newtype = TYPE_Research,
+--		newitem = RESEARCH_LabDefense,
+--		reqtype = TYPE_Research,
+--		reqitem = RESEARCH_IncBuildingIntegrity,
+--	},
+
 	vetclinic = 
 	{
 		newtype = TYPE_Structure,
@@ -165,60 +225,52 @@ prerequisites =
 		reqitem = RESEARCH_AdvancedStructure,
 	},
 
-	henchmanyoke_research = 
-	{
-		newtype = TYPE_Research,
-		newitem = RESEARCH_HenchmanYoke,
-		reqtype = TYPE_Structure,
-		reqitem = VetClinic_EC,
-	},
+--	henchmanyoke_research = 
+--	{
+--		newtype = TYPE_Research,
+--		newitem = RESEARCH_HenchmanYoke,
+--		reqtype = TYPE_Research,
+--		reqitem = RESEARCH_Rank4,
+--	},
 
-	henchmanmotspeech_research = 
-	{
-		newtype = TYPE_Research,
-		newitem = RESEARCH_HenchmanMotivationalSpeech,
-		reqtype = TYPE_Structure,
-		reqitem = VetClinic_EC,
-	},
+--	henchmanmotspeech_research = 
+--	{
+--		newtype = TYPE_Research,
+--		newitem = RESEARCH_HenchmanMotivationalSpeech,
+--		reqtype = TYPE_Research,
+--		reqitem = RESEARCH_Rank2,
+--	},
 
-	strengthenfences_research = 
-	{
-		newtype = TYPE_Research,
-		newitem = RESEARCH_StrengthenFences,
-		reqtype = TYPE_Research,
-		reqitem = RESEARCH_Rank4,
-	},
+--	henchmanheal_research = 
+--	{
+--		newtype = TYPE_Research,
+--		newitem = RESEARCH_HenchmanHeal,
+--		reqtype = TYPE_Research,
+--		reqitem = RESEARCH_HenchmanTag,
+--	},
 
 	strengthenelecgrid_research = 
 	{
 		newtype = TYPE_Research,
 		newitem = RESEARCH_StrengthenElectricalGrid,
-		reqtype = TYPE_Research,
-		reqitem = RESEARCH_Rank4,
+		reqtype = TYPE_Structure,
+		reqitem = ElectricGenerator_EC,
 	},
 
-	incbuildingintegrity_research =
+	incbuildingintegrity_research = 
 	{
 		newtype = TYPE_Research,
 		newitem = RESEARCH_IncBuildingIntegrity,
-		reqtype = TYPE_Structure,
-		reqitem = VetClinic_EC,
+		reqtype = TYPE_Research,
+		reqitem = RESEARCH_Rank3,
 	},
 
-	sbtower_upgrade =
+	sbtower_upgrade = 
 	{
 		newtype = TYPE_Research,
 		newitem = RESEARCH_TowerUpgrade,
 		reqtype = TYPE_Research,
-		reqitem = RESEARCH_Rank4,
-	},
-
-	genetic_amplifier = 
-	{
-		newtype = TYPE_Structure,
-		newitem = GeneticAmplifier_EC,
-		reqtype = TYPE_Research,
-		reqitem = RESEARCH_Rank2,
+		reqitem = RESEARCH_Rank3,
 	},
 
 	sonic_boom = 

@@ -3,7 +3,14 @@
 -- Use the short filename of the animals
 stock = {
 
--- ICXP ANIMALS 
+--TELLURIAN
+	"SQUID",
+	"NARWHAL",
+	"HATCHETFISH",
+	"SNAIL",
+
+-- ICXP ANIMALS
+--	"KONG", 
 	"ANACONDA",
 	"BEHEMOTH",
 	"BLACK_WIDOW",
