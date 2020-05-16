@@ -6,7 +6,8 @@ size = getgameattribute("size");
 range_max1 = getgameattribute("range4_max");
 range_max2 = getgameattribute("range2_max");
 range_max3 = getgameattribute("range5_max");
-range_max = max(range_max1, max(range_max2, range_max3));
+range_max4 = getgameattribute("range8_max");
+range_max = max(range_max1, max(range_max2, range_max3, range_max4));
 speed_max = getgameattribute( "speed_max" );
 airspeed_max = getgameattribute( "airspeed_max" );
 waterspeed_max = getgameattribute( "waterspeed_max" );
@@ -16,6 +17,7 @@ damagem = getgameattribute( "melee_damage" );
 damage2 = getgameattribute( "range2_damage" );
 damage4 = getgameattribute( "range4_damage" );
 damage5 = getgameattribute( "range5_damage" );
+damage8 = getgameattribute( "range8_damage" );
 GlobalCostMod = 1.0;
 sonicRankMod = 1.0;
 RangeCostMult = 1.0;
@@ -23,7 +25,7 @@ RangeCostMult = 1.0;
 if getgameattribute("range4_dmgtype") == 16 then
 	damage4 = damage4 * sonicRankMod;
 end
-damager = max (damage2, max (damage4, damage5));
+damager = max (damage2, max (damage4, damage5, damage8));
 if range_max > 0 then
 	damager = damager*(1+(range_max/35));
 end
@@ -37,6 +39,7 @@ if (getgameattribute("slow") == 1) then
 	else
 	SlowCost = 1.0;                          
 end
+
 
 if airspeed_max > 0 and damager < 1 then
 	mflyerrankmod = 1.0;
@@ -91,7 +94,7 @@ end
 --end
 --
 --
---setgameattribute("speed_max", speed_max/(getgameattribute("size")^(-0.18))*(getgameattribute("size")^(0.1))/1.2);
+--setgameattribute("speed_max", speed_max/(getgameattribute("size")^(-0.18))*(getgameattribute("size")^(0.1));
 
 if (range_max3 > 0) then
    AttackRateMain = 80/speed;
@@ -140,15 +143,15 @@ if getgameattribute("sight_radius1") > 50 then
 end
 
 if getgameattribute("hard_shell") == 1 then
-	maxArmour = 0.82;
+	maxArmour = 0.99;
 	else
-	maxArmour = 0.75;
+	maxArmour = 0.80;
 end
 	
-setgameattribute("armour", min(getgameattribute("armour"), maxArmour));
+setgameattribute("armour", min(getgameattribute("armour"), maxArmour)*0.8);
                               
 sight_radius1 = getgameattribute("sight_radius1" );
-armour = min(getgameattribute( "armour" ), 0.75);
+armour = min(getgameattribute( "armour" ), 0.85);
 
 if ( getgameattribute("is_flyer") == 1 ) then		
 	if (getgameattribute("range2_max") > 40) then
@@ -159,6 +162,9 @@ if ( getgameattribute("is_flyer") == 1 ) then
 	end	
 	if (getgameattribute("range5_max") > 27) then
 		setgameattribute("range5_max",40);
+	end
+	if (getgameattribute("range8_max") > 40) then
+		setgameattribute("range8_max",40);
 	end
 	range_max = min(range_max, 40);	
 end
@@ -229,10 +235,10 @@ end
 
 flyerrankmod = 1.1
 
-rank2pow = 76.4;
-rank3pow = 122.3;
-rank4pow = 234.0;
-rank5pow = 386.5;
+rank2pow = 70;
+rank3pow = 118;
+rank4pow = 240;
+rank5pow = 440;
 if getgameattribute("is_flyer") == 1 then
 	rank2pow = rank2pow * flyerrankmod;
 	rank3pow = rank3pow * flyerrankmod;
@@ -269,7 +275,6 @@ if (CreatureRank == 1) then
 end
 
 
-
 --Arrays in lua suck...
 
 
@@ -277,10 +282,10 @@ end
 ------------------------------------------
 --Health Limits
 ------------------------------------------
-rank1lim = 80;
-rank2lim = 1650;
-rank3lim = 4000;
-rank4lim = 12000;
+rank1lim = 100;
+rank2lim = 250;
+rank3lim = 700;
+rank4lim = 1200;
 rank5lim = 35000;
 
 if getgameattribute("hard_shell") == 1 then
@@ -302,13 +307,18 @@ end
 if hitpoints/(1-armour) > rank3lim and CreatureRank == 3 then
 	HealthLimit(rank3lim);
 end
-
---if hitpoints/(1-armour) > rank4lim and CreatureRank == 4 then
---	HealthLimit(rank4lim);
+--
+--if hitpoints/(1-armour) > 1000 and CreatureRank == 4 then
+--	CreatureRank = 5;
 --end
 
-if hitpoints/(1-armour) > rank5lim and CreatureRank == 5 then
-	HealthLimit(rank5lim);
+--if hitpoints/(1-armour) > 1000 and CreatureRank == 5 then
+--	setgameattribute(CreatureRank , 5);
+--end
+if (getgameattribute("poplow") == 1) then
+	Pop = 1;
+	else
+	Pop = (size/2)+0.5;                          
 end
 
 
@@ -316,12 +326,14 @@ if damager < 1 then
   setgameattribute("melee4_damage", getgameattribute("melee4_damage")+damagedif);
   else
   setgameattribute("melee4_damage", getgameattribute("melee4_damage")+damagedif*rangedmmod);
-  if damage4 > damage5 and damage4 > damage2 then
+  if damage4 > damage5 and damage4 > damage2 and damage4 > damage8 then
     setgameattribute("range4_damage", getgameattribute("range4_damage")+ damagedif*rangedrmod/(1+(range_max/35)));
-    elseif damage5 > damage4 and damage5 > damage2 then
+    elseif damage5 > damage4 and damage5 > damage2 and damage5 > damage8 then
       setgameattribute("range5_damage", getgameattribute("range5_damage")+ damagedif*rangedrmod/(1+(range_max/35)));
-      else
+      elseif damage2 > damage4 and damage2 > damage5 and damage2 > damage8 then
       setgameattribute("range2_damage", getgameattribute("range2_damage")+ damagedif*rangedrmod/(1+(range_max/35)));
+      else
+      setgameattribute("range8_damage", getgameattribute("range8_damage")+ damagedif*rangedrmod/(1+(range_max/35)));
   end
 end
 ----------------------------------------
@@ -359,13 +371,14 @@ AttributeData =
 	{ "speed_max", 1, 10, nil, {0.0, 20.0, 30.0, 40.0}, "landspeed", 1 },
 	{ "waterspeed_max", 1, 8, nil, {0.0, 4.0, 6.0, 8.5}, "waterspeed", 1 },
 	{ "airspeed_max", 1, 16, nil, {0.0, 5.0, 15.0, 20.0}, "airspeed", 1 },
-	{ "sight_radius1", nil, 10, 1000, {0.0, 25.0, 35.0, 45.0}, "sightradius", 1 },
+	{ "sight_radius1", nil, 1, 1000, {0.0, 25.0, 35.0, 45.0}, "sightradius", 1 },
 	{ "size", nil, 1, nil, {0, 3, 6, 9}, "size", 1},
 
 	{ "total_damage", 1, 0, nil, {0.0, 5.0, 9.0, 11.5}, "damage", 1 },
 	{ "range2_max", 1, 0, nil, {0.0, 5.0, 9.0, 16.0}, "range2_max", 1 },
 	{ "range4_max", 1, 0, nil, {0.0, 5.0, 9.0, 16.0}, "range4_max", 1 },
 	{ "range5_max", 1, 0, nil, {0.0, 5.0, 9.0, 16.0}, "range5_max", 1 },
+	{ "range8_max", 1, 0, nil, {0.0, 5.0, 9.0, 16.0}, "range8_max", 1 },
 };
 
 
@@ -434,6 +447,15 @@ if checkgameattribute( "range5_damage" ) == 1 then
 	end
 end
 
+if checkgameattribute( "range8_damage" ) == 1 then
+	val = getgameattribute( "range8_damage" );
+	if (val and val > 0) then
+			rating = Rank( val, {0.0,12.0,20.0,26.0} );
+			setattribute( "range8_damage_rating", rating - 1 );
+		setattribute( "range8_damage_val", val );
+	end
+end
+
 
 ----------------------------------------
 --Ability Cost and Min Rank
@@ -456,7 +478,7 @@ if (	getgameattribute("stink_attack")==1 or
 		EndCost = 5;
 end
 -- Unusable abilities removed
-if (damage2>0) or (damage4>0) or (damage5>0) then
+if (damage2>0) or (damage4>0) or (damage5>0) or (damage8>0) then
 	setgameattribute( "charge_attack", 0 );
 	setgameattribute( "leap_attack", 0 );	
 	--setgameattribute( "speed_boost", 0 );
@@ -509,7 +531,7 @@ AbilityData =
 	--power as a factor in their cost and a number of special abilities either because the ability is potentially problematic with the power discount
 	--Note that the special case ranks are still controlled in this array
 	--MinRank 0
-	{ ABT_Ability, "is_immune", 0, 5, 0, 5 },
+	{ ABT_Ability, "is_immune", 0, 10, 0, 5 },
 
 	{ ABT_Ability, "keen_sense", 0, 10, 0, 0 },
 
@@ -531,6 +553,8 @@ AbilityData =
 
  	{ ABT_Ability, "overpopulation", 2, 0, 0, 0},
 
+	{ ABT_Ability, "poplow", 1, 3, 0, 3},
+
 	--MinRank 1
 	{ ABT_Ability, "herding", 1, 0, 0, 0 },       --Special Case
 
@@ -544,7 +568,7 @@ AbilityData =
 
 	{ ABT_Ability, "Autodefense", 1, 15, 0, 5},
 
-	{ ABT_Ability, "assassinate", 1, 10, 0, 20},
+	{ ABT_Ability, "assassinate", 1, 10, 10, 20},
 
 	{ ABT_Ability, "can_SRF", 1, 15, 0, 10},
 	
@@ -555,9 +579,9 @@ AbilityData =
 
 	{ ABT_Ability, "is_swimmer", 2, 0, 0 },
 
-	{ ABT_Ability, "deflection_armour", 2, 20, 0, 20 },
+	{ ABT_Ability, "deflection_armour", 2, 30, 10, 20 },
 
-	{ ABT_Ability, "infestation", 2, 10, 0, 0 },
+	{ ABT_Ability, "infestation", 2, 30, 0, 0 },
 
 	--MinRank 3
 	{ ABT_Ability, "hard_shell", 3, 0, 0, 0 }, --Special Case
@@ -648,7 +672,7 @@ if damager > 0 then
 	CreatureRank = max(CreatureRank, 2);
 end
 
-BodyPartsThatCanHaveRange = { 2, 4, 5 };
+BodyPartsThatCanHaveRange = { 2, 4, 5, 8 };
 
 for index, part in BodyPartsThatCanHaveRange do
 	part_damage = getgameattribute( "range" .. part .. "_damage" );
@@ -710,9 +734,9 @@ end
 CostGather = CostGather * GlobalCostMod;
 CostRenew = CostRenew * GlobalCostMod;
 -- Dedicated swimmer cost modifiers
-artillerypureswimmercostmodifier = 0.75;
-directpureswimmercostmodifier = 0.5;
-meleepureswimmercostmodifier = 0.5;
+artillerypureswimmercostmodifier = 0.85;
+directpureswimmercostmodifier = 0.75;
+meleepureswimmercostmodifier = 0.4;
 
 
 -- Reduce cost if unit is a dedicated swimmer
@@ -794,9 +818,9 @@ if getgameattribute("poison_bite") == 1 or getgameattribute("poison_sting") == 1
 end
 
 --if getgameattribute("is_flyer") == 0 then
-build_time = (8+24 * CreatureRank)*(power/max_power)*Popmult*1.4;
-CostGather = (CostGather + speedCost + sightCost)*(power/max_power)*RangeCostMult*1.1+(2/CreatureRank);
-CostRenew = CostRenew * (power/max_power)*1.4;
+build_time = (8+24 * CreatureRank)*(power*1.1/max_power)*Popmult;
+CostGather = (CostGather + speedCost + sightCost)*(power*1.1/max_power)*RangeCostMult*1.1+(2/CreatureRank)*1.4;
+CostRenew = CostRenew * (power*1.1/max_power)*1.2+(3.5*CreatureRank);
 --	else
 --	if (PhysRank == 1) then
 --		max_power = rank2pow;
@@ -861,10 +885,10 @@ end
 --if getgameattribute("size") == 10 then
 --	setgameattribute("size", 8);
 --end
---if getgameattribute("size") == 11 then
---	setgameattribute("size", 9);
---end
-if getgameattribute("size") >= 12 then
+if getgameattribute("size") == 10 then
+	setgameattribute("size", 9);
+end
+if getgameattribute("size") >= 11 then
 	setgameattribute("size", 10);
 end
 
@@ -882,16 +906,32 @@ end
 --TELLURIAN YEAH LETS RIP OFF SMOD
 ----------------------------------------
 
+if has_artillery == 1 and getgameattribute("is_flyer") == 1 then
+	CostRenew = CostRenew+30;
+end
+
+if getgameattribute("bobcost") == 1 then
+	CostRenew = CostRenew+30;
+end
+
 if CreatureRank == 3 then
-	CostRenew = CostRenew *0.75
+	CostRenew = CostRenew*0.75
+end
+
+if CreatureRank == 5 then
+	CostRenew = CostRenew*0.95
+end
+
+if CreatureRank == 5 then
+	CostGather = CostGather*0.95
 end
 
 if CreatureRank == 1 then
-	build_time = build_time*2
+	build_time = build_time*1.2
 end
 
 if getgameattribute("hard_shell") == 1 and getgameattribute("regeneration") == 1 then
-	CostRenew = CostRenew+100;
+	CostRenew = CostRenew+30;
 end
 
 if getgameattribute ("armour") >= 0.6 and getgameattribute("regeneration") == 1 then
@@ -926,6 +966,11 @@ if getgameattribute("herding") == 1 and getgameattribute("armour") >= 0.4 then
 	CostRenew = CostRenew*1.05;
 end
 
+if getgameattribute("herding") == 1 and getgameattribute("armour") >= 0.59 then
+	CostGather = CostGather*1.25;
+end
+
+
 ----------------------------------------
 --End of Ripping off SMod
 ----------------------------------------
@@ -938,7 +983,7 @@ setgameattribute("constructionticks", build_time);
 setattribute( "creature_rank", CreatureRank );
 setattribute( "costrenew", CostRenew );
 setattribute( "cost", CostGather );
-setattribute( "popsize", 1 )
+setattribute( "popsize", Pop )
 
 end
 

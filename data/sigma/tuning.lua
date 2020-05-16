@@ -293,7 +293,7 @@ PackBonus =
 	basedamagemodifier		= 1.50,
 
 	-- the base defense modifier, new defense is this * normal damage
-	basedefensemodifier		= 1.50,
+	basedefensemodifier		= 1.35,
 
 	-- the search radius that the pack bonus is effective for, meters
 	searchradius			= 20.0,
@@ -424,16 +424,16 @@ StinkCloud =
 ElectricBurst =
 {
 	-- the minimum number of entities needed for the bonus to kick in
-	enduranceCost			= 35.0,
+	enduranceCost			= 50.0,
 
 	-- this is the duration of the attack in ticks, and modifies the base damage
 	-- new damage is this * dmgPerTick (see below)
-	duration				= 2.0,
+	duration				= 5.0,
 
 	-- damage radius : C = (creature size (in meters)) O = offset, S = scale
 	-- Final radius = O + C*S  (where O is the minimum radius)
-	radiusOffset			= 11.0,
-	radiusScale				= 2.0,
+	radiusOffset			= 8.0,
+	radiusScale				= 1.0,
 
 	-- damage per tick
 	-- new damage is this * duration (see above)
@@ -467,10 +467,10 @@ QuillBurst =
 	-- damage per tick
 	-- new damage is this * duration (see above)
 	dmgPerTick1				= 50.0,
-	dmgPerTick2				= 50.0,
-	dmgPerTick3				= 60.0,
-	dmgPerTick4				= 100.0,
-	dmgPerTick5				= 150.0,
+	dmgPerTick2				= 60.0,
+	dmgPerTick3				= 80.0,
+	dmgPerTick4				= 150.0,
+	dmgPerTick5				= 250.0,
 
 	-- not used
 	dmgToBuilding			= 0
@@ -758,7 +758,7 @@ AttackBonus =
 SonicAttack =
 {
 	-- angle of the cone - should match up with effect
-	cone_angle		= 21,
+	cone_angle		= 7,
 	
 	-- duration of effect in seconds
 	duration		= 32,

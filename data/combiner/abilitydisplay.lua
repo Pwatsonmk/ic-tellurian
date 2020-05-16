@@ -81,6 +81,22 @@ AbilitiesList =
 		shortdesc		= 37505,
 		showonlyincombiner	= 0,
 	},
+	Colony = 
+	{
+		gameattributename 	= "poplow",
+		bodypart		= part_head,
+		name			= 37530,
+		shortdesc		= 37531,
+		showonlyincombiner	= 0,
+	},
+	ColonyTorso = 
+	{
+		gameattributename 	= "poplowtorso",
+		bodypart		= part_torso,
+		name			= 37530,
+		shortdesc		= 37531,
+		showonlyincombiner	= 0,
+	},
 	Jumping = 
 	{
 		gameattributename 	= "can_SRF",
@@ -257,14 +273,14 @@ AbilitiesList =
 		shortdesc		= 37513,
 		showonlyincombiner	= 0,
 	},
-        ImaginaryHovering = 
-	{
-		gameattributename 	= "imaginary_hovering",
-		bodypart		= part_head,
-		name			= 37514,
-		shortdesc		= 37515,
-		showonlyincombiner	= 0,
-	},
+        --ImaginaryHovering = 
+	--{
+	--	gameattributename 	= "imaginary_hovering",
+	--	bodypart		= part_head,
+	--	name			= 37514,
+	--	shortdesc		= 37515,
+	--	showonlyincombiner	= 0,
+	--},
 	Poison =
 	{
 		gameattributename 	= "poison_bite",

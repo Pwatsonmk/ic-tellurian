@@ -15,17 +15,17 @@ SizeScaling =
 {
 	{	-- Size 1 Creature
 		FootPrint	= 10000.0,
-		OBBVol		= 8.0,
-		maxXdim     = 2.0,
-		maxYdim     = 3.0,
-		maxZdim     = 3.4,
+		OBBVol		= 6.0,
+		maxXdim     = 1.0,
+		maxYdim     = 2.0,
+		maxZdim     = 2.4,
 	},
 	{	-- Size 2 Creature
 		FootPrint	= 10000.0,
 		OBBVol		= 10.0,
 		maxXdim     = 4.0,
-		maxYdim     = 6.0,
-		maxZdim     = 5.0,
+		maxYdim     = 5.0,
+		maxZdim     = 4.0,
 	},
 	{	-- Size 3 Creature
 		FootPrint	= 10000.0,
@@ -72,16 +72,16 @@ SizeScaling =
 	{	-- Size 9 Creature
 		FootPrint	= 10000.0,
 		OBBVol		= 95.0,
-		maxXdim     = 32.0,
-		maxYdim     = 36.0,
-		maxZdim     = 29.0,
+		maxXdim     = 36.0,
+		maxYdim     = 40.0,
+		maxZdim     = 32.0,
 	},
 	{	-- Size 10 Creature
 		FootPrint	= 10000.0,
 		OBBVol		= 125.0,
-		maxXdim     = 40.0,
-		maxYdim     = 42.0,
-		maxZdim     = 38.0,
+		maxXdim     = 48.0,
+		maxYdim     = 52.0,
+		maxZdim     = 44.0,
 	},
 }
 

@@ -56,14 +56,14 @@ DeclBelow=-80.000000
 --	Pan scaling : panning velocity scaling
 
 -- Panning speed at the default zoom height.
-PanScaleMouseDefZ=180
-PanScaleKeyboardDefZ=63
-PanScaleScreenDefZ=73
+PanScaleMouseDefZ=260
+PanScaleKeyboardDefZ=120
+PanScaleScreenDefZ=120
 
 -- Panning speed at the minimum zoom height.
-PanScaleMouseMinZ=60
-PanScaleKeyboardMinZ=15
-PanScaleScreenMinZ=15
+PanScaleMouseMinZ=100
+PanScaleKeyboardMinZ=30
+PanScaleScreenMinZ=30
 
 -- Panning acceleration
 -- To turn acceleration off, use the following values:
@@ -89,7 +89,7 @@ EntityMinViewAngle=0.03		--	in radians
 
 	
 -- The default height or distance from the ground or target that the camera starts at.
-DefaultHeight = 140
+DefaultHeight = 60
 
 -- The default declination that the camera starts it.  This is in degrees from the ground (0 would be pointed at the horizon)
 DefaultDeclination = 53

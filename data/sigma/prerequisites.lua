@@ -69,8 +69,8 @@ prerequisites =
 	{
 		newtype = TYPE_Research,
 		newitem = RESEARCH_HenchmanBinoculars,
-		reqtype = TYPE_Structure,
-		reqitem = VetClinic_EC,
+		reqtype = TYPE_Research,
+		reqitem = RESEARCH_Rank3,
 	},
 	
 	electrical_generator = 
@@ -225,29 +225,29 @@ prerequisites =
 		reqitem = RESEARCH_AdvancedStructure,
 	},
 
---	henchmanyoke_research = 
---	{
---		newtype = TYPE_Research,
---		newitem = RESEARCH_HenchmanYoke,
---		reqtype = TYPE_Research,
---		reqitem = RESEARCH_Rank4,
---	},
+	henchmanyoke_research = 
+	{
+		newtype = TYPE_Research,
+		newitem = RESEARCH_HenchmanYoke,
+		reqtype = TYPE_Research,
+		reqitem = RESEARCH_HenchmanBinoculars,
+	},
 
---	henchmanmotspeech_research = 
---	{
---		newtype = TYPE_Research,
---		newitem = RESEARCH_HenchmanMotivationalSpeech,
---		reqtype = TYPE_Research,
---		reqitem = RESEARCH_Rank2,
---	},
+	henchmanmotspeech_research = 
+	{
+		newtype = TYPE_Research,
+		newitem = RESEARCH_HenchmanMotivationalSpeech,
+		reqtype = TYPE_Research,
+		reqitem = RESEARCH_HenchmanBinoculars,
+	},
 
---	henchmanheal_research = 
---	{
---		newtype = TYPE_Research,
---		newitem = RESEARCH_HenchmanHeal,
---		reqtype = TYPE_Research,
---		reqitem = RESEARCH_HenchmanTag,
---	},
+	henchmanheal_research = 
+	{
+		newtype = TYPE_Research,
+		newitem = RESEARCH_HenchmanHeal,
+		reqtype = TYPE_Research,
+		reqitem = RESEARCH_HenchmanBinoculars,
+	},
 
 	strengthenelecgrid_research = 
 	{

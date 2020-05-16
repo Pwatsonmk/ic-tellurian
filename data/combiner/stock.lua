@@ -8,6 +8,12 @@ stock = {
 	"NARWHAL",
 	"HATCHETFISH",
 	"SNAIL",
+	"SHRIMP",
+	"HORNBILL",
+	"BOB",
+	"TAPIR",
+	"SPIDER",
+	"FINISHED NAKED MOLE RAT",
 
 -- ICXP ANIMALS
 --	"KONG", 
