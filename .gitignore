@@ -30,6 +30,8 @@
 
 # Ignore by path
 data/art/ebps/nis/*
+data/art/ebps/stock/Thumbs.db
+data/art/ebps/stock/stock.txt
 data/art/font/*
 data/scenarios/*
 data/islands/*
