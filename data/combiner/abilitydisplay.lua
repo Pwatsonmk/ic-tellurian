@@ -37,16 +37,16 @@ AbilitiesList =
 	{
 		gameattributename 	= "AutoDefense",
 		bodypart		= part_tail,
-		name			= 37515,
-		shortdesc		= 37516,
+		name			= 37493,
+		shortdesc		= 37494,
 		showonlyincombiner	= 0,
 	},
 	Loner = 
 	{
 		gameattributename 	= "loner",
 		bodypart		= part_tail,
-		name			= 37510,
-		shortdesc		= 37511,
+		name			= 37491,
+		shortdesc		= 37492,
 		showonlyincombiner	= 0,
 	},
 	DeflectionArmour = 
@@ -61,32 +61,32 @@ AbilitiesList =
 	{
 		gameattributename 	= "assassinate",
 		bodypart		= part_tail,
-		name			= 37525,
-		shortdesc		= 37526,
+		name			= 37498,
+		shortdesc		= 37499,
 		showonlyincombiner	= 0,
 	},
 	Flash = 
 	{
 		gameattributename 	= "flash",
 		bodypart		= part_tail,
-		name			= 37530,
-		shortdesc		= 37531,
+		name			= 37502,
+		shortdesc		= 37503,
 		showonlyincombiner	= 0,
 	},
 	Infestation = 
 	{
 		gameattributename 	= "infestation",
 		bodypart		= part_head,
-		name			= 37535,
-		shortdesc		= 37536,
+		name			= 37504,
+		shortdesc		= 37505,
 		showonlyincombiner	= 0,
 	},
 	Jumping = 
 	{
 		gameattributename 	= "can_SRF",
 		bodypart		= part_torso,
-		name			= 37540,
-		shortdesc		= 37541,
+		name			= 37508,
+		shortdesc		= 37509,
 		showonlyincombiner	= 0,
 	},
 	HighEndurance =
@@ -176,21 +176,13 @@ AbilitiesList =
 		name			= 6060,
 		shortdesc		= 6061,
 		showonlyincombiner	= 0,
-	},
-	Flyer = 
-	{
-		gameattributename 	= "is_flyer",
-		bodypart		= part_wings,
-		name			= 6070,
-		shortdesc		= 6071,
-		showonlyincombiner	= 1,
 	},	
 	Digging = 
 	{
 		gameattributename 	= "can_dig",
 		bodypart		= part_front_legs,
-		name			= 37505,
-		shortdesc		= 37506,
+		name			= 37489,
+		shortdesc		= 37490,
 		showonlyincombiner	= 0,
 	},
 	Charge = 
@@ -212,7 +204,7 @@ AbilitiesList =
 	FrenzyAttack = 
 	{
 		gameattributename 	= "frenzy_attack",
-		bodypart		= part_torso,
+		bodypart		= part_creature,
 		name			= 6105,
 		shortdesc		= 6106,
 		showonlyincombiner	= 0,
@@ -232,39 +224,72 @@ AbilitiesList =
 		name			= 6215,
 		shortdesc		= 6216,
 		showonlyincombiner	= 0,
-	},
-	SwimmerTail = 
-	{
-		gameattributename 	= "is_swimmer",
-		bodypart		= part_tail,
-		name			= 6065,
-		shortdesc		= 6066,
-		showonlyincombiner	= 1,
-	},
-	SwimmerTorso = 
-	{
-		gameattributename 	= "is_swimmer",
-		bodypart		= part_torso,
-		name			= 6065,
-		shortdesc		= 6066,
-		showonlyincombiner	= 1,
 	},	
 	WebThrow =
 	{
 		gameattributename 	= "web_throw",
 		bodypart		= part_tail,
-		name			= 37520,
-		shortdesc		= 37521,
+		name			= 37496,
+		shortdesc		= 37597,
 		showonlyincombiner	= 0,
 	},
 	SoiledLand =
 	{
 		gameattributename 	= "soiled_land",
 		bodypart		= part_back_legs,
-		name			= 37537,
-		shortdesc		= 37538,
+		name			= 37506,
+		shortdesc		= 37507,
 		showonlyincombiner	= 0,
 	},
+        --SpeedBoost = 
+	--{
+	--	gameattributename 	= "speed_boost",
+	--	bodypart		= part_wings,
+	--	name			= 37510,
+	--	shortdesc		= 37511,
+	--	showonlyincombiner	= 0,
+	--},
+        Overpopulation = 
+	{
+		gameattributename 	= "overpopulation",
+		bodypart		= part_creature,
+		name			= 37512,
+		shortdesc		= 37513,
+		showonlyincombiner	= 0,
+	},
+        ImaginaryHovering = 
+	{
+		gameattributename 	= "imaginary_hovering",
+		bodypart		= part_head,
+		name			= 37514,
+		shortdesc		= 37515,
+		showonlyincombiner	= 0,
+	},
+	Poison =
+	{
+		gameattributename 	= "poison_bite",
+		bodypart		= part_head,
+		name			= 37518,
+		shortdesc		= 6201,
+		showonlyincombiner	= 0,
+	},
+	PoisonSting =
+	{
+		gameattributename 	= "poison_sting",
+		bodypart		= part_tail,
+		name			= 37519,
+		shortdesc		= 6201,
+		showonlyincombiner	= 0,
+	},
+	HardShell =
+	{
+		gameattributename 	= "hard_shell",
+		bodypart		= part_torso,
+		name			= 37516,
+		shortdesc		= 37517,
+		showonlyincombiner	= 0,
+	},
+
 }
 
 ---------------------------------------------------------------------
@@ -274,12 +299,12 @@ AbilitiesList =
 
 DamageModifyingAbilitiesList = 
 {
-	Poison = 
-	{
-		dmgtype 		= DT_Poison,
-		name			= 6200,
-		shortdesc		= 6201,
-	},
+	--Poison = 
+	--{
+		--dmgtype 		= DT_VenomSpray,
+		--name			= 6200,
+		--shortdesc		= 6201,
+	--},
 	Horns = 
 	{
 		dmgtype 		= DT_HornNegateArmour,
