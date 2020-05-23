@@ -6,9 +6,11 @@
 --for most expensive damagetype.
 --Added ranged piercing ability for porcupine.
 --Power used to calculate certain ability pricing. Abilities affected:
---Herding, Pack, Barrier Destroy, Horns, Camouflage, Ranged Piercing
+--Herding, Pack, Barrier Destroy, Horns, Camouflage, Ranged Piercing, Digging
 --Extensive code changes to support this.
---Pure swimmer cost lowered, swimmer ranged cost more than melee.
+--Poplow cost fixed so that units with 150-299 power are not charged.
+--Leap attack cost lowered by 5 elec since leap time got nerfed in tuning.lua
+--Pure swimmer cost lowered.
 
 --Let's go!
 
@@ -29,6 +31,7 @@ CreatureRank = 0;
 MinRank = 0;
 
 herdCost = 0;
+popdivide = 150;
 
 -----------------
 --uncapped vars--
@@ -473,6 +476,12 @@ if (getgameattribute("pack_hunter") == 1 and getgameattribute("herding") == 1) t
 	setgameattribute("herding", 0);
 end
 
+--not unusable, but removing so that loner units won't be charged for herding or pack hunter
+if (getgameattribute("loner") == 1) then
+	setgameattribute("herding", 0);
+	setgameattribute("pack_hunter", 0);
+end
+
 -- Ability type constants.
 ABT_Ability = 1;
 ABT_Melee = 2;
@@ -510,7 +519,7 @@ AbilityData =
 
 	{ ABT_Ability, 	"is_immune", 		0, 	5, 	0, 	2.5 },
 	{ ABT_Ability, 	"keen_sense", 		0, 	10, 0, 	0 },
-	{ ABT_Ability, 	"can_dig", 			0, 	10, 0, 	10 },
+	{ ABT_Ability, 	"can_dig", 			0, 	0, 	0, 	0 },
 	{ ABT_Ability, 	"sonar_pulse", 		0, 	15, 0, 	5 },
 	{ ABT_Ability, 	"is_stealthy", 		0, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"stink_attack", 	0, 	50, 0, 	5 },
@@ -530,7 +539,7 @@ AbilityData =
 	{ ABT_Ability, 	"assassinate", 		1, 	10, 10,	20 },
 	{ ABT_Ability, 	"can_SRF", 			1, 	15, 0, 	10 },
 	{ ABT_Ability, 	"quill_burst", 		2, 	0, 	0, 	0 },	--special
-	{ ABT_Ability, 	"leap_attack", 		2, 	15, 0, 	5 },
+	{ ABT_Ability, 	"leap_attack", 		2, 	10, 0, 	5 },
 	{ ABT_Ability, 	"is_swimmer", 		2, 	0, 	0,	0 },
 	{ ABT_Ability, 	"deflection_armour",2, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"infestation", 		2, 	30, 0, 	0 },
@@ -570,12 +579,13 @@ AbilityRefPoints =
 	{ ABT_Ability, 	"herding", 			120, 	150, 	350,	3 },
 	{ ABT_Ability, 	"pack_hunter", 		160, 	190, 	500,	3 },
 	{ ABT_Ability, 	"is_stealthy", 		200, 	90, 	300,	3 },
+	{ ABT_Ability, 	"can_dig", 			150, 	60, 	210, 	3 },
 	{ ABT_Ability, 	"regeneration", 	110, 	110, 	250,	3 },
-	{ ABT_Ability, 	"frenzy_attack", 	190, 	160, 	400,	3 },	
+	{ ABT_Ability, 	"frenzy_attack", 	170, 	120, 	400,	3 },	
 	{ ABT_Ability, 	"ranged_piercing", 	80, 	50, 	200,	2 },
 
 	{ ABT_Melee, 	DT_BarrierDestroy, 		140, 	60, 	400, 	1 },
-	{ ABT_Melee, 	DT_HornNegateArmour, 	210, 	190, 	700,	1 },
+	{ ABT_Melee, 	DT_HornNegateArmour, 	200, 	120, 	550,	1 },
 
 };
 
@@ -670,12 +680,9 @@ if hasrangedmgtype(DT_VenomSpray) == 1 then
 	CostRenew = CostRenew + 1000;
 end
 
-if (getgameattribute("poplow") == 1) and (power/150 > 1) then
-	CostRenew = CostRenew + (power*0.1);
-end
-
-if (getgameattribute("poplowtorso") == 1) and (power/150 > 1) then
-	CostRenew = CostRenew + (power*0.1);
+--poplow cost
+if (((getgameattribute("poplow") == 1) or (getgameattribute("poplowtorso") == 1)) and (power/popdivide >= 2)) then
+	CostRenew = CostRenew + ((power-popdivide)/popdivide*20);
 end
 
 if getgameattribute("flash") == 1 then
@@ -685,10 +692,6 @@ end
 if getgameattribute("headflashdisplay") == 1 then
 	CostRenew = CostRenew + (50+(10*CreatureRank));
 end
-
---if getgameattribute("regeneration") == 1 then
---	CostRenew = CostRenew+(CreatureRank*40*armour);
---end
 
 if getgameattribute("deflection_armour") == 1 then
 	CostRenew = CostRenew+((hitpoints/(1-armour))/5.5);
@@ -792,9 +795,9 @@ end
 
 --Popspace calc
 if (getgameattribute("poplow") == 1) or (getgameattribute("poplowtorso") == 1) then
-	Pop = power/300;
-	else
-	Pop = power/150;
+	Pop = (power/popdivide)/2;
+else
+	Pop = power/popdivide;
 end
 
 
@@ -810,4 +813,6 @@ setattribute( "popsize", Pop )
 
 setgameattribute("Power", power);
 
+--deleteStart
 end
+--deleteEnd
