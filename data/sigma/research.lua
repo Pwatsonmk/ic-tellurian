@@ -181,9 +181,9 @@ research =
 		research      = RESEARCH_LabDefense,
 		name          = 40275,
 		icon          = "ui/ingame/research15.tga",
-		cost          = 650,
-		costrenew     = 450,
-		researchticks = 240,
-		structure     = VetClinic_EC,
+		cost          = 0,
+		costrenew     = 0,
+		researchticks = 0,
+		structure     = Lab_EC,
 	},
 }

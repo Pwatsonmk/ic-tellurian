@@ -621,7 +621,7 @@
 
 	singleselectinfotable = 
 	{
-		{38410, 38411},		-- healthbar/healthlabel
+		{38411, 38411},		-- healthbar/healthlabel
 		{38412, 38413},		-- entity icon
 		{38414, 38415},		-- entity damage
 		{38416, 38417},		-- entity endurance
@@ -924,6 +924,11 @@ infocenterresearch = function( id, enable )
 	BindButtonToInResearch		( "buildque_icon00", "", "docancelresearch", "", id, enable )
 	BindBarToResearch			( "buildque_progress_statbar", id )
 
+	if IsLabDefenseEnabled( id ) == 1 then
+	BindBarToLabDefense( "singlselect_statbar0", id )	
+
+	end
+
 end
 
 --
@@ -996,8 +1001,12 @@ infocenterbuildqueue = function( id, enabled )
 	BindLabelToBuildProgress( "buildque_progress_label", id )
 	BindBarToBuildQueue     ( "buildque_progress_statbar", id )
 
-end
+	if IsLabDefenseEnabled( id ) == 1 then
+		BindBarToLabDefense( "singlselect_statbar0", id )	
 
+	end
+
+end
 --
 unitattrtooltip = function( index )
 
@@ -1189,7 +1198,10 @@ end
 --
 infocenterhenchman = function( id )
 
-	BindLabelToHenchmanState( "henchmenaction_icon", id )
+	--BindLabelToHenchmanState( "ui/ingame/enemycreatureicon.tga", id )
+
+	--display dps
+	BindLabelToText		    ( "textlabel_infoline03", 40005 )
 
 	-- tag reload
 	if EntityHasTagReload( id ) == 1 then
@@ -1199,18 +1211,42 @@ infocenterhenchman = function( id )
 
 	end
 
+	--display speed and sight (incl. upgrades)
+
+	if (IsResearched( RESEARCH_HenchmanMotivationalSpeech ) == 1) then
+		BindLabelToText( "textlabel_upgradeline04", 40004 ) else
+		BindLabelToText( "textlabel_infoline04", 40006)
+	
+	end
+
+	if (IsResearched( RESEARCH_HenchmanBinoculars ) == 1) then
+		BindLabelToText( "textlabel_upgradeline05", 40010 ) else
+		BindLabelToText( "textlabel_infoline05", 40007 )
+
+	end
+
 end
 
 --
 infocentergyrocopter = function( id )
 
-	BindLabelToHenchmanState( "henchmenaction_icon", id )
+	--BindLabelToHenchmanState( "henchmenaction_icon", id )
 
 	-- tag reload
 	if EntityHasTagReload( id ) == 1 then
 
 		BindLabelToText		    ( "textlabel_infoline01", 40780 )
 		BindBarToEntityTagReload( "progress_statbar01", id )
+
+	end
+
+	--display speed and sight (incl. upgrades)
+
+	BindLabelToText( "textlabel_infoline04", 40013)
+
+	if (IsResearched( RESEARCH_HenchmanBinoculars ) == 1) then
+		BindLabelToText( "textlabel_upgradeline05", 40015 ) else
+		BindLabelToText( "textlabel_infoline05", 40014 )
 
 	end
 
@@ -1295,6 +1331,12 @@ end
 --
 infocenterlab = function( id )
 
+	-- auto lab defense research
+	if ResearchIsOpen(RESEARCH_LabDefense) == 1 then
+	
+		DoResearch(RESEARCH_LabDefense)
+	end
+
 	-- radar pulse
 	if RadarPulseIsOpen() == 1 then
 
@@ -1307,7 +1349,8 @@ infocenterlab = function( id )
 	if IsLabDefenseEnabled( id ) == 1 then
 
 		BindLabelToText		    ( "textlabel_infoline03", 40786 )
-		BindBarToLabDefense( "progress_statbar02", id )
+		BindBarToLabDefense( "progress_statbar2", id )
+		BindBarToLabDefense( "singlselect_statbar0", id )		
 	
 	end
 end
@@ -1426,78 +1469,83 @@ infocenterworld = function()
 
 		elseif type == Geyser_EC then
 
-			BindLabelToEntityName       ( "singlselect_name_label", id, "singleselectinfotooltip", 5 )
-			BindImageToEntityIcon       ( "singlselect_icon",       id, "singleselectinfotooltip", 2 )
+            BindLabelToEntityName       ( "singlselect_name_label", id, "singleselectinfotooltip", 5 )
+            BindImageToEntityIcon       ( "singlselect_icon",       id, "singleselectinfotooltip", 2 )
 
-			BindLabelToText				( "textlabel_infoline01", 40767 )
+            BindLabelToText                ( "textlabel_infoline01", 40767 )
 
-		else
+        elseif  type == Fire_EC or
+            type == Villager_EC
+            then
 
-			if	type == Creature_EC or
-				type == Henchman_EC or
-				type == Gyrocopter_EC or
-				type == Lab_EC or
-				type == RemoteChamber_EC or
-				type == WaterChamber_EC or
-				type == Aviary_EC or
-				type == ElectricGenerator_EC or
-				type == ResourceRenew_EC or
-				type == VetClinic_EC or
-				type == Foundry_EC or
-				type == AntiAirTower_EC or
-				type == SoundBeamTower_EC or
-				type == BrambleFence_EC or
-				type == GeneticAmplifier_EC or
-				type == Rex_EC or
-				type == Fire_EC or
-				type == LandingPad_EC or
-				type == Villager_EC
-				then
+            --basic info only
+            infocentersinglebasicstats( id )        
 
-				-- basic stats
-				infocentersinglebasicstats( id )
+        else
 
-			end
+            if    type == Creature_EC or
+                type == Henchman_EC or
+                type == Gyrocopter_EC or
+                type == Lab_EC or
+                type == RemoteChamber_EC or
+                type == WaterChamber_EC or
+                type == Aviary_EC or
+                type == ElectricGenerator_EC or
+                type == ResourceRenew_EC or
+                type == VetClinic_EC or
+                type == Foundry_EC or
+                type == AntiAirTower_EC or
+                type == SoundBeamTower_EC or
+                type == BrambleFence_EC or
+                type == GeneticAmplifier_EC or
+                type == Rex_EC or
+                type == LandingPad_EC
+                then
 
-		end
+                -- display it as though it's friendly!
+                infocenterfriendly( id )
 
-	end -- count == 1
+            end
+
+        end
+
+    end -- count == 1
 
 end
 
 --
 infocenter = function()
 
-	if SelectionCount() == 0 then
-	
-		-- display nothing
-		
-	else
-	
-		if LocalPlayer() == 0 then
+    if SelectionCount() == 0 then
+    
+        -- display nothing
+        
+    else
+    
+        if LocalPlayer() == 0 then
 
-			if SelectionCount() == 1 then
+            if SelectionCount() == 1 then
 
-				-- single
-				infocentersingleobserver( SelectionId( 0 ) )
+                -- single
+                infocentersingleobserver( SelectionId( 0 ) )
 
-			end
+            end
 
-		elseif SelectionBelongsToPlayer() == 1 then
+        elseif SelectionBelongsToPlayer() == 1 then
 
-			infocenterfriendly()
+            infocenterfriendly()
 
-		elseif SelectionIsEnemy() == 1 or SelectionIsAlly() == 1 then
+        elseif SelectionIsEnemy() == 1 or SelectionIsAlly() == 1 then
 
-			infocenterenemy()
-			
-		else
+            infocenterenemy()
+            
+        else
 
-			infocenterworld()
+            infocenterworld()
 
-		end
+        end
 
-	end
+    end
 
 end
 
@@ -1512,11 +1560,11 @@ infocentersingle = function( id )
 		
 		infocentercreature( id )
 
-	elseif EntityType( id ) == Henchman_EC then
+	elseif (EntityType( id ) == Henchman_EC) and (SelectionBelongsToPlayer() == 1) then
 		
 		infocenterhenchman( id )
 
-	elseif EntityType( id ) == Gyrocopter_EC then
+	elseif (EntityType( id ) == Gyrocopter_EC) and (SelectionBelongsToPlayer() == 1) then
 		
 		infocentergyrocopter( id )
 

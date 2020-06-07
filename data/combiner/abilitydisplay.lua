@@ -116,7 +116,7 @@ AbilitiesList =
 	Jumping = 
 	{
 		gameattributename 	= "can_SRF",
-		bodypart		= part_wings,
+		bodypart		= part_torso,
 		name			= 37508,
 		shortdesc		= 37509,
 		showonlyincombiner	= 0,
@@ -321,15 +321,6 @@ AbilitiesList =
 		shortdesc		= 6201,
 		showonlyincombiner	= 0,
 	},
-	HardShell =
-	{
-		gameattributename 	= "hard_shell",
-		bodypart		= part_torso,
-		name			= 37516,
-		shortdesc		= 37517,
-		showonlyincombiner	= 0,
-	},
-
 }
 
 ---------------------------------------------------------------------

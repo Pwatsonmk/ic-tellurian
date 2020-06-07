@@ -22,7 +22,7 @@ night_is_stealthy = 0,
 -- costextinfo
 cost = 100,
 costrenew = 0,
-constructionticks = 68,
+constructionticks = 78,
 
 -- movingextinfo
 is_land = 1,

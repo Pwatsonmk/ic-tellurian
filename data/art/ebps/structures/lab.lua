@@ -12,10 +12,10 @@ ext.min_triangle_count=1300
 -- structure defense ext info
 --
 -- cost of activation
-ext.renewCost = 500.0
+ext.renewCost = 200.0
 
 -- electricity drainingRate per tick
-ext.drainRate = 4.4
+ext.drainRate = 1.13
 
 -- amount of damage reduced to
 ext.damageMin = 1.0

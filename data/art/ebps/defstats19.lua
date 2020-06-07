@@ -22,7 +22,7 @@ ext.keen_sense = 1
 
 -- towerburstextinfo
 ext.burstRechargeTicks	= 400
-ext.burstRadius			= 20.0
+ext.burstRadius			= 25.0
 ext.burstDamage			= 250.0
 ext.burstDmgAirMult		= 0.1
 ext.burstDmgGroundMult	= 1.0

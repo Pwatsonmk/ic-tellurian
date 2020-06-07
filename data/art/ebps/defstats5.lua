@@ -40,7 +40,7 @@ ext.radarPulse_costGather = 0
 ext.stayInPathfindingAfterDead = 0
 
 -- infestationextinfo
-ext.dmg_infestation_multiplier = 1.5
+ext.dmg_infestation_multiplier = 1.3
 
 -- structure defense ext info
 --
@@ -48,7 +48,7 @@ ext.dmg_infestation_multiplier = 1.5
 ext.renewCost = 200.0
 
 -- electricity drainingRate per tick
-ext.drainRate = 4.4
+ext.drainRate = 1.13
 
 -- amount of damage reduced to
 ext.damageMin = 1.0

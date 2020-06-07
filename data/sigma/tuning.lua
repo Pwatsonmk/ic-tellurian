@@ -490,7 +490,7 @@ QuillBurst =
 }
 
 ---------------------------------------------------------------------
--- WebThrow
+-- Web Throw
 
 WebThrow =
 {
@@ -499,7 +499,7 @@ WebThrow =
 
 	-- this is the duration of the attack in ticks, and modifies the base damage
 	-- new damage is this * normal damage
-	duration				= 30.0,
+	duration				= 40.0,
 
 	-- attack range : C = (creature size (in meters)) O = offset, S = scale
 	-- Final radius = O + C*S  (where O is the minimum radius)
@@ -556,7 +556,7 @@ Infestation =
 	
 	-- Is infestation fully effective on building with struture defence ON?
 	-- 1 = YES, infest with full damage ; 0 = NO, cannot infest
-	canInfestOnStructureDefence	= 1;
+	canInfestOnStructureDefence	= 0;
 	
 }
 
@@ -729,7 +729,7 @@ AttackBonus =
 	barrierFenceBonusMult			= 3.0,
 
 	-- multiplier of damage applied to a building when struck with electric type damage
-	electricBuildingBonusMult		= 0.8,
+	electricBuildingBonusMult		= 1.0,
 
 	-- multiplier of damage applied to a building when struck with horn negate armour type damage
 	negateArmourBuildingBonusMult	= 1.0,
@@ -1047,8 +1047,8 @@ AIPlayer =
 	-- electricity bonus for AI
 	resRenewBonusEasy = 0.75,
 	resRenewBonusStandard = 1.00,
-	resRenewBonusHard = 1.2,
-	resRenewBonusHardest = 1.75,
+	resRenewBonusHard = 1.00,
+	resRenewBonusHardest = 1.50,
 	
 	-- coal bonus for AI
 	resGatherBonusEasy = 0.75,

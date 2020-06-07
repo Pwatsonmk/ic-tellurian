@@ -206,7 +206,7 @@ prerequisites =
 		newtype = TYPE_Command,
 		newitem = CMD_LabDefenseTurnOff,
 		reqtype = TYPE_Research,
-		reqitem = RESEARCH_LabDefense,
+		reqitem = RESEARCH_Rank3,
 	},
 
 --	labdefense_research= 

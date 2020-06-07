@@ -29,6 +29,7 @@ stock = {
 	"LAMMERGEIER",
 	"BOLAS_SPIDER",
 	"DIAMOND_PYTHON",
+	"OOGPISTER",
 
 -- ICXP ANIMALS
 --	"KONG", 
