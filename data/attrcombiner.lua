@@ -21,11 +21,29 @@ function combine_creature()
 -----------------
 --uncapped vars--
 -----------------
+---- Let's start by determining effective speed.
 
 speed_max 	= getgameattribute( "speed_max" );
 airspeed_max 	= getgameattribute( "airspeed_max" );
 waterspeed_max 	= getgameattribute( "waterspeed_max" );
-speed 		= max( speed_max, max( airspeed_max, waterspeed_max ) );
+
+if (getgameattribute("is_flyer") == 1) then
+	speed = airspeed_max*1.3;
+end
+
+if (getgameattribute("is_swimmer") == 1 and getgameattribute("is_land") == 1) then
+	speed = ((waterspeed_max^2)/(36+(speed_max*4))) + speed_max;
+end
+
+if (getgameattribute("is_swimmer") == 1 and getgameattribute("is_land") == 0) then
+	speed = waterspeed_max*0.7;
+end
+
+if (getgameattribute("is_swimmer") == 0 and getgameattribute("is_land") == 1) then
+	speed = speed_max;
+end
+
+---- End of speed section.
 
 size 		= getgameattribute( "size" );
 hitpoints 	= getgameattribute( "hitpoints" );
@@ -53,15 +71,15 @@ if (range_max > 0) then
 end
 
 if damager > damagem then
-	rangedrmod = 0.8;
-	rangedmmod = 0.2;
+	rangedrmod = 0.92;
+	rangedmmod = 0.55;
 	else
-	rangedrmod = 0.2;
-	rangedmmod = 0.8;
+	rangedrmod = 0.55;
+	rangedmmod = 0.92;
 end
 
 if damager > 0 then
-	damage = damagem * rangedmmod + damager * rangedrmod;
+	damage = (damagem * rangedmmod) + (damager * rangedrmod);
 	else
 	damage = damagem;
 end
@@ -167,12 +185,12 @@ end
 
 rank2pow = 60;
 rank3pow = 120;
-rank4pow = 220;
+rank4pow = 230;
 rank5pow = 400;
 
 power = Power(damage, hitpoints, armour);
 
-speedCost = speed*0.75;
+speedCost = ((speed/22)^0.28);
 
 sightCost = sight_radius1*0.4;
 
@@ -392,7 +410,7 @@ AbilityData =
 	{ ABT_Ability, 	"flash", 		0, 	0, 	0, 	0 },
 	{ ABT_Ability, 	"end_bonus", 		0, 	10, 	0,	0 },
  	{ ABT_Ability, 	"speed_boost", 		0, 	0, 	0, 	0 },
- 	{ ABT_Ability, 	"overpopulation", 	2, 	0, 	0, 	0 },
+ 	{ ABT_Ability, 	"overpopulation", 	2, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"poplow", 		1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"poplowtorso", 		1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"herding", 		1, 	0, 	0, 	0 },	--special
@@ -406,28 +424,28 @@ AbilityData =
 	{ ABT_Ability, 	"quill_burst", 		2, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"leap_attack", 		2, 	15, 	0, 	5 },
 	{ ABT_Ability, 	"is_swimmer", 		2, 	0, 	0,	0 },
-	{ ABT_Ability, 	"deflection_armour", 	2, 	30, 	10, 	20 },
+	{ ABT_Ability, 	"deflection_armour", 	2, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"infestation", 		2, 	30, 	0, 	0 },
 	{ ABT_Ability, 	"charge_attack", 	3, 	15, 	0, 	5 },
 	{ ABT_Ability, 	"is_flyer", 		3, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"electric_burst", 	2, 	0, 	0, 	0 },	--special
-	{ ABT_Ability, 	"poison_touch", 	3, 	40, 	0, 	10 },
+	{ ABT_Ability, 	"poison_touch", 	3, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"web_throw", 		3, 	0, 	0, 	0 },	--special
- 	{ ABT_Ability, 	"poison_bite", 			3,  	30, 	0, 	10 },
- 	{ ABT_Ability, 	"poison_sting", 	3,  	30, 	0, 	10 },
-	{ ABT_Ability, 	"poison_pincers", 	3, 	30, 	0, 	10 },
+ 	{ ABT_Ability, 	"poison_bite", 		3,  	0, 	0, 	0 },	--accounted for in damagetype
+ 	{ ABT_Ability, 	"poison_sting", 	3,  	0, 	0, 	0 },	--accounted for in damagetype
+	{ ABT_Ability, 	"poison_pincers", 	3, 	0, 	0, 	0 },	--accounted for in damagetype
 	{ ABT_Ability, 	"loner", 		2, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"soiled_land", 		3, 	50, 	0, 	0 },
 
 	{ ABT_Range, 	DT_Electric, 		2, 	0, 	0,	0 },
 	{ ABT_Range, 	DT_Poison, 		3, 	0, 	0,	0 },
-	{ ABT_Range, 	DT_Sonic, 		2, 	10, 	0,	2.5 },
+	{ ABT_Range, 	DT_Sonic, 		2, 	0, 	0,	0 },
 	{ ABT_Range, 	DT_VenomSpray, 		3, 	0, 	0,	0 },
 
 	{ ABT_Melee, 	DT_BarrierDestroy, 	0, 	0, 	0, 	0},     --special
 	{ ABT_Melee, 	DT_HornNegateFull, 	2, 	30, 	0, 	10 },
 	{ ABT_Melee, 	DT_HornNegateArmour, 	3, 	0, 	0, 	0 },	--special
-	{ ABT_Melee, 	DT_Poison, 		3, 	0, 	0, 	0 },
+	{ ABT_Melee, 	DT_Poison, 		3, 	0, 	0, 	0 },	--special
 };
 
 -- Total the costs and find min rank for all abilities.
@@ -480,12 +498,15 @@ for index, part in BodyPartsThatCanHaveRange do
 		-- if not artillery range
 		if ( range_artillerytype( part ) == 0 ) then
 			has_direct = 1;
-			RangeCostMult = 1.15;
-			CostRenew = CostRenew + 30 + 10*(CreatureRank - 1);
+
+			if ( hasrangedmgtype(DT_Sonic) == 1 ) then
+				CostRenew = CostRenew + (damager * 3);
+			else
+				CostRenew = CostRenew + (damager * 1.5);
+			end
 		else
 			has_artillery = 1;
-			RangeCostMult = 1.2;
-			CostRenew = CostRenew + 30 + 10*(CreatureRank - 1);
+			CostRenew = CostRenew + (damager * 1.7);
 		end
 	end
 end
@@ -507,19 +528,19 @@ end
 
 if (CreatureRank == 1) then
 	max_power = rank2pow;
-	CostGather = 50; 
+	CostGather = 60; 
 	elseif (CreatureRank == 2) then
 		max_power = rank3pow;
-		CostGather = 90;
+		CostGather = 110;
 		elseif (CreatureRank == 3) then
 		    max_power = rank4pow;
-		    CostGather = 150;
+		    CostGather = 170;
 		    elseif (CreatureRank == 4) then
 		        max_power = rank5pow;
-				CostGather = 250;
+				CostGather = 275;
 		        else
 		    	max_power = 1000;
-			    CostGather = 425;
+			    CostGather = 450;
 end
 
 -----------------
@@ -528,40 +549,14 @@ end
 -----------------
 -----------------
 
--- Dedicated swimmer cost modifiers
-artillerypureswimmercostmodifier = 0.85;
-directpureswimmercostmodifier = 0.75;
-meleepureswimmercostmodifier = 0.4;
-
--- Reduce cost if unit is a dedicated swimmer
-if 	getgameattribute("speed_max") == 0 and
-	getgameattribute("waterspeed_max") > 0 and
-	getgameattribute("airspeed_max") == 0 then
-	
-	if has_direct == 1 then 
-		CostGather = CostGather * directpureswimmercostmodifier;
-		CostRenew = CostRenew * directpureswimmercostmodifier;
-	end
-	if has_artillery == 1 then
-		CostGather = CostGather * artillerypureswimmercostmodifier;
-		CostRenew = CostRenew * artillerypureswimmercostmodifier;
-	end
-	if has_direct == nil and has_artillery == nil then
-		CostGather = CostGather * meleepureswimmercostmodifier;
-		CostRenew = CostRenew * meleepureswimmercostmodifier;
-	end
-
-	if has_direct == 1 and has_artillery == 1 then
-		CostGather = CostGather/directpureswimmercostmodifier;
-		CostRenew = CostRenew/directpureswimmercostmodifier;
-	end
-end
-
---more ability costs
-
 -- The 0.65 here is equal to 1 - the horns multiplier from tuning.lua
 if hasmeleedmgtype(DT_HornNegateArmour) == 1 then
 	CostRenew = CostRenew + ((( ((1-(maxArmour*0.65))/(1-maxArmour)) *damagem)-damagem)*(CreatureRank*2));
+end
+
+-- This is applying a cost to venom spray (can't do it from the above table)
+if hasrangedmgtype(DT_VenomSpray) == 1 then
+	CostRenew = CostRenew + 1000;
 end
 
 -- The 1.5 here is the barrier destroy multiplier for damage to structures from tuning.lua
@@ -602,10 +597,31 @@ if getgameattribute("regeneration") == 1 then
 	CostRenew = CostRenew+(CreatureRank*40*armour);
 end
 
+if getgameattribute("deflection_armour") == 1 then
+	CostRenew = CostRenew+((hitpoints/(1-armour))/5.5);
+end
+
+if getgameattribute("overpopulation") == 1 then
+	CostRenew = CostRenew+(power/5);
+end
+
+-- Sorting out cost for Poisons.
+-- NOTE: If you want to give a venomous ranged unit poison cost, apply Damage Type 1 to its melee attack on the relevant body part.
+
+if hasmeleedmgtype(DT_Poison) == 1 then
+	CostRenew = CostRenew + 20 + (20 * (CreatureRank - 2));
+end
+
+-- If poisonous, ptouch is free!
+
+if (getgameattribute("poison_touch") == 1) and (hasmeleedmgtype(DT_Poison) == 0) then
+	CostRenew = CostRenew + 20 + (20 * (CreatureRank - 2));
+end
+
 -- Build time
 
 build_time = (30 * CreatureRank)*((power*1.2/max_power)^1.2)*popMult;
-CostGather = (CostGather + speedCost)*((power*1.3/max_power)^0.8)*RangeCostMult*1.1+(2/CreatureRank)*1.25;
+CostGather = (CostGather)*speedCost*((power*1.3/max_power)^0.8)*RangeCostMult*1.1+(2/CreatureRank)*1.25;
 CostRenew = CostRenew*((power*1.3/max_power)^0.8);
 
 if getgameattribute("overpopulation") == 0 then

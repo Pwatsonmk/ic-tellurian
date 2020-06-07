@@ -576,7 +576,7 @@
 		{RESEARCH_TowerUpgrade,				HK_Research_TowerUpgrade, 42284 },
 		{RESEARCH_StrengthenFences,			HK_Research_StrengthenFences, 42272 },
 		{RESEARCH_StrengthenElectricalGrid,		HK_Research_StrengthenElecGrid, 42273 },
-		{RESEARCH_LabDefense,				HK_Research_LabDefense, 42458 },
+--		{RESEARCH_LabDefense,				HK_Research_LabDefense, 42458 },
 	}
 
 	foundaryresearch = 
@@ -1206,8 +1206,8 @@ infocenterhenchman = function( id )
 	-- tag reload
 	if EntityHasTagReload( id ) == 1 then
 
-		BindLabelToText		    ( "textlabel_infoline01", 40780 )
-		BindBarToEntityTagReload( "progress_statbar01", id )
+		BindLabelToText		    ( "reload_label", 40780 )
+		BindBarToEntityTagReload( "reload_statbar", id )
 
 	end
 
@@ -1235,8 +1235,8 @@ infocentergyrocopter = function( id )
 	-- tag reload
 	if EntityHasTagReload( id ) == 1 then
 
-		BindLabelToText		    ( "textlabel_infoline01", 40780 )
-		BindBarToEntityTagReload( "progress_statbar01", id )
+		BindLabelToText		    ( "reload_label", 40780 )
+		BindBarToEntityTagReload( "reload_statbar", id )
 
 	end
 
@@ -1259,8 +1259,8 @@ infocenterrex = function( id )
 	-- tag reload
 	if EntityHasTagReload( id ) == 1 then
 
-		BindLabelToText		    ( "textlabel_infoline01", 40782 )
-		BindBarToEntityTagReload( "progress_statbar01", id )
+		BindLabelToText		    ( "reload_label", 40782 )
+		BindBarToEntityTagReload( "reload_statbar", id )
 
 	end
 
@@ -1298,8 +1298,8 @@ infocentersoundbeamtower = function( id )
 	-- sonic boom
 	if SonicBoomIsOpen() == 1 then
 
-		BindLabelToText		    ( "textlabel_infoline01", 40784 )
-		BindBarToSonicBoomRecharge( "progress_statbar01", id )
+		BindLabelToText		    ( "reload_label", 40784 )
+		BindBarToSonicBoomRecharge( "reload_statbar", id )
 
 	end
 
@@ -1313,8 +1313,8 @@ infocenterantiairtower = function( id )
 	-- air burst
 	if AirBurstIsOpen() == 1 then
 
-		BindLabelToText		    ( "textlabel_infoline01", 40785 )
-		BindBarToAirBurstRecharge( "progress_statbar01", id )
+		BindLabelToText		    ( "reload_label", 40785 )
+		BindBarToAirBurstRecharge( "reload_statbar", id )
 
 	end
 
@@ -1332,8 +1332,7 @@ end
 infocenterlab = function( id )
 
 	-- auto lab defense research
-	if ResearchIsOpen(RESEARCH_LabDefense) == 1 then
-	
+	if (IsResearched( RESEARCH_Rank3 ) == 1) and (ResearchIsOpen( RESEARCH_LabDefense ) == 1) then	
 		DoResearch(RESEARCH_LabDefense)
 	end
 
@@ -1349,7 +1348,7 @@ infocenterlab = function( id )
 	if IsLabDefenseEnabled( id ) == 1 then
 
 		BindLabelToText		    ( "textlabel_infoline03", 40786 )
-		BindBarToLabDefense( "progress_statbar2", id )
+		BindBarToLabDefense( "progress_statbar02", id )
 		BindBarToLabDefense( "singlselect_statbar0", id )		
 	
 	end
@@ -1361,8 +1360,8 @@ infocenterlucy = function( id )
 	-- tag reload
 	if EntityHasTagReload( id ) == 1 then
 
-		BindLabelToText		( "textlabel_infoline01", 40783 )
-		BindBarToEntityTagReload( "progress_statbar01", id )
+		BindLabelToText		( "reload_label", 40783 )
+		BindBarToEntityTagReload( "reload_statbar", id )
 
 	end
 
@@ -2848,7 +2847,7 @@ dospecial = function( type )
 		if result == 0 then
 
 			--
-			cleartaskbar()
+			-- cleartaskbar()
 
 			-- command area
 				-- cancel button

@@ -1,12 +1,8 @@
---TO DO--
---If attacking and selfValue >>> enemyValue, build CC near enemy base???--
-
 
 aitrace("Script Component: Base building logic")
 
 function init_basebuild()
-
-	--dofilepath("data:ai/rank2rush.lua")
+	
 	aitrace("init_basebuild()")
 	
 	-- flags for turning on and off certain features of the AI
@@ -21,7 +17,7 @@ function init_basebuild()
 	sg_buildstructure[Aviary_EC] = 1
 	sg_buildstructure[ResourceRenew_EC]=1
 	sg_buildstructure[GeneticAmplifier_EC]=1
-	sg_buildstructure[LandingPad_EC] = 0
+	sg_buildstructure[LandingPad_EC] = 1
 	sg_buildstructure[BrambleFence_EC] = 1
 	
 	--local randFactor = 1000
@@ -53,7 +49,7 @@ end
 
 function NumChambers()
 	
-	return NumBuildingActive( RemoteChamber_EC )+NumBuildingActive(Aviary_EC)+NumBuildingActive(WaterChamber_EC)
+	return NumBuildingActive( RemoteChamber_EC)+NumBuildingActive(Aviary_EC)+NumBuildingActive(WaterChamber_EC)
 	
 end
 
@@ -79,19 +75,6 @@ function doupgrades()
 	 	return
 	end
 	
-	-------------------------------------------------------------------------------
-	-- Added by Bchamp 4/1/2019 to speed up getting Henchmen Yoke -----------------
-	-- 17 is the erate for 4 rods + fully upgraded generator without grid upgrade -
-	local curRank = GetRank()
-	if (g_LOD >= 2) then
-		if (ResearchQ(RESEARCH_HenchmanYoke) == 0 and curRank >= 3 and erate > 17) then
-			return
-		end
-	end
-	-------------------------------------------------------------------------------
-	-------------------------------------------------------------------------------
-
-
 	-- LOGIC ? 
 	-- try for rank2 first, but if for some reason we can't get there than I guess
 	-- we should upgrade the egen ? on bigger maps maybe i'd get the upgrades first?
@@ -99,7 +82,7 @@ function doupgrades()
 	-- this 14 needs to be worked out based on number of geysers and army type
 		
 	-- determine if we should build another egen or upgrade
-	if (NumBuildingActive( ElectricGenerator_EC ) > 0 and curRank >= 2) then
+	if (NumBuildingActive( ElectricGenerator_EC ) > 0 and ResearchCompleted(RESEARCH_Rank2)==1) then
 		
 		 if (CanUpgradeWithEscrow( UPGRADE_EGen ) == 1) then
 			ReleaseGatherEscrow();
@@ -110,7 +93,27 @@ function doupgrades()
 	end
 end
 
+function dolandingpad()
+	
+	if (ResearchCompleted(RESEARCH_Rank5)==1) then
+	
+		if (NumBuildingQ( LandingPad_EC ) < 1 and CanBuildWithEscrow( LandingPad_EC )==1) then
+			ReleaseGatherEscrow();
+			ReleaseRenewEscrow();
+			xBuild( LandingPad_EC, PH_Best );
+			aitrace("Script: Build landing pad")
+		end
+		
+		if (NumBuildingQ( Gyrocopter_EC ) < 1 and CanBuildGyroWithEscrow() == 1) then
+			ReleaseGatherEscrow();
+			ReleaseRenewEscrow();
+			BuildGyro();
+			aitrace("Script: Build gyro copter")
+		end
+		
+	end
 
+end
 
 sg_randval = Rand(100)
 
@@ -161,10 +164,10 @@ end
 
 function dogeneticamplifier()
 	
-	if (g_LOD > 0 and NumBuildingActive( Foundry_EC ) == 0) then
-		return
+	if (checkToBuildAdvancedStructures(5) == 0) then
+		return 0
 	end
-
+	
 	local numCreaturesNeeded = 9
 	-- make easy mode much more random in regards to building this
 	if (g_LOD == 0) then
@@ -188,7 +191,7 @@ end
 
 
 function dolightningrods()
-
+	
 	local erate = ElectricityPerSecQ()
 	 
 	 -- if we have reached our desired rate then don't build anymore
@@ -196,12 +199,12 @@ function dolightningrods()
 	 	return
 	end
 	
-	-- wait for 8 active henchmen before building a second rod - add randomness here
-	if (NumHenchmanActive() < 8 and NumBuildingQ( ResourceRenew_EC )>0) then
+	-- wait for six active henchmen before building a second rod - add randomness here
+	if (NumHenchmanActive() < 5 and NumBuildingQ( ResourceRenew_EC )>0) then
 		return
 	end
 	
-	-- more than 8 henchmen and more than 2 rods rank2 to start
+	-- more than 6 henchmen and more than 2 rods rank2 to start
 	if (NumBuildingQ( ResourceRenew_EC )>1 and (ResearchQ(RESEARCH_Rank2)==0 and g_LOD>0)) then
 		return
 	end
@@ -216,11 +219,6 @@ function dolightningrods()
 	
 	-- if these numbers are different, then a rod is being built (only build one at a time)
 	if ( (numQ-numActive) > 0) then
-		return
-	end
-	
-	-- should only really build 2 rods before level 2
-	if (NumBuildingActive( ResourceRenew_EC ) >= 2 and  ResearchQ(RESEARCH_Rank2)==0) then
 		return
 	end
 	
@@ -252,7 +250,6 @@ function dosoundbeamtowers()
 		flyerAttackPercentage = UnderFlyerAttackValue() / underAttackVal
 	end
 		
-	
 	-- early game (not research first rank yet)
 	if (curRank == 1 and fact_selfValue < 400) then
 		local randval = 300 + sg_randval*3
@@ -260,12 +257,7 @@ function dosoundbeamtowers()
 			buildTowers = 1
 		end
 	end
-	
-	-- added by LBFrank 01/02/19 Possibly stops AI from making pointless towers at L1
-	if (curRank == 1 and underAttackVal == 0) then
-		buildTowers = 0
-	end
-	
+		
 	-- NOTE: could easily add code to detect if attacking enemy has lots of artillery and/or flyers
 	-- which would lower the desire for soundbeam towers
 	
@@ -283,10 +275,8 @@ function dosoundbeamtowers()
 	end
 	
 	local numTowerActive = NumBuildingActive( SoundBeamTower_EC )
-	if (fact_closestGroundDist ~= 0) then
-		if (NumHenchmanActive() > 5 and fact_closestGroundDist < 150 and numTowerActive<1 and curRank==1) then
-			buildTowers = 1
-		end
+	if (NumHenchmanActive() > 5 and fact_closestGroundDist < 150 and numTowerActive<1 and curRank==1) then
+		buildTowers = 1
 	end
 	
 	-- check for camo digger units
@@ -299,16 +289,6 @@ function dosoundbeamtowers()
 		end
 	end
 	
-	-- added by LBFrank 3/31/19 to check for sonic units (useful in the wake of L2/L3 sonic)
-	if (buildTowers==0 and numTowerActive==0) then
-		local numSonic = PlayersUnitTypeCount( player_enemy, player_max, sg_class_sonic )
-		if (curRank < 4 and numSonic > (3+sg_randval/60)) then
-			buildTowers = 1
-		elseif (numSonic > 7) then
-			buildTowers = 1
-		end
-	end
-
 	if (buildTowers == 1) then
 	
 		local desiredAmount = 1 + CoalPileWithDropOffs()
@@ -319,23 +299,11 @@ function dosoundbeamtowers()
 				
 		local numtowersBeRequested = NumBuildingQ( SoundBeamTower_EC ) - numTowerActive
 	
-		-- don't build more than one at a time, if so, build a second creature chamber on hard difficulty
-		-- modified by bchamp 10/1/2018 to stop AI from building a ton of SB towers when they really need to build units
+		-- don't build more than one at a time
 		if (numtowersBeRequested > 0) then
-			if (g_LOD == 2 and NumBuildingQ( RemoteChamber_EC ) < 2 and CanBuildWithEscrow( RemoteChamber_EC ) == 1 ) then
-				
-				ReleaseGatherEscrow();
-				ReleaseRenewEscrow();
-				xBuild( RemoteChamber_EC, PH_Best );
-				aitrace("Script: Build second defense creature chamber")
-			end
-
 			return
 		end
 		
-
-
-
 		if (NumBuildingQ( SoundBeamTower_EC ) < desiredAmount and CanBuildWithEscrow( SoundBeamTower_EC )==1) then
 			ReleaseGatherEscrow();
 			ReleaseRenewEscrow();
@@ -366,11 +334,16 @@ function doantiairtowers()
 	end
 	
 	-- constants
-	local numtowers = 1+enemyFlyers/5*(GetRank()-2); --Updated by Bchamp 2/15/2020
+	local numtowers = 1+enemyFlyers/10;
 	
 	local numActive = NumBuildingActive( AntiAirTower_EC )
 	local numQueued = NumBuildingQ( AntiAirTower_EC )
 	local numtowersBeRequested =  numQueued - numActive
+	
+	-- don't build more than one at a time
+	if (numtowersBeRequested > 0) then
+		return
+	end
 	
 	-- make sure one more is being built if we are underattack by flyers
 	if ((NumUnprotectedAASite() > 0 or NumSitesWithZeroAA() > 0) and numQueued == numtowers) then
@@ -390,44 +363,20 @@ end
 
 function dovetclinic()
 
-
-	 -- extra check to make sure we have a few creatures, lab isn't under attack, and we have henchmen. Bchamp 3/31/2019
-	if (LabUnderAttackValue() > 200 or NumCreaturesQ() < (sg_randval*0.06 + 1) or NumHenchmanActive() < 12 ) then
-		return
+	local offset = 0
+	-- build clinic earlier if we have a long way to go
+	if (fact_lowrank_all > 3) then
+		offset = -20
 	end
 
-	-- Do not build more than 1 Research Clinic at a time -- Bchamp 4/1/2019
-	if (NumBuildingQ( VetClinic_EC ) > NumBuildingActive( VetClinic_EC )) then
-		return
+	if (checkToBuildAdvancedStructures(offset) == 0) then
+		return 0
 	end
 
-	local curRank = GetRank()
-	
-	--Add randomization to number of vet clinics built. Bchamp 3/31/2019
-	local maxVetClinic = 1
-	if (curRank > 2 and g_LOD >= 2) then
-		-- 30% chance of building a single vet clinic. Also will only build a single clinic if doing a 1v1 on a small map.
-		if (sg_randval < 30 or ((PlayersAlive( player_ally ) == 1 and PlayersAlive( player_enemy ) == 1) and fact_closestAmphibDist < 450)) then
-			maxVetClinic = 1
-		else
-			maxVetClinic = 2
-		end
-	end
-	
-	-- If already completed all of these researches at the clinic, don't build more. This way AI doesnt keep building if you destroy clinics
-	-- in the late game. Added by Bchamp 3/31/2019
-	-- LBFrank 4/01/19 they may want one clinic to research tower upgrade if they have the towers for it. if not then yeah we don't need em
-	if (ResearchCompleted(RESEARCH_HenchmanYoke) == 1 and ResearchCompleted(RESEARCH_HenchmanMotivationalSpeech) == 1 and ResearchCompleted(RESEARCH_StrengthenElectricalGrid) == 1 and ResearchCompleted(RESEARCH_IncBuildingIntegrity) == 1) then
-		if (ResearchCompleted(RESEARCH_TowerUpgrade) == 0 and (NumBuildingActive( SoundBeamTower_EC ) + NumBuildingActive( AntiAirTower_EC )) <= 1) then
-			maxVetClinic = 1
-		else
-			maxVetClinic = 0
-		end
-	end
-
+	 -- extra check to make sure we have a few creatures
 	 if (goal_needcoal ~= 2) then
 		-- typical check for building
-		if (NumBuildingQ( VetClinic_EC ) < maxVetClinic and CanBuildWithEscrow( VetClinic_EC )==1) then
+		if (NumBuildingQ( VetClinic_EC ) < 1 and CanBuildWithEscrow( VetClinic_EC )==1) then
 			ReleaseGatherEscrow();
 			ReleaseRenewEscrow();
 			xBuild( VetClinic_EC, PH_Best );
@@ -444,7 +393,7 @@ end
 function dofoundry()
 	
 	money_on_hold = 0;
-
+	
 	local alwaysBuild = 0
 	-- always build when we have no drop off unless when? if have tons of money and we are under attack?
 	if (CoalPileWithDropOffs()==0 and (LabUnderAttackValue() < fact_selfValue or ScrapAmountWithEscrow() < 500) ) then
@@ -452,95 +401,10 @@ function dofoundry()
 	end
 	
 	local gatherSiteOpen = IsGatherSiteOpen()
-	local numFoundries = NumBuildingQ( Foundry_EC )
-
-	--When henchmen are under attack and can no longer mine coal at this gather site, they will build a foundry. 
-	--This function can be bad because AI can waste resources on a foundry when it really needs units more than anything.
-	--Changed to NumHenchmenGuarding() > 4 instead of 2. And increased UnderAttackValue() > 200 from 100..--Bchamp 3/31/2019
-	if (gatherSiteOpen == 0 and NumHenchmenGuarding()>4 and UnderAttackValue() > 200) then
+	if (gatherSiteOpen == 0 and NumHenchmenGuarding()>2 and UnderAttackValue() > 100) then
 		alwaysBuild = 1
 	end
-
-	--Build Foundry if you are going to be able to beat attack, otherwise don't and save for units. Added 3/31/2019 by Bchamp
-	if (gatherSiteOpen == 0 and NumHenchmenGuarding()>3 and UnderAttackValue() < 0.7*fact_selfValue) then
-		alwaysBuild = 1
-	end
-	
-	local curRank = GetRank()
-	local minFoundries_LOD = g_LOD --Use Level of difficulty determining minimum number of foundries at each level. Assumes g_LOD is never more than 2
-	if (minFoundries_LOD > 2) then
-		minFoundries_LOD = 2
-	end
-
-	-- Have a minimum of 2 foundries if AI is at least lvl 2 
-	if (curRank >= 2 and numFoundries < minFoundries_LOD) then
-		if (LabUnderAttackValue() > 100 and ScrapPerSec() > 8) then
-			alwaysBuild = 0
-		else
-			--Minimum of 16 henchmen before building second foundry. Also make sure foundry's are full. 3/30/2019 Bchamp
-			if (numFoundries == 1 and (NumHenchmanQ() < 16 or gatherSiteOpen > 0 or NumCreaturesQ() < (sg_randval*0.05 + 1))) then
-				alwaysBuild = 0
-			else
-				alwaysBuild = 1
-			end
-		end
-	end
-	
-	-- On larger maps, have a minimum of 3 foundries if AI is at least lvl 3. 
-	-- Also need minimum number of units.
-	if (fact_closestGroundDist > 500 and curRank >= 3) then
-		if (numFoundries < (minFoundries_LOD + 1) and gatherSiteOpen == 0 and NumCreaturesQ() > (sg_randval*0.07 + 2)) then
-			if (LabUnderAttackValue() > 100 and ScrapPerSec() > 8) then
-				alwaysBuild = 0
-			else
-				alwaysBuild = 1
-			end
-		end
-	end
-
-	-- Have minimum 3 foundries once AI reaches Rank 4
-	if (curRank >= 4) then
-		if (numFoundries < (minFoundries_LOD + 1) and gatherSiteOpen == 0) then
-			if (LabUnderAttackValue() > 100 and ScrapPerSec() > 8) then
-				alwaysBuild = 0
-			else
-				alwaysBuild = 1
-			end
-		end
-	end
-
-	-- On small maps, have a minimum of 5 foundries if AI is at lvl 5
-	-- is this too many on small maps?? Vacation? Ring?
-	if (curRank == 5 and numFoundries < (minFoundries_LOD + 3) and gatherSiteOpen == 0) then
-		if (LabUnderAttackValue() > 100 and ScrapPerSec() > 8) then
-			alwaysBuild = 0
-		else
-			alwaysBuild = 1
-		end
-	end
-
-
-	-- On large maps, have a minimum of 6 foundries if AI is at lvl 5
-	if (fact_closestGroundDist > 500 and curRank == 5 and numFoundries < (minFoundries_LOD + 4)) then
-		if (LabUnderAttackValue() > 100 and ScrapPerSec() > 8) then
-			alwaysBuild = 0
-		else
-			alwaysBuild = 1
-		end
-	end
-	
-	----------------------------------------------------------------------------------------------
-	-- Added by Bchamp 4/1/2019 to speed up henchmen yoke. Would rather get 1.5x resources from
-	----- yoke rather than spend money on foundry and henchmen to fill it ------------------------
-	if (curRank >= 3 and ResearchQ(RESEARCH_HenchmanYoke) == 0 and numFoundries > 1 and g_LOD >= 2) then
-		alwaysBuild = 0
-		if (ScrapPerSec() > 22) then --10 henchmen mining at 5 coal piles ~12 ScrapPerSec
-			return
-		end
-	end
-	----------------------------------------------------------------------------------------------
-
-
+		
 	-- check for case where there are a bunch of henchmen who could use a better spot to gather
 	
 	if (alwaysBuild == 0) then
@@ -553,13 +417,6 @@ function dofoundry()
 			return
 		end
 			
-		--Work In Progress Code
-		--Trying to figure out how to stop AI from continually trying to build Foundry when its unsafe due to enemy units.
-		--This code here was to test if global counter variables worked. They appear to.
-		--if (sg_foundryAttempts > NumBuildingQ( Foundry_EC ) and UnderAttackValue() > 100) then
-		--	return
-		--end
-
 		-- build foundry more on smaller maps
 		-- build foundry when we have a military advantage
 		-- build foundry when need more money
@@ -586,55 +443,42 @@ function dofoundry()
 			return
 		end
 		
-		if (NumHenchmenGuarding() < 1) then
+		 if (NumHenchmenGuarding() < 1) then
 		 	return
 		end
 		
 		-- if have less henchmen then our threshold, no need to expand
-		if (NumHenchmanActive() <= sg_henchmanthreshold and CoalPileWithDropOffs()>0) then
-			return
-		end
+		--if (NumHenchmanActive() <= sg_henchmanthreshold and CoalPileWithDropOffs()>0) then
+		--	return
+		--end
 	end
 
-	--Only build one foundry at a time 1/4/2019 Bchamp
-	if (NumBuildingQ( Foundry_EC ) - NumBuildingActive( Foundry_EC ) > 0) then
-		return
-	end
+	local dist2dropoff = DistToDropOff();
+	if (dist2dropoff > icd_maxfoundrydist) then
 
+		aitrace("Script: dist2dropoff="..dist2dropoff);
 		if (CanBuildWithEscrow( Foundry_EC ) == 1) then
 			ReleaseGatherEscrow();
 			ReleaseRenewEscrow();
 			xBuild( Foundry_EC, PH_Best );
 			aitrace("Script: build foundry");
-			sg_foundryAttempts = sg_foundryAttempts + 1
 			return
 		end
 		
-
+		aitrace("Script: failed to build foundry");
+	end
 end
 
-
 function docreaturechamber()
-
+	
 	local numActiveChambers = NumBuildingActive( RemoteChamber_EC )
-	local curRank = GetRank()
-
-	-- Don't make more than one Creature Chamber on Easy Difficulty --Added by Bchamp 4/5/2019
-	if (g_LOD == 0) then
-		if (numActiveChambers > 0) then
-			return
-		end
-	end
 
 	if (numActiveChambers > 0) then
 		local underAttackVal = UnderAttackValue()
-		-- check to see distance of chamber to base and blow chamber if under attack, Bchamp 10/2018
-		if (GroundDistToBase() > 150 and (UnderAttackValue() > (2*fact_selfValue + 150) and fact_selfValue < 400)) then
+		-- check to see distance of chamber to base
+		if (GroundDistToBase() > 150 and ((LabUnderAttackValue() > 80 and fact_selfValue < 400) or
+		 (underAttackVal > fact_selfValue and underAttackVal > 100)) ) then
 			Scuttle( RemoteChamber_EC )
-			if (goal_rank2rush == 1) then
-				CancelRank2Rush();
-
-			end
 		end
 	end
 
@@ -644,112 +488,54 @@ function docreaturechamber()
 		aim_erate = 6
 	end
 	
-	-- if AI has tons of electricity (edited from 1600 to 2600 on 9/27/2018 by Bchamp)
-	if (ElectricityAmountWithEscrow() > 2600) then
+	-- if AI has tons of electricity
+	if (ElectricityAmountWithEscrow() > 1600) then
 		aim_erate = 0
 	end
 	
-
 	local metRankRequirement = 1
-
-	--rank requirement test - this states in standard/hard if we have a unit greater than rank1 and we have 
-	--not started researching rank2 then don't build chamber yet
-	if (g_LOD>0 and fact_army_maxrank > 1 and ResearchQ(RESEARCH_Rank2)==0) then
+	-- rank requirement test - this states in standard/hard if we have a unit greater than rank1 and we have 
+	-- not started researching rank2 then don't build chamber yet
+	-- if AI has more than 600 coal, then also build chamber
+	if (g_LOD>0 and fact_army_maxrank > 1 and ResearchQ(RESEARCH_Rank2)==0 and ScrapAmountWithEscrow() < 600) then
 		metRankRequirement = 0
 	end
 		
-	-- LOGIC #1 (build chamber when we have reached elec desired rate)
-	if (LabUnderAttackValue()<500 and ElectricityPerSecQ()<aim_erate) then
+	-- LOGIC #1 (build chamber when we have reached elec desired rate or already have ranked to 2)
+	 if (LabUnderAttackValue()<500 and (ElectricityPerSecQ()<aim_erate or metRankRequirement==0 ) ) then
 	 	return 0
 	end
 
-	-------------------------------------------------------------
-	--added 10/1/2018 by bchamp----------------------------------
-	--sets desireCC. Won't build a CC before rank 2 if rank2 units are swimmers/amphib
-	local desireCC = 0
-	local curRank = GetRank()
-	if (goal_desireGround == 1 or curRank < 2) then
-		if (curRank < 2) then
-			local swimmerCount = Army_NumCreaturesInClass( Player_Self(), sg_class_swimmer, curRank-1, curRank+1 );
-			if (swimmerCount > 0) then 
-				return
-			end
-		end
-		desireCC = 1
-	end
-	-------------------------------------------------------------
-	-------------------------------------------------------------
-	-- Added by Bchamp so all amphib armies will still make regular CC's, assuming they have a WC 4/19/2019
-	if (NumBuildingActive(WaterChamber_EC) > 0 and curRank >= fact_lowrank_amphib) then
-		desireCC = 1
-	end
-	-------------------------------------------------------------
-
-
-	if (desireCC == 1 and (goal_needelec ~= 2 or fact_armyAvgElec<10)) then
-
-
+	-- if we have no elec don't build chamber - unless we have a low elec army
+	if (goal_desireGround == 1 and (goal_needelec ~= 2 or fact_armyAvgElec<10)) then
+		
 		if (numActiveChambers > 0  and ScrapAmountWithEscrow() > 500) then
 			local groundActive = Army_NumCreature( Player_Self(), sg_class_ground );
 			local groundQ = Army_NumCreatureQ( Player_Self(), sg_class_ground );
 			local queued = groundQ - groundActive
 			
-			if (queued >= (4*numActiveChambers) or numActiveChambers < (NumBuildingActive( Foundry_EC ) + 1)) then
+			if (queued >= (4*numActiveChambers)) then
 				-- store number of desired chambers
 				numActiveChambers = numActiveChambers+1
 			end
-
-			--Added so that computer could build a second CC at L2 if it's doing well. --Added by Bchamp 4/1/2019
-			if (g_LOD >= 2 and numActiveChambers < 2 and curRank == 2 and ScrapPerSec() > 15 
-				and (ElectricityPerSecQ() >= 10 or (ElectricityPerSecQ() >= 8 and goal_rank2rush == 1)) and queued >= (numActiveChambers)) then
-
-				numActiveChambers = 1+Rand(2)
-				if (ScrapAmountWithEscrow() > 500) then
-					numActiveChambers = 2
-				end
-			end
-
+			-- cap for now
+			--if (numActiveChambers>2) then
+			--	numActiveChambers = 2
+			--end
 			
 		else
 			-- store number of desired chambers
 			numActiveChambers = 1
 		end
-
+		
 		-- build chamber when we have more than X number of henchman and a foundry
 		
-		-- function that will hopefully increase distance chambers are spread out
-		-- have it based on # foundrys if there are more than 2 chambers present
-		
-		-- mapsizeoffset so jump distance is also map dependent
-		local mapsizeoffset = 1
-		if (fact_closestAmphibDist>400) then
-			mapsizeoffset = 1.2
-		end
-		if (fact_closestAmphibDist>650) then
-			mapsizeoffset = 1.5
-		end
-		if (fact_closestAmphibDist>800) then
-			mapsizeoffset = 1.7
-		end
-		local jump = 0
-		if (NumBuildingQ( RemoteChamber_EC ) >= 2) then
-			jump = 60*((NumBuildingQ( Foundry_EC ))^0.75)*mapsizeoffset
-		elseif (NumBuildingQ( RemoteChamber_EC ) < 2) then
-			jump = 0
-		end
-
-		-- if lab under attack, change chamber location to PH_Best, which will be near lab if possible, or remote if unsafe
-		chamberLocation = PH_OutsideBase
-		if (LabUnderAttackValue() > 200) then
-			chamberLocation = PH_Best
-		end
-
 		if (NumBuildingQ( RemoteChamber_EC ) < numActiveChambers and 
-			IsChamberBeingBuilt() == 0 and metRankRequirement == 1
-			and CanBuildWithEscrow( RemoteChamber_EC ) == 1) then 
-
-			-- randomize the distance from the base with spread.
-			icd_chamberDistFromBase = (jump + 25 + (2*Rand(10)))
+			IsChamberBeingBuilt() == 0 and
+			CanBuildWithEscrow( RemoteChamber_EC)==1) then
+			
+			-- randomize the distance from the base 30-45m
+			icd_chamberDistFromBase = 25 + Rand(10)
 			-- if an amphibian map then stay closer to the base
 			if (goal_amphibTarget==1) then
 				icd_chamberDistFromBase = 30
@@ -757,8 +543,8 @@ function docreaturechamber()
 			
 			ReleaseGatherEscrow();
 			ReleaseRenewEscrow();
-			xBuild( RemoteChamber_EC, chamberLocation );
-			aitrace("Script: Build creature chamber")
+			xBuild( RemoteChamber_EC, PH_OutsideBase );
+			aitrace("Script: Build first creature chamber")
 			return 1
 		end
 	end
@@ -767,121 +553,67 @@ function docreaturechamber()
 end
 
 function doelectricalgenerator()
+	 
+	-- wait for rank 2 (no exceptions here)
+	if (ResearchCompleted(RESEARCH_Rank2)==0) then
+		return
+	end
 	
-	--this determines if we want to build a gen
-	local buildGen = 1
-
 	if (LabUnderAttackValue() > 0 or UnderAttackValue() > fact_selfValue*0.5) then
-		buildGen = 0
+		return
 	end
 	 
-	local erate = ElectricityPerSecQ()
+	 local erate = ElectricityPerSecQ()
 	 
 	 -- if we have reached our desired rate then don't build anymore
-	if (erate >= sg_desired_elecrate) then
-	 	buildGen = 0
+	 if (erate >= sg_desired_elecrate) then
+	 	return
 	end
 	
 	-- this rule states that only build this egen when
-	-- we have 2 or more rods present
-	if (NumBuildingQ( ResourceRenew_EC ) < 2 and g_LOD ~= 0) then
-		buildGen = 0
+	-- we have 4 rods present
+	if (NumBuildingQ( ResourceRenew_EC ) < 4 and g_LOD ~= 0) then
+		return
 	end
 	
 	-- make sure AI has some military or make sure have met our lowrank requirement
 	if (fact_selfValue < (100+sg_randval*5) and GetRank() >= fact_lowrank_all) then
-		buildGen = 0
+		return
 	end
-	
-	-- only build generator if foundry exists
-	if (NumBuildingQ( Foundry_EC ) < 1) then
-		buildGen = 0
-	end
-	  
+		  
 	-- are there egens that need upgrading, if so we should upgrade instead of building more egens
 	if (NumBuildingQ( ElectricGenerator_EC ) > 0 and EGenNeedsUpgrading()==1) then
-		buildGen = 0
+		return
 	end
 		 
 	local beingBuilt = NumBuildingQ( ElectricGenerator_EC ) - NumBuildingActive( ElectricGenerator_EC )
-	
-	if (buildGen == 1) then		 
-		if (beingBuilt == 0 and CanBuildWithEscrow( ElectricGenerator_EC ) == 1) then
-			ReleaseGatherEscrow();
-			ReleaseRenewEscrow();
-			xBuild( ElectricGenerator_EC, PH_OpenGeyser );
-			aitrace("Script: Build egen")
-		end
+			 
+	if (beingBuilt == 0 and CanBuildWithEscrow( ElectricGenerator_EC ) == 1) then
+		ReleaseGatherEscrow();
+		ReleaseRenewEscrow();
+		xBuild( ElectricGenerator_EC, PH_OpenGeyser );
+		aitrace("Script: Build egen")
 	end
 end
 
 function dowaterchamber()
 	
+	-- if this chamber is desired and we have no other chamber this maybe a good option
+	-- this is only if we have swimmers in the current ranks of course
 	
-	-- Build Water Chamber when starting to research level that water units are available.
-	-- Added by Bchamp 4/5/2019
-	local curRank = GetRank()
-	local prepWC = 0
-	if (g_LOD >= 2 and ((fact_lowrank_amphib - curRank) == 1 or (fact_lowrank_swimmer - curRank) == 1) and NumBuildingQ( WaterChamber_EC ) == 0) then
-		if (curRank == 1 and ResearchQ(RESEARCH_Rank2) == 1) then
-			prepWC = 0 --Water Chambers not available to build until L2 as of current update 4/5/2019
-		elseif (curRank == 2 and ResearchQ(RESEARCH_Rank3) == 1) then
-			prepWC = 1
-		elseif (curRank == 3 and ResearchQ(RESEARCH_Rank4) == 1) then
-			prepWC = 1
-		elseif (curRank == 4 and ResearchQ(RESEARCH_Rank5) == 1) then
-			prepWC = 1
-		else
-			prepWC = 0
-		end
-
-		if (prepWC == 1 and CanBuildWithEscrow( WaterChamber_EC )==1 and IsChamberBeingBuilt() == 0) then
+	if (goal_desireSwimmers == 0 or (LabUnderAttackValue() > 100 and NumChambers() > 0)) then
+		return 0
+	end
+	
+	if (NumBuildingQ( WaterChamber_EC ) < 2 and IsChamberBeingBuilt() == 0 and 
+		CanBuildWithEscrow( WaterChamber_EC )==1) then
 			ReleaseGatherEscrow();
 			ReleaseRenewEscrow();
 			xBuild( WaterChamber_EC, PH_Best );
 			aitrace("Script: Build waterchamber");
 			return 1
-		end
-		return 0
 	end
-
-
-
-	-- if this chamber is desired and we have no other chamber this maybe a good option
-	-- this is only if we have swimmers in the current ranks of course
-	
-	---------------------------------------------------
-	--Removed by Bchamp 10/12/2019 after noticing that Rex Chance army (which at the time had no amphib till L4) did not build WCs on Islets
-	--at all for the entire game on Normal Difficulty. This fixes it, although it may be inelegant. We should take time to investigate why goal_desireSwimmers == 0 in this situation,
-	--since it doesn't look like it should in military.lua
-	--if (goal_desireSwimmers == 0 or (LabUnderAttackValue() > 100 and NumChambers() > 0)) then
-		--return 0 
-	--end
-	---------------------------------------------------
-
-
-	-- MORE WCs on water maps
-	if (fact_lowrank_amphib == curRank or (goal_amphibTarget==1) or (Army_NumCreature( Player_Self(), sg_class_amphib ) == Army_NumCreature( Player_Self(), sg_class_ground ))) then
-		if (NumBuildingQ( WaterChamber_EC ) < (GetRank()-1) and IsChamberBeingBuilt() == 0 and 
-			CanBuildWithEscrow( WaterChamber_EC )==1) then
-				ReleaseGatherEscrow();
-				ReleaseRenewEscrow();
-				xBuild( WaterChamber_EC, PH_Best );
-				aitrace("Script: Build waterchamber");
-				return 1
-		end
-		return 0
-	else
-		if (NumBuildingQ( WaterChamber_EC ) < 2 and NumBuildingQ( WaterChamber_EC ) < (GetRank()-1) and
-			IsChamberBeingBuilt() == 0 and CanBuildWithEscrow( WaterChamber_EC )==1) then
-				ReleaseGatherEscrow();
-				ReleaseRenewEscrow();
-				xBuild( WaterChamber_EC, PH_Best );
-				aitrace("Script: Build waterchamber");
-				return 1
-		end
-		return 0
-	end
+	return 0
 end
 
 function doaviary()
@@ -889,13 +621,7 @@ function doaviary()
 	if (goal_desireFlyers == 0) then
 		return 0
 	end
-
-	-- Added so that Air Chambers are never built before lvl 3 on 9/6/2018 by Bchamp
-	local curRank = GetRank()
-	if (curRank < 3) then
-		return 0
-	end
-	
+		
 	local numActiveChambers = NumBuildingActive( Aviary_EC )
 	if (numActiveChambers > 0 and  ScrapAmountWithEscrow() > 500) then
 		local flyerActive = Army_NumCreature( Player_Self(), sg_class_flyer );
@@ -944,6 +670,7 @@ function dobasebuild()
 
 	-- if we need coal badly don't ask for any buildings since
 	-- we cannot afford them we should build only henchman
+	-- what about foundrys ?
 	if (goal_needcoal == 2 or NumHenchmanActive()==0) then
 		return
 	end
@@ -1007,9 +734,11 @@ function dobasebuild()
 		dogeneticamplifier()
 	end
 	
+	-- landing pad
+	if (sg_buildstructure[LandingPad_EC]==1) then
+		dolandingpad();
+	end
 	
 	doupgrades();
 
 end
-	
-	

@@ -8,7 +8,7 @@ function init_research()
 	sg_research[RESEARCH_AdvancedStructure] = 1
 	sg_research[RESEARCH_HenchmanYoke] = 1
 	sg_research[RESEARCH_HenchmanHeal] = 0
-	sg_research[RESEARCH_HenchmanBinoculars] = 1
+	sg_research[RESEARCH_HenchmanBinoculars] = 0
 	sg_research[RESEARCH_HenchmanTag] = 0
 	sg_research[RESEARCH_HenchmanMotivationalSpeech] = 1
 	sg_research[RESEARCH_StrengthenFences] = 0
@@ -21,7 +21,7 @@ function init_research()
 		sg_research[RESEARCH_HenchmanHeal] = 1
 		sg_research[RESEARCH_HenchmanBinoculars] = 1
 		sg_research[RESEARCH_StrengthenFences] = 1
-		sg_research[RESEARCH_HenchmanImprovedHealing] = 0
+		sg_research[RESEARCH_HenchmanImprovedHealing] = 1
 	end
 	
 	-- what rank do we want to stop at
@@ -38,71 +38,14 @@ function init_research()
 end
 
 -- rank helper function
-randUnitsOrRank = Rand(100) --Random variable used to help decide if AI should build more units before ranking up.
-
-
 function rankUp( capAt )
+
 	-- whats our current Rank
 	local curRank = GetRank();
 	
-	-- Adjust for island map logic or not being able to build units
-	if (curRank < fact_lowrank_all or (fact_closestGroundDist == 0 and curRank < fact_lowrank_amphib and curRank < fact_lowrank_flyer)) then
-		randUnitsOrRank = 100
-	end
-
-	if (curRank < 2 and NumHenchmanActive() < sg_desired_henchman) then
-		return
-	end
-
-	--On Hard and Expert, do not go L4 if AI has not researched Advanced Structures --Bchamp 5/5/2019
-	if (g_LOD >= 2 and curRank >= 3 and ResearchCompleted(RESEARCH_AdvancedStructure) == 0) then
-		return
-	end
-
 	-- if we have more ranks to go
 	if (curRank < fact_army_maxrank and curRank < capAt) then
-		-- Added by Bchamp 4/7/2019 so that AI doesn't go Level 3 so quickly and has units and economy
-		-- Edited by Bchamp 5/5/2019 to adjust for new L4 costs, 1000/2000. 
-		local gametime = GameTime()
-		local numCreatures = NumCreaturesQ()
-		local is_alone = 0
-		if ( PlayersAlive( player_ally ) == 1 ) then
-			is_alone = 1
-		end
-
-		if (g_LOD >= 2 and curRank == 2 and randUnitsOrRank < 90) then
-			if (gametime < 4.5*60) then
-				if (numCreatures < 5 + (randUnitsOrRank*0.07) + is_alone*Rand(3)) then
-					return
-				elseif (NumBuildingActive( Foundry_EC ) == 0 or NumHenchmanActive() < 8) then --could change to ScrapPerSec() if we find problems with this? --Bchamp
-					return
-				end
-			elseif (gametime < 5.25*60) then
-				if (numCreatures < 3+(randUnitsOrRank*0.06) + is_alone*Rand(3)) then
-					return
-				elseif (NumBuildingActive( Foundry_EC ) == 0 or NumHenchmanActive() < 8) then --could change to ScrapPerSec() if we find problems with this? --Bchamp
-					return
-				end
-			end
-		-- Added by Bchamp 4/17/2019 to slow down L4.
-		elseif (g_LOD >= 2 and curRank == 3 and randUnitsOrRank < 90) then
-			if (gametime < 7.5*60) then
-				if (numCreatures < 6+(randUnitsOrRank*0.07) + is_alone*Rand(3)) then
-					return
-				end
-				if (NumBuildingActive( Foundry_EC ) == 0 or ResearchCompleted(RESEARCH_HenchmanYoke) == 0 or NumHenchmanActive() < 10) then --could change to ScrapPerSec() if we find problems with this? --Bchamp
-					return
-				end
-			elseif (gametime < 9*60) then
-				if (numCreatures < 5+(randUnitsOrRank*0.06) + is_alone*Rand(3)) then
-					return
-				end
-				if (ResearchCompleted(RESEARCH_HenchmanYoke) == 0 or NumHenchmanActive() < 10) then --could change to ScrapPerSec() if we find problems with this? --Bchamp
-					return
-				end
-			end
-		end
-
+		
 		-- find next rank:
 		-- if curRank is 1 then next rank is Rank2+0 or curRank-1
 		-- if curRank is 4 then next rank is Rank2+3 or curRank-1
@@ -249,8 +192,7 @@ function Logic_doadvancedresearch()
 	
 	-- don't research this if we are not in rank2 or we don't have some army
 	-- unless our army isn't available until r4
-	if (g_LOD == 2 and (ResearchCompleted(RESEARCH_Rank2)==0 or (fact_selfValue < 700 and fact_lowrank_all<4) or 
-		(NumBuildingActive( Foundry_EC ) < 1 and GameTime() < 8*60))) then --Don't do advanced research if no foundry before 8 minutes. Bchamp 4/17/2019
+	if (g_LOD == 2 and (ResearchCompleted(RESEARCH_Rank2)==0 or (fact_selfValue < 700 and fact_lowrank_all<4))) then
 		return
 	end
 	
@@ -301,24 +243,9 @@ function dovetclinicresearch()
 				Research( RESEARCH_HenchmanMotivationalSpeech );
 				aitrace("Script: Research henchman motivational speech")
 			end
-
 			
 		end
 		
-		if (ResearchQ(RESEARCH_HenchmanYoke) == 1 or 
-			(g_LOD >= 2 and GetRank() == 2 and ResearchQ(RESEARCH_Rank3) == 1 and UnderAttackValue() < 200 and NumCreaturesQ() >= 5)) then
-			--If need elec, then strengthen electrical grid. Added by Bchamp 3/9/19, added g_LOD >= 2 on 9/15/2019
-			if (NumBuildingActive( ElectricGenerator_EC ) > 0 and ElectricityPerSecQ() < sg_desired_elecrate) then
-				if (sg_research[RESEARCH_StrengthenElectricalGrid] == 1 and goal_needelec == 1 and 
-					CanResearchWithEscrow(RESEARCH_StrengthenElectricalGrid) == 1) then
-					ReleaseGatherEscrow()
-					ReleaseRenewEscrow()
-					Research( RESEARCH_StrengthenElectricalGrid );
-					aitrace("Script: Research electrical grid")
-				end
-			end
-		end
-
 		-- do these research items after rank3
 		if (ResearchCompleted(RESEARCH_Rank3)==1) then
 
@@ -339,20 +266,17 @@ function dovetclinicresearch()
 			end
 			
 			-- RESEARCH_IncBuildingIntegrity
-			if (NumBuildingActive( VetClinic_EC ) > 1 or ResearchQ(RESEARCH_HenchmanYoke) == 1) then
-				if (sg_research[RESEARCH_IncBuildingIntegrity] == 1 and CanResearchWithEscrow(RESEARCH_IncBuildingIntegrity) == 1) then
-					ReleaseGatherEscrow()
-					ReleaseRenewEscrow()
-					Research( RESEARCH_IncBuildingIntegrity );
-					aitrace("Script: Research building integrity")
-				end
+			if (sg_research[RESEARCH_IncBuildingIntegrity] == 1 and CanResearchWithEscrow(RESEARCH_IncBuildingIntegrity) == 1) then
+				ReleaseGatherEscrow()
+				ReleaseRenewEscrow()
+				Research( RESEARCH_IncBuildingIntegrity );
+				aitrace("Script: Research building integrity")
 			end
 		end
 		
-		-- don't delay these researches
-		if (ResearchCompleted(RESEARCH_Rank3)==1) then
+		-- delay these researches
+		if (ResearchCompleted(RESEARCH_Rank4)==1) then
 			
-
 			-- RESEARCH_StrengthenFences
 			if (sg_research[RESEARCH_StrengthenFences] == 1 and CanResearchWithEscrow(RESEARCH_StrengthenFences) == 1) then
 				ReleaseGatherEscrow()
@@ -361,7 +285,14 @@ function dovetclinicresearch()
 				aitrace("Script: Research stronger fences")
 			end
 	
-
+			-- RESEARCH_StrengthenElectricalGrid
+			if (sg_research[RESEARCH_StrengthenElectricalGrid] == 1 and goal_needelec == 1 and 
+				CanResearchWithEscrow(RESEARCH_StrengthenElectricalGrid) == 1) then
+				ReleaseGatherEscrow()
+				ReleaseRenewEscrow()
+				Research( RESEARCH_StrengthenElectricalGrid );
+				aitrace("Script: Research electrical grid")
+			end
 	
 			-- RESEARCH_HenchmanImprovedHealing
 			if (sg_research[RESEARCH_HenchmanImprovedHealing] == 1 and CanResearchWithEscrow(RESEARCH_HenchmanImprovedHealing) == 1) then
@@ -372,7 +303,7 @@ function dovetclinicresearch()
 			end
 	
 			-- RESEARCH_TowerUpgrade
-			if (sg_research[RESEARCH_TowerUpgrade] == 1 and (TowerCount() >= 2 or (TowerCount() >= 1 and ResearchCompleted(RESEARCH_HenchmanYoke) == 1)) and CanResearchWithEscrow(RESEARCH_TowerUpgrade) == 1) then
+			if (sg_research[RESEARCH_TowerUpgrade] == 1 and TowerCount() > 2 and CanResearchWithEscrow(RESEARCH_TowerUpgrade) == 1) then
 				ReleaseGatherEscrow()
 				ReleaseRenewEscrow()
 				Research( RESEARCH_TowerUpgrade );
@@ -389,7 +320,7 @@ function doresearch()
 	Logic_setmaxrank()
 	
 	-- make sure we are not hurtin for either type of funds and we have a few dudes
-	if (goal_needcoal == 2 or goal_needelec == 2 and NumHenchmanActive() < 4) then
+	if (goal_needcoal == 2 or goal_needelec ==2 and NumHenchmanActive() < 4) then
 		return
 	end
 	

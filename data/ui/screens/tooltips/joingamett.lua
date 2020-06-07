@@ -44,8 +44,10 @@ tooltips =
 	{ "back",			"statusbar_helptext",	"statusbar_helptext", 0, 26809, 0, Point_Below },
 	{ "gamename_header",			"statusbar_helptext",	"statusbar_helptext", 0, 26811, 0, Point_Below },
 	{ "game_banner",			"statusbar_helptext",	"statusbar_helptext", 0, 26811, 0, Point_Below },
-	{ "roomname_header",			"statusbar_helptext",	"statusbar_helptext", 0, 26812, 0, Point_Below },
-	{ "room_banner",			"statusbar_helptext",	"statusbar_helptext", 0, 26812, 0, Point_Below },
+	{ "events",	"statusbar_helptext",	"statusbar_helptext", 0, 38014, 0, Point_Below },
+	{ "room_banner0",	"statusbar_helptext",	"statusbar_helptext", 0, 38014, 0, Point_Below },
+	{ "roomname_header0",	"statusbar_helptext",	"statusbar_helptext", 0, 38014, 0, Point_Below },
+	{ "ipaddresslabel",	"ability_tooltip",	"ability_tooltip", 38027, 38031, 0, Self_Above },
 	
 
 	

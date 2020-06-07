@@ -1,8 +1,3 @@
--- Edits by LBFrank/Buttious and Bchamp
--- Artillery units are now always accompanied by ranged units
--- AI also now recognizes niche units such as flying artillery and 
--- units with certain abilities, and will use/counter them accordingly
-
 function doMobilityChoice()
 
 	-- should check spawners relationship with target
@@ -42,7 +37,7 @@ function doMobilityChoice()
 	
 	-- if flyers are closer then amphibs 
 	if (sg_airDist*2 < sg_amphibDist) then
-		sg_goalflyer = sg_goalflyer+1
+		g_goalflyer = sg_goalflyer+1
 	end
 	
 end
@@ -63,15 +58,7 @@ function checkSelfArmy()
 		-- reduce want for flyer
 		sg_goalflyer = sg_goalflyer-1.5
 	end
-
-	-- edited by LBFrank 12/30/18 wants more flyers on a water map if there are more flyers than swimmers
-	local swimmerValue = PlayersUnitTypeValue( playerindex, player_max, sg_class_swimmer )
-	if ((sg_groundDist == 0) and (flyerValue > swimmerValue)) then
-		sg_goalflyer = sg_goalflyer+4
-	end
 	
-
-
 	local artilleryValue = PlayersUnitTypeValue( playerindex, player_max, sg_class_artillery )
 	local artilleryPercent = artilleryValue/totalValue*100
 	if (artilleryValue > 1500 and artilleryPercent > 70) then
@@ -82,33 +69,7 @@ function checkSelfArmy()
 		sg_goalrange = sg_goalrange+1
 		
 	end
-
-	--Added to ensure mix of ranged units along with artillery units so that artillery units can't be out-microed by skilled players
-	--Bchamp 10/1/2018
-	local directRangeValue = PlayersUnitTypeValue( playerindex, player_max, sg_class_directrange )	
-	if (directRangeValue == 0) then
-		directRangeValue = 1
-	end
-	local artilleryToDirectRangeRatio = artilleryValue / directRangeValue
-	if (artilleryToDirectRangeRatio > 1.5) then
-		sg_goalartillery = sg_goalartillery-1.5
-		-- increase desire of direct ranged
-		sg_goalrange = sg_goalrange+1
-	end
 	
-	-- LBFrank 12/31/18 ensure mixing standard melee with stink when stink is being used
-	local stinkValue = PlayersUnitTypeValue( playerindex, player_max, sg_class_stink )
-	local standardValue = PlayersUnitTypeValue( playerindex, player_max, sg_class_standard )
-	if ((stinkValue == 1) and (standardValue == 0)) then
-		standardValue = 1
-	end
-	local standardtostinkRatio = stinkValue / standardValue
-	if (standardtostinkRatio > 1.5) then
-		sg_goalstink = sg_goalstink-1
-		-- increase desire of standard melee
-		sg_goalstandard = sg_goalstandard+2
-	end
-
 	if (1) then
 		
 		debug_SELFflyerValue = flyerValue
@@ -186,20 +147,15 @@ function doRPSchoice_easy(chosenEnemy)
 	if (flyerPercent >= 70) then
 		--sg_goalmelee = sg_goalmelee-1
 		--sg_goalartillery = sg_goalartillery+1
-		sg_goalflyer = sg_goalflyer+1
+		--sg_goalflyer = sg_goalflyer-1
 		sg_goalrange = sg_goalrange-1.5
 	elseif (flyerPercent >= 35) then
 		--sg_goalmelee = sg_goalmelee-1
 		--sg_goalartillery = sg_goalartillery+0
-		sg_goalflyer = sg_goalflyer+1
+		--sg_goalflyer = sg_goalflyer+1
 		sg_goalrange = sg_goalrange-1
 	end
 		
-	sg_goalmelee = sg_goalmelee*2
-	sg_goalartillery = sg_goalartillery*2
-	sg_goalflyer = sg_goalflyer*2
-	sg_goalrange = sg_goalrange*2
-	
 	-- debug code
 	if (1) then
 		debug_totalValue = totalValue
@@ -250,13 +206,12 @@ function doRPSchoice(chosenEnemy)
 	if (artilleryPercent >= 70) then
 		sg_goalmelee = sg_goalmelee+3
 		sg_goalartillery = sg_goalartillery+2
-		sg_goalflyingArtillery = sg_goalflyingArtillery+3
-		sg_goalflyer = sg_goalflyer+3
+		sg_goalflyer = sg_goalflyer+1
 		sg_goalrange = sg_goalrange-2
 	elseif (artilleryPercent >= 35) then
 		sg_goalmelee = sg_goalmelee+2
 		sg_goalartillery = sg_goalartillery+1
-		sg_goalflyer = sg_goalflyer+1
+		--sg_goalflyer = sg_goalflyer+1
 	end
 	
 	local directRangeValue = PlayersUnitTypeValue( chosenEnemy, player_max, sg_class_directrange )
@@ -265,14 +220,12 @@ function doRPSchoice(chosenEnemy)
 	if (directRangePercent >= 70) then
 		sg_goalmelee = sg_goalmelee-1
 		sg_goalartillery = sg_goalartillery+3
-		sg_goalflyingArtillery = sg_goalflyingArtillery+4
-		sg_goalflyer = sg_goalflyer-2
-		sg_goalrange = sg_goalrange+2 
+		sg_goalflyer = sg_goalflyer-3
+		sg_goalrange = sg_goalrange+2
 	elseif (directRangePercent >= 35) then
 		sg_goalartillery = sg_goalartillery+2
-		sg_goalflyingArtillery = sg_goalflyingArtillery+1
-		sg_goalflyer = sg_goalflyer-1
-		sg_goalrange = sg_goalrange+2
+		sg_goalflyer = sg_goalflyer-2
+		sg_goalrange = sg_goalrange+1
 	end
 	
 	local groundMeleeValue = PlayersUnitTypeValue( chosenEnemy, player_max, sg_class_groundmelee )
@@ -281,7 +234,6 @@ function doRPSchoice(chosenEnemy)
 	if (groundMeleePercent >= 70) then
 		sg_goalmelee = sg_goalmelee+1
 		sg_goalartillery = sg_goalartillery-2
-		sg_goalflyingArtillery = sg_goalflyingArtillery+2
 		sg_goalflyer = sg_goalflyer+3
 		sg_goalrange = sg_goalrange+2
 	elseif (groundMeleePercent >= 35) then
@@ -292,11 +244,10 @@ function doRPSchoice(chosenEnemy)
 	
 	local flyerValue = PlayersUnitTypeValue( chosenEnemy, player_max, sg_class_flyer )
 	local flyerPercent = flyerValue/totalValue*100
-
+	
 	if (flyerPercent >= 70) then
 		sg_goalmelee = sg_goalmelee-3
 		--sg_goalartillery = sg_goalartillery-0
-		sg_goalflyingArtillery = sg_goalflyingArtillery-1
 		sg_goalflyer = sg_goalflyer+2
 		sg_goalrange = sg_goalrange+3
 	elseif (flyerPercent >= 35) then
@@ -316,37 +267,7 @@ function doRPSchoice(chosenEnemy)
 	elseif (highDPercent >= 35) then
 		sg_goalantidefence = sg_goalantidefence + 0.75
 	end
-
-	-- added by LBFrank 10/15/18 so when enemy has stink, AI prioritizes melee and flyers
-	local highStValue = PlayersUnitTypeValue( chosenEnemy, player_max, sg_class_stink )
-	local highStPercent = highStValue/totalValue*100
 	
-	-- if enemy has alot of stink, build alot of melee and flyers (avoiding range and art a little)
-	if (highStPercent >= 60) then
-		sg_goalmelee = sg_goalmelee+3
-		sg_goalflyer = sg_goalflyer+3
-		sg_goalrange = sg_goalrange-1
-		sg_goalartillery = sg_goalartillery-1
-		sg_goalflyingArtillery = sg_goalflyingArtillery-1
-	elseif (highStPercent >= 25) then
-		sg_goalmelee = sg_goalmelee+1
-		sg_goalflyer = sg_goalflyer+1
-	end
-	
-	-- added by LBFrank 01/01/19 so when enemy has deflect, AI also prioritizes melee and flyers
-	local highdeflectValue = PlayersUnitTypeValue( chosenEnemy, player_max, sg_class_deflect )
-	local highdeflectPercent = highdeflectValue/totalValue*100
-	
-	-- if enemy has alot of deflect, build alot of melee and flyers (avoiding range a little)
-	if (highdeflectPercent >= 60) then
-		sg_goalmelee = sg_goalmelee+3
-		sg_goalflyer = sg_goalflyer+3
-		sg_goalrange = sg_goalrange-1
-	elseif (highdeflectPercent >= 25) then
-		sg_goalmelee = sg_goalmelee+1
-		sg_goalflyer = sg_goalflyer+1
-	end
-
 	-- debug code
 	if (1) then
 		debug_totalValue = totalValue
@@ -394,15 +315,11 @@ function docreaturechoice()
 	sg_goalflyer = 0
 	sg_goalrange = 0
 	sg_goalantidefence = 0
-	sg_goalpureswimmer = 0
-	sg_goalflyingArtillery = 0
-	sg_goalstandard = 0
-	-- LBFrank 04/19/19 we dont want loners. at all.
-	sg_goalloner = -100
+	sg_goalpureswimmer = -5
 		
 	-- check to see if we have a particular unit type and see if it should
 	-- be built
-	sg_goalstink = 0
+	--sg_goalstink = 0
 	--sg_goalhorns = 0
 	local chosenEnemy
 	
@@ -428,22 +345,17 @@ function docreaturechoice()
 	if (UnderNavalAttack()==1) then
 		sg_goalamphib = sg_goalamphib+2.5
 		sg_goalflyer = sg_goalflyer+2.5
-		sg_goalpureswimmer = sg_goalpureswimmer+2.5
 	end
 	
 	local curRank = GetRank()
 	
 	-- stay away from melee guys when there are blockades present in world
-	-- edited by LBFrank 12/28/18 adding goalflyer and goalartillery strings here. AI should build more artillery and flyers in response to 'blockades'
 	if (NumBlockades() > 0 and LabUnderAttackValue()==0) then
 		
 		sg_goalmelee = sg_goalmelee-1
-		sg_goalartillery = sg_goalartillery+1
 		if (curRank < 3) then
 			sg_goalmelee = sg_goalmelee-2
-			sg_goalrange = sg_goalrange+1
-			sg_goalartillery = sg_goalartillery+2
-			sg_goalflyer = sg_goalflyer+2
+			sg_goalrange = sg_goalrange-0.5
 		end
 		
 		-- this means artillery or flyers should be chosen
@@ -499,15 +411,6 @@ function docreaturechoice()
 				newvalue = newvalue + sg_goalpureswimmer
 			end	
 		end
-		if (Army_IsUnitInClass( playerindex, sg_class_flyingArtillery, i )==1) then
-			newvalue = newvalue + sg_goalflyingArtillery
-		end
-		if (Army_IsUnitInClass( playerindex, sg_class_stink, i )==1) then
-			newvalue = newvalue + sg_goalstink
-		end
-		if (Army_IsUnitInClass( playerindex, sg_class_loner, i )==1) then
-			newvalue = newvalue + sg_goalloner
-		end
 		if (Logic_CustomCreatureChoiceScore) then
 			newvalue = newvalue + Logic_CustomCreatureChoiceScore(playerindex, i)
 		end
@@ -522,8 +425,6 @@ function docreaturechoice()
 		-- adjust unit based on rank, attempt to alway build best ranked creature
 		newvalue = newvalue - (curRank-unitRank)*rankMod
 		
-		-- note by bchamp on 10/1/2018
-		-- SetCounterValue seems to set the desired creature count for a particular unit.
 		SetCounterValue(i, newvalue )
 		
 		i = i + 1

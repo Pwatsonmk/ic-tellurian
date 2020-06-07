@@ -43,10 +43,8 @@ function FlyerRush_CanDo()
 			rawset(globals(), "Logic_creatureTypeDesire", nil )
 			Logic_creatureTypeDesire = FlyerRush_Logic_creatureTypeDesire
 			
-			-- this code originally turned off hench expansion when doing flyer rush --
-			-- it was commented out on 9/26/2018 by Bchamp so that AI could be more balanced --
-			-- when performing a flyer rush and maintain economy. --
-			-- goal_dohenchmanexpand = 0 --
+			-- turn off henchman expansion - only build to threshold
+			goal_dohenchmanexpand = 0
 			
 			aitrace("FlyerRush: Running")
 		end	

@@ -7,18 +7,10 @@
 -- (c) 2001 Relic Entertainment Inc.
 -- 
 
-
---CHANGES as of 12/18/2017
---Defense upgrade set to 3.
---Plague duration and spread speed reduced (duration is now 25 seconds, spreads every 3).
---Defile damage increased to 0.2.
---Level 4 regen reduced to 1.75.
---Stink cloud duration reduced; 64@L1, 84@L2, 104@L3, 124@L4, 144@L5; endurance cost increased to 100.
---Poison damage reduce changed to 0.85.
---Deflect chances reduced.
---Quill burst damage and friendly fire reduced.
---High ground bonus reduced, required height difference increased; range damage multiplier against fliers reduced.
-
+--CHANGES in Tellurian 2.6 (as of 29/04/2019):
+--Plague duration reduced (duration is now 15 seconds).
+--Attack ground error radius increased from 2 to 4.
+--Frenzy endurance cost per second increased from 7.5 to 8.5.
 
 -- * Global Tuning Values
 
@@ -921,10 +913,10 @@ Frenzy =
 {
 
 	-- Endurance cost per second for the frenzy attack
-	endurancePerSecond	= 7.5,
+	endurancePerSecond	= 8.5,
 	
 	-- Damage issued multiplier, i.e. I do normal damage times x, when frenzied
-	dmgIssuedMult		= 2.0,
+	dmgIssuedMult		= 1.5,
 
 	-- Damage received multiplier, i.e. I take normal damage times x, when frenzied
 	dmgReceivedMult		= 1.5,
@@ -1000,13 +992,13 @@ Plague =
 {
 	-- How much damage the plague does per second, per attacker rank
 	damagePerSecond1	= 3.0,
-	damagePerSecond2	= 4.0,
-	damagePerSecond3	= 5.0,
-	damagePerSecond4	= 10.0,
-	damagePerSecond5	= 15.0,
+	damagePerSecond2	= 3.0,
+	damagePerSecond3	= 6.0,
+	damagePerSecond4	= 9.0,
+	damagePerSecond5	= 12.0,
 	
 	-- How long (seconds) does the plague last
-	timeSeconds			= 25.0,
+	timeSeconds			= 15.0,
 
 	-- How far does a plagued entity search to spread the plague
 	spreadRadius		= 20.0,
@@ -1047,13 +1039,13 @@ AIPlayer =
 	-- electricity bonus for AI
 	resRenewBonusEasy = 0.75,
 	resRenewBonusStandard = 1.00,
-	resRenewBonusHard = 1.00,
+	resRenewBonusHard = 1.20,
 	resRenewBonusHardest = 1.50,
 	
 	-- coal bonus for AI
 	resGatherBonusEasy = 0.75,
 	resGatherBonusStandard = 1.00,
-	resGatherBonusHard = 1.2,
+	resGatherBonusHard = 1.3,
 	resGatherBonusHardest = 1.75,
 }
 
@@ -1122,7 +1114,7 @@ Flyer =
 	stoppedSpeed 	= 1.5,
 
 	-- fliers will attack every... this number of seconds
-	secondsPerAttack = 4.0,
+	secondsPerAttack = 3.0,
 
 	-- number of ticks it takes a flyer to swoop down to deliver a triggered attack
 	swoopDownTicks = 10.0,
@@ -1165,7 +1157,7 @@ GarrisonHeal =
 AttackGround =
 {
 	-- the error radius, so that AttackGround aim isn't perfect
-	errorRadius	= 2.0,
+	errorRadius	= 4.0,
 }
 
 ---------------------------------------------------------------------

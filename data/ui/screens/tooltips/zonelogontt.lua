@@ -41,4 +41,5 @@ tooltips =
 	{ "newaccount_button",				"statusbar_helptext",	"statusbar_helptext", 0, 31753, 0, Point_Below },
 	{ "accept",				"statusbar_helptext",	"statusbar_helptext", 0, 31754, 0, Point_Below },
 	{ "cancel",				"statusbar_helptext",	"statusbar_helptext", 0, 31755, 0, Point_Below },
+	{ "server_link",				"statusbar_helptext",	"statusbar_helptext", 0, 38015, 0, Point_Below },
 }

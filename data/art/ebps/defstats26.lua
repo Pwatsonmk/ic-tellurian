@@ -7,7 +7,7 @@ dofilepath("data:art/ebps/defbuilding.lua")
 ext = gameattributes;
 
 -- healthextinfo
-ext.hitpoints = 800
+ext.hitpoints = 850
 
 -- costextinfo
 ext.cost = 200
@@ -29,8 +29,8 @@ ext.burstCostGather		= 0
 
 -- antiairtowerextinfo
 ext.delayTicks = 4
-ext.attackDmgType = 2 -- (30% armor piercing)
-ext.attackDmgPerTick = 13.5
+ext.attackDmgType = 8+4092 -- electric + full armour piercing
+ext.attackDmgPerTick = 10
 ext.attackDuration = 1
 ext.attackRadius = 25.0
 ext.activateTime = 0.4

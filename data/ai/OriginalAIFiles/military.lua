@@ -1,13 +1,10 @@
 
--- Spam Offset Added!
-
 aitrace("Script Component: Creature Ordering Functions")
 
 function init_military()
 
 	aitrace("init_military()")
-
-
+	
 	icd_groundgroupminsize = 8;
 	icd_groundgroupmaxsize = 40;
 	
@@ -44,7 +41,7 @@ function init_military()
 	-- max amount, set by init func overrides and triggers
 	sg_creature_unit_cap = sg_creature_desired;
 
-	-- set for hard level ((what does this do??? It just gets reset below...consider removing to declutter? -Bchamp))
+	-- set for hard level
 	icd_enemyValueModifier = 1.1
 
 	if (g_LOD == 0) then
@@ -63,7 +60,7 @@ function init_military()
 	else
 		icd_enemyValueModifier = 0.95;
 		icd_engageEnemyValueModifier = 0.80;
-		icd_fleeEnemyValueModifier = 0.65; --the higher this value, the more easily the AI will flee. Raised from 0.60 by Bchamp 4/12/2019
+		icd_fleeEnemyValueModifier = 0.60;
 	end
 	
 	-- is the AIs current target an amphibian one
@@ -100,7 +97,6 @@ function init_military()
 		end
 	end
 	
-	--What does this do? I *think* to means that the "docreaturebuild" function will re-run every X seconds? Bchamp 3/31/2019 
 	if (g_LOD == 0) then
 		RegisterTimerFunc("docreaturebuild", 10 )
 	elseif (g_LOD == 1) then
@@ -171,7 +167,7 @@ function Logic_creatureTypeDesire()
 		-- should also check if the top wanted creatures are amphibian ?
 		
 		-- does building swimmer double our options
-		if (goal_amphibTarget == 0 and swimmerCount >= groundCount) then
+		if (goal_amphibTarget == 0 and swimmerCount > groundCount) then
 			goal_desireSwimmers = 1
 		end
 			
@@ -195,7 +191,7 @@ function Logic_creatureTypeDesire()
 		goal_desireFlyers = 1
 		
 		if ((swimmerCount + groundCount) > 0) then
-			-- if the creature choose has no flyin desire, unless its our only --....What? Bchamp 3/31/2019
+			-- if the creature choose has no flyin desire, unless its our only 
 			if (g_LOD > 0 and sg_goalflyer < 0.5) then
 				goal_desireFlyers = 0
 			end
@@ -224,9 +220,7 @@ function armydecisions() -- static info
 	-- to our target
 	icd_buildDefensively = 1
 	-- or could check if we haven't been attacked in 30sec
-	-- ADJUSTED UnderAttackValue() Threshold to correspond to rank and increased. Fromerly 400. 
-	-- Consider upping LabUnderAttackValue? Needs testing. Bchamp
-	if (LabUnderAttackValue() == 0 and UnderAttackValue() < (250*GetRank())) then
+	if (LabUnderAttackValue() == 0 and UnderAttackValue() < 400) then
 		icd_buildDefensively = 0
 	end
 	
@@ -257,9 +251,7 @@ function Logic_ChamberChoice()
 
 	icd_chooseDefendChamber = 0
 	-- must choose defend chamber or offensive chamber
-	-- Noticed problem where AI would queue 9+ units at single chamber at lab, when it could be building units at multiple chambers
-	-- Will queue units at other chambers if num creatures queued is 2 or more, added by Bchamp 2/15/2020
-	if (LabUnderAttackValue() > 0 and (NumCreaturesQ() - NumCreaturesActive() > 1)) then
+	if (LabUnderAttackValue() > 0) then
 		icd_chooseDefendChamber = 1
 	end
 	
@@ -299,25 +291,11 @@ function Logic_military_setgroupsizes()
 	
 	local groupoffset = 0
 	local valueoffset = 0
-	local rankMultiplier = 60
-	local curRank = GetRank()
-
-	--Added by bchamp 4/19/2019 for value multiplication
-	if (curRank == 2) then
-		rankMultiplier = 120
-	elseif (curRank == 3) then
-		rankMultiplier = 230
-	elseif (curRank == 4) then
-		rankMultiplier = 400
-	elseif (curRank == 5) then
-		rankMultiplier = 650 + Rand(2)*50 --add randomness
-	end
 				
 	-- increase my troop counts if the enemy has more units than I do
 	if (g_LOD > 0) then
 		
 		-- the closer we are the smaller the earlier groups can be
-		-------the elseif statements won't be called here. Need to reverse order of conditions. Needs changing. - Bchamp 4/5/2019
 		if (fact_closestGroundDist > 300) then
 			groupoffset = 2
 			valueoffset = 500
@@ -329,7 +307,7 @@ function Logic_military_setgroupsizes()
 			valueoffset = 1000
 		end
 		
-		local moreEnemies = PlayersAlive( player_enemy )-PlayersAlive( player_ally )
+		local moreEnemies =PlayersAlive( player_enemy )-PlayersAlive( player_ally )
 		
 		-- in FFA games, create bigger groups
 		if (moreEnemies > 0) then
@@ -339,8 +317,6 @@ function Logic_military_setgroupsizes()
 		
 		groupoffset = groupoffset + 1;
 		
-		--All these are the same. Also, how does Pop work now with Tellurian? I think maybe we should use a number of enemy units rather than these fact values.
-		--Bchamp 3/31/2019
 		if (fact_enemyPop > 10 or fact_militaryPop > 10) then
 			groupoffset = groupoffset + 1;
 			valueoffset = valueoffset + 200;
@@ -366,7 +342,6 @@ function Logic_military_setgroupsizes()
 		valueoffset = 0 -- this is 200-1400 group value
 	end
 	
-
 	-- initial group sizes for all LODs
 	icd_groundgroupminsize = groupoffset+2;
 	icd_groundgroupmaxsize = groupoffset*2+6;
@@ -391,27 +366,6 @@ function Logic_military_setgroupsizes()
 		
 	end
 	
-
-	
-	----------------------------------------------------------------------------------
-	-- Added by Bchamp 4/22/2019 to ensure that groupminvalue is used to account for spam or low power units. Also adjusted for rank
-	if (g_LOD >= 2) then
-
-		icd_groundgroupminsize = groupoffset + 3 + Rand(3);
-		icd_groundgroupmaxsize = (groupoffset+5)*2+6;
-		
-		icd_groundgroupminvalue = icd_groundgroupminsize*rankMultiplier;
-		icd_groundgroupmaxvalue = icd_groundgroupmaxsize*rankMultiplier*2;
-
-		-- Added by Bchamp 4/1/2019 to keep high pressure on opponent when winning
-		local unitCount = PlayersUnitTypeCount( Player_Self(), player_max, sg_class_ground )
-		if (fact_selfValue > fact_enemyValue*1.5 and unitCount > (icd_groundgroupminsize*1.5)) then
-			icd_groundgroupminsize = Rand(5) + 2
-			icd_groundgroupminvalue = 100
-		end
-	end
-	----------------------------------------------------------------------------------
-
 	icd_airgroupmaxsize = icd_groundgroupmaxsize
 
 end
@@ -482,7 +436,6 @@ function Logic_military_setdesiredcreatures()
 
 	local popmax = PopulationMax();
 	local gametime = GameTime()
-	local numCreatures = NumCreaturesActive()
 	
 	if (g_LOD == 0) then
 	
@@ -498,7 +451,7 @@ function Logic_military_setdesiredcreatures()
 		-- unit cap, grow at same rate as enemy (should do this per type)
 		if (fact_militaryPop >= sg_creature_desired and (fact_enemyValue >= fact_selfValue*1.3 or fact_enemyPop >= fact_militaryPop*1.5)) then
 			-- desire for more than what ya got
-			sg_creature_desired = numCreatures + 1;
+			sg_creature_desired = NumCreaturesActive()+1;
 		end
 		
 		-- if AI has passed its desired rate and has more value then opponent
@@ -517,7 +470,7 @@ function Logic_military_setdesiredcreatures()
 		-- unit cap, grow at same rate as enemy (should do this per type)
 		if (fact_militaryPop >= sg_creature_desired and (fact_enemyValue >= fact_selfValue*1.1 or fact_enemyPop >= fact_militaryPop*1.2)) then
 			-- desire for more than what ya got
-			sg_creature_desired = numCreatures + 2;
+			sg_creature_desired = NumCreaturesActive()+2;
 		end
 
 	else
@@ -525,19 +478,16 @@ function Logic_military_setdesiredcreatures()
 		sg_creature_desired = popmax;
 	end
 
-	-- make sure to leave enough room for 10 henchmen..should we leave room for sg_desiredhenchman insetad? --bchamp 3/31/2019
+	-- make sure to leave enough room for 10 henchmen
 	if (sg_creature_desired >= (popmax-10)) then
 		sg_creature_desired = popmax-10
 	end
 	
-	removeExtraGroundCreatures() --This kills own ground creatures if we have enough in order to make room for amphib and air. Should AI be killing own units? Bchamp 3/31/2019
+	removeExtraGroundCreatures()
 	
-
-	------------------------------------------------------------------------------
 	-- RULES BELOW - these all put caps on creatures to give money to other areas
-	------------------------------------------------------------------------------
 
-	-- run some island map logic. If no amphib or fliers available, only builds a few creatures for defense then returns 1. 
+	-- run some island map logic
 	if (Logic_islandmaplogic()==1) then
 		return
 	end
@@ -555,24 +505,9 @@ function Logic_military_setdesiredcreatures()
 		return
 	end
 	
-	-- if we are under attack and we are the underdogs, set no limit, build more units
-	if (UnderAttackValue() > 100 and fact_enemyValue*1.5 > fact_selfValue ) then
-		return
-	end
-
-	-- if we are at least L3 and comfortable but do not have Henchmen Yoke, slow down creature production. 
-	-- Added by Bchamp 4/1/2019. Tested and this does help AI research Yoke about a minute faster.
-	if (g_LOD >= 2 and curRank >= 3 and ResearchCompleted(RESEARCH_HenchmanYoke) == 0) then
-		if (UnderAttackValue() < 100 and NumCreaturesActive() > 5 and NumHenchmanActive() > 18 and fact_selfValue > fact_enemyValue) then
-			sg_creature_desired = numCreatures + 1
-			return
-		end
-	end
-
-
 	-- if we have lots of coal and elec, enough to rank up, build more units
 	if (g_LOD > 1 and ScrapAmountWithEscrow() > 1100 and ElectricityAmountWithEscrow() > 1600) then
-		-- make creatures, until this money drops down
+		-- cap the creatures, until this money drops down
 		sg_creature_desired = popmax-10
 		-- for standard, don't go too crazy
 		if (g_LOD == 1) then
@@ -583,6 +518,11 @@ function Logic_military_setdesiredcreatures()
 
 	-- if we are at max rank - don't put any limits on creature count
 	if (fact_army_maxrank == curRank) then
+		return
+	end
+		
+	-- if we are under attack and we are the underdogs, set no limit, build more units
+	if (UnderAttackValue() > 0 and fact_enemyValue*1.5 > fact_selfValue ) then
 		return
 	end
 	
@@ -619,28 +559,7 @@ sg_militaryRand = Rand(100)
 -- function that gets called on a timer
 function attack_now_timer()
 		
-	--This does nothing as far as I can tell.....Let's try and work on this later? Bchamp 4/22/2019
-	SetTargetTypePriority( Creature_EC, 20 )
-	SetTargetTypePriority( SoundBeamTower_EC, 20 )
-	SetTargetTypePriority( AntiAirTower_EC, 20 )
-	SetTargetTypePriority( ElectricGenerator_EC, 1000 )
-	SetTargetTypePriority( RemoteChamber_EC, 20 )
-	SetTargetTypePriority( WaterChamber_EC, 20 )
-	SetTargetTypePriority( Aviary_EC, 20 )
-	SetTargetTypePriority( ResourceRenew_EC, 20 )
-	SetTargetTypePriority( Foundry_EC, 20 )
-	SetTargetTypePriority( VetClinic_EC, 20 )
-	SetTargetTypePriority( GeneticAmplifier_EC, 20 )
-	SetTargetTypePriority( LandingPad_EC, 20 )
-	SetTargetTypePriority( BrambleFence_EC, 20 )
-	SetTargetTypePriority( Lab_EC, 20 )
-	SetTargetTypePriority( Henchman_EC, 20 )
-
-	SetTargetPriority( ElectricGenerator_EC, 10000 )
-	SetTargetPriority( Henchman_EC, 20 )
-	SetTargetPriority( Creature_EC, 20 )
-	SetTargetPriority( Lab_EC , 0)
-
+	
 	AttackNow();
 	aitrace("Script: Attack Now")
 end
@@ -669,16 +588,11 @@ function Logic_military_setattacktimer()
 		wavedelay = 60*2 + sg_militaryRand*0.6
 	end
 	
-	if (g_LOD >= 2) then
-		local moreEnemies = PlayersAlive( player_enemy )-PlayersAlive( player_ally )
+	if (g_LOD == 2) then
+		local moreEnemies =PlayersAlive( player_enemy )-PlayersAlive( player_ally )
 		if (moreEnemies > 0) then
 			-- delay initial attack
 			timedelay = timedelay + sg_militaryRand*moreEnemies/2
-		else --Added 4/1/19 by Bchamp to shorten wave delay if winning to keep pressure on opponent.
-			local unitCount = PlayersUnitTypeCount( Player_Self(), player_max, sg_class_ground )
-			if (fact_selfValue > fact_enemyValue*1.5 and unitCount > (icd_groundgroupminsize*1.5)) then
-				wavedelay = 10 + sg_militaryRand*0.10
-			end
 		end
 	end
 	
@@ -715,8 +629,9 @@ function Logic_military_setattackpercentages()
 	local numEnemies = PlayersAlive( player_enemy )
 	local numAllies = PlayersAlive( player_ally )
 	
-	-- if the AI has more than 1.5 times more creatures than enemy then all out attack. Modified by Bchamp 4/1/2019
-	if (g_LOD>1 and fact_selfValue > ((fact_enemyValue+300)*1.5) and numAllies >= numEnemies) then
+	-- if the AI has more than 1.5 times more creatures than
+	-- have an all out attack, unless...
+	if (g_LOD>1 and fact_selfValue > fact_enemyValue and numEnemies == 1) then
 		AttackNow()
 		icd_groundattackpercent = 100
 		icd_waterattackpercent = 100
@@ -745,8 +660,7 @@ function Logic_military_setattackpercentages()
 		icd_airattackpercent = 0
 	end
 			
-
-	-- If there is nothing to defend....just all out attack. Good for Destory Enemy Base or special gameplay modes
+	-- this should never work in MP i guess this is for single player only
 	if (NumBuildingActive( Lab_EC ) == 0) then
 		
 		icd_groundattackpercent = 100
@@ -779,14 +693,7 @@ function dobuildcreatures()
 
 	-- Army_CreatureCostQ( Player_Self(), sg_class_ground )
 	local creaturesQ = NumCreaturesQ();
-	local totalChambers = NumBuildingActive( RemoteChamber_EC ) + NumBuildingActive( WaterChamber_EC ) + NumBuildingActive( Aviary_EC )
-	local curRank = GetRank()
-
-	-- Do not queue more units than you have chambers (incorporating rank). Saves resources for other activities. Bchamp 4/5/2019
-	if (g_LOD >= 2 and (creaturesQ - NumCreaturesActive()) >= (totalChambers + curRank - 1)) then
-		return
-	end
-
+		
 	if ( creaturesQ < sg_creature_desired and CanBuildCreature( sg_class_ground )==1) then
 		xBuildCreature( sg_class_ground )
 		aitrace("Script: build creature "..(creaturesQ+1).." of "..sg_creature_desired);
@@ -795,8 +702,6 @@ end
 
 -- this function should try to determine who we should target as an enemy
 -- this assumes we are not defending ourselves
--- Chooses enemy with the highest military population
--- This function is used nowhere in the AI luas.....
 function chooseenemy() -- return the enemies index
 
 	local currentMax = -1

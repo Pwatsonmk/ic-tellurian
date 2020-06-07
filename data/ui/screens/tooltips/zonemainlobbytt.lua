@@ -33,13 +33,14 @@ tooltips =
 	--  id of the text to use for body 
 	--  0/1 to auto-resize
 	--  tooltip mode, See choices above 
-	{ "roomname_header",				"statusbar_helptext",	"statusbar_helptext", 0, 31851, 0, Point_Below },
+	--{ "roomname_header",				"statusbar_helptext",	"statusbar_helptext", 0, 31851, 0, Point_Below },
 	{ "players_header",				"statusbar_helptext",	"statusbar_helptext", 0, 31852, 0, Point_Below },
 	{ "rooms_header",				"statusbar_helptext",	"statusbar_helptext", 0, 31855, 0, Point_Below },
 	{ "playerstats_button",				"statusbar_helptext",	"statusbar_helptext", 0, 31853, 0, Point_Below },
 	{ "joinroom_button",				"statusbar_helptext",	"statusbar_helptext", 0, 31856, 0, Point_Below },
 	{ "createroom_button",				"statusbar_helptext",	"statusbar_helptext", 0, 31857, 0, Point_Below },
 	{ "addfriend_button",				"statusbar_helptext",	"statusbar_helptext", 0, 31858, 0, Point_Below },
+	{ "leaderboard_header",				"statusbar_helptext",	"statusbar_helptext", 0, 38018, 0, Point_Below },
 
 	{ "hostgame_button",				"statusbar_helptext",	"statusbar_helptext", 0, 31859, 0, Point_Below },
 	{ "mainlobby_button",				"statusbar_helptext",	"statusbar_helptext", 0, 31860, 0, Point_Below },
@@ -56,6 +57,8 @@ tooltips =
 	{ "friends_header",				"statusbar_helptext",	"statusbar_helptext", 0, 31867, 0, Point_Below },
 
 	{ "squelch_button",				"statusbar_helptext",	"statusbar_helptext", 0, 31868, 0, Point_Below },
+	{ "server_link",				"statusbar_helptext",	"statusbar_helptext", 0, 38015, 0, Point_Below },
+	{ "score_header",				"statusbar_helptext",	"statusbar_helptext", 0, 38021, 0, Point_Below },
 
 
 }

@@ -107,24 +107,13 @@ sg_class_swimmer = 2
 sg_class_artillery = 3
 sg_class_directrange = 4
 sg_class_groundrank1rush = 5
-sg_class_groundrank2rush = 6
-sg_class_groundmelee = 7
-sg_class_antiair = 8
-sg_class_amphib = 9
-sg_class_highdefence = 10
-sg_class_antidefence = 11
-sg_class_camoflauge = 12
-sg_class_stink = 13
-sg_class_flyingArtillery = 14
-sg_class_deflect = 15
-sg_class_loner = 16
-
--- standard melee to pair with stink
-sg_class_standard = 17
-
-sg_class_sonic = 18
-sg_class_last = 19
-
+sg_class_groundmelee = 6
+sg_class_antiair = 7
+sg_class_amphib = 8
+sg_class_highdefence = 9
+sg_class_antidefence = 10
+sg_class_camoflauge = 11
+sg_class_last = 12
 
 class_check_func = {}
 
@@ -136,8 +125,8 @@ function addAnalyzeFunc( checkFunc )
 	sg_class_last = sg_class_last+1
 	
 	-- should never ask for more than this
-	if (sg_class_last > 30) then --originally 15...Bchamp 4/19/2019
-		--lua_error("AI: No More Analyze Func Space Left")
+	if (sg_class_last > 15) then
+		lua_error("AI: No More Analyze Func Space Left")
 	end
 	
 	return nextval
@@ -200,19 +189,6 @@ class_check_func[sg_class_groundrank1rush+1] = function( creatureinfo )
 	
 	return 0
 	
-end
-
--- Added by Bchamp on 9/27/2018 to attempt to create lvl 2 rush function
--- Ground Rank2 Rush Class
-class_check_func[sg_class_groundrank2rush+1] = function( creatureinfo )
-	if (ci_rank( creatureinfo ) == 2 and ci_getattribute( creatureinfo, "costrenew" ) < 55 ) then
-		if (ci_getattribute( creatureinfo, "is_land" ) == 1) then
-			return 1
-		end
-	end
-
-	return 0
-
 end
 
 
@@ -282,72 +258,7 @@ class_check_func[sg_class_camoflauge+1] = function( creatureinfo )
 	return 0
 end
 
--- added by LBFrank 10/15/18 so AI knows what units have stink and (12/31/18) which do not
--- Stink unit
-class_check_func[sg_class_stink+1] = function( creatureinfo )
-	
-	-- big stinko
-	if (ci_getattribute( creatureinfo, "stink_attack" ) == 1) then
-		return 1
-	end
-	
-	return 0
-end
 
---standard melee w/o Stink
-class_check_func[sg_class_standard+1] = function( creatureinfo )
-	-- no stinko
-	if ((ci_rangedamage( creatureinfo )== 0) and (ci_getattribute( creatureinfo, "stink_attack" ) == 0)) then
-		return 1
-	end
-	
-	return 0
-end
-
--- added by LBFrank 12/30/18 so AI knows it has flying artillery
-class_check_func[sg_class_flyingArtillery+1] = function( creatureinfo )
-	
-	if ((ci_isartillery( creatureinfo ) == 1) and (ci_getattribute( creatureinfo, "is_flyer" ) == 1)) then
-		return 1
-	end
-	
-	return 0
-end
-
-
--- LBFrank 01/01/19 so AI knows what units have deflection
-class_check_func[sg_class_deflect+1] = function( creatureinfo )
-	
-
-	if (ci_getattribute( creatureinfo, "deflection_armour" ) == 1) then
-		return 1
-	end
-	
-	return 0
-end
-
--- LBFrank 01/03/19 so AI knows what units are loners
-class_check_func[sg_class_loner+1] = function( creatureinfo )
-	
-
-	if (ci_getattribute( creatureinfo, "loner" ) == 1) then
-		return 1
-	end
-	
-	return 0
-end
------------------------------------------
--- LBFrank 03/31/19 Sonic Units
-class_check_func[sg_class_sonic+1] = function( creatureinfo )
-	
-
-	if (ci_rangedamagetype( creatureinfo, DT_Sonic)==1) then
-		return 1
-	end
-	
-	return 0
-end
------------------------------------------
 
 function oncreatureanalyze( playerindex, info )
 	
@@ -415,19 +326,12 @@ function onarmyanalyze()
 	Army_AddClassName( sg_class_artillery, "Artillery")
 	Army_AddClassName( sg_class_directrange, "DirectRange")
 	Army_AddClassName( sg_class_groundrank1rush, "GroundRank1Rush")
-	Army_AddClassName( sg_class_groundrank2rush, "GroundRank2Rush")
 	Army_AddClassName( sg_class_groundmelee, "GroundMelee")
 	Army_AddClassName( sg_class_antiair, "AntiAirUnit")
 	Army_AddClassName( sg_class_amphib, "AmphibCreature")
 	Army_AddClassName( sg_class_highdefence, "HighDefence")
 	Army_AddClassName( sg_class_antidefence, "AntiDefence")
 	Army_AddClassName( sg_class_camoflauge, "Camo")
-	Army_AddClassName( sg_class_stink, "Stink")
-	Army_AddClassName( sg_class_standard, "StandardMelee")
-	Army_AddClassName( sg_class_flyingArtillery, "FlyingArtillery")
-	Army_AddClassName( sg_class_deflect, "Deflect")
-	Army_AddClassName( sg_class_loner, "loner")
-	Army_AddClassName( sg_class_sonic, "Sonic")
 
 	aitrace("Script: "..getn(class_check_func).." registered classes");
 

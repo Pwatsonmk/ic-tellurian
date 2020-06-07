@@ -27,10 +27,6 @@ dofilepath("data:ai/researchrush.lua")
 dofilepath("data:ai/flyerrush.lua")
 -- 
 dofilepath("data:ai/choosecreature.lua")
---
-dofilepath("data:ai/rank2rush.lua")
---
-dofilepath("data:ai/economyrush.lua")
 
 
 function oninit()
@@ -51,39 +47,15 @@ function oninit()
 	
 	sg_desired_elecrate = 4
 	-----------------------------
-	sg_chamberAttempts = 0
-	sg_foundryAttempts = 0
+	
 	-- run this once in the beginning so henchman will act on this as soon as possible
 	dobasebuild();
 	
-	--Added by Bchamp 3/31/2019 to toggle aggressive behavior
-	--aggressionLevel = 2
-	
-	local dotactic = 1 --should AI perform tactics?
-
 	-- check for this tactic
-	if (dotactic == 1) then
-		if (EconomyRush_CanDo(dotactic) == 0) then
-			if (Rank2Rush_CanDoTactic(dotactic) == 0) then
-				if (Rank1Rush_CanDoTactic() == 0) then
-					if (ResearchRush_CanDo(dotactic) == 0) then
-						FlyerRush_CanDo()
-					end
-				end
-			end
+	if (Rank1Rush_CanDoTactic()==0) then
+		if (ResearchRush_CanDo()==0) then
+			FlyerRush_CanDo()
 		end
-	end
-
-	if (dotactic == 2) then
-		EconomyRush_CanDo(dotactic)
-	elseif (dotactic == 3 or dotactic == 4) then
-		Rank2Rush_CanDoTactic(dotactic)
-	elseif (dotactic == 5) then 
-		return
-	elseif (dotactic == 6) then
-		ResearchRush_CanDo(dotactic)
-	elseif (dotactic == 7) then
-		return
 	end
 
 end
@@ -125,11 +97,11 @@ function scuttle_elec()
 	
 	aitrace("ScuttleElec elec:"..ElectricityAmountWithEscrow().." coal:"..ScrapAmountWithEscrow().." military:"..fact_selfValue);
 	
-	if (NumBuildingActive(ResourceRenew_EC)>0 and ScrapPerSec() < 8) then --added ScrapPerSec() criteria so that AI doesn't hurt scuttle lightning rods when it has decent coal income. Not worth losing the rod if AI can wait a few seconds to get coal. 
+	if (NumBuildingActive(ResourceRenew_EC)>0) then
 		Scuttle( ResourceRenew_EC )
 		return
 	end
-	if (NumBuildingActive(ElectricGenerator_EC)>0 and ScrapPerSec() < 8) then
+	if (NumBuildingActive(ElectricGenerator_EC)>0) then
 		Scuttle( ElectricGenerator_EC )
 		return
 	end
@@ -158,6 +130,10 @@ function scuttle_extrachamber()
 end
 
 function doscuttle(lowelec)
+	if (ElectricityAmountWithEscrow() > 1600) then
+		scuttle_elec()
+		return
+	end
 	if (NumBuildingActive(GeneticAmplifier_EC)>0) then
 		aitrace("ScuttleGeneticAmplifier")
 		Scuttle(GeneticAmplifier_EC)
@@ -168,16 +144,12 @@ function doscuttle(lowelec)
 		Scuttle(VetClinic_EC)
 		return
 	end
-	if (ElectricityAmountWithEscrow() > 1800) then --Changed from 1600 to 1800 4/7/2019 Bchamp
-		scuttle_elec()
-		return
-	end
 	-- if we have a foundry that is empty and if this isn't the only drop off on the map
 	if (NumEmptyFoundies() > 0 and CoalPileWithDropOffs() > 0) then
 		Scuttle(Foundry_EC)
 		return
 	end
-	if (lowelec==1 and ElectricityAmountWithEscrow() > 150) then --Changed from 50 to 150 4/7/2019 Bchamp
+	if (lowelec==1 and ElectricityAmountWithEscrow() > 50) then
 		scuttle_elec()
 		return
 	end
@@ -200,7 +172,7 @@ function needmorecoal()
 	end
 	
 	-- are we fully satified for coal
-	if ( (NumHenchmanQ() == sg_desired_henchman and ScrapPerSec() > 25) or ScrapAmountWithEscrow() > 2500) then
+	if ( (NumHenchmanQ() == sg_desired_henchman and ScrapPerSec() > 15) or ScrapAmountWithEscrow() > 1500) then
 		goal_needcoal = 0
 	end
 	
@@ -222,9 +194,8 @@ function needmorecoal()
 		end
 						
 		-- tests to see if we have enough money for tower
-		-- Changed LabUnderAttackValue() > 200 from 100. AI scuttled lightning rods too quickly in testing. 3/31/2019 Bchamp
 		local numSBTower = NumBuildingQ( SoundBeamTower_EC )
-		if (fact_selfValue < 100 and numSBTower == 0 and LabUnderAttackValue() > 200) then
+		if (fact_selfValue < 100 and numSBTower == 0 and LabUnderAttackValue() > 100) then
 			-- do some scuttling
 			aitrace("Script: No military, no towers, lots of elec, scuttle");
 			doscuttle(1)
@@ -249,69 +220,46 @@ end
 
 -- this function determines how much electricity we should aim for
 function needmoreelec()
-	
-	sg_desired_elecrate = 11 --Baseline elec rate is 8 rods + gen without upgrades
 
+	-- 2 rods or a rod plus egen - for early game
+	sg_desired_elecrate = 4
+	
 	local curRank = GetRank()
-
-	-- 2 rods - for early game
-	if (curRank < 2 and ResearchQ(RESEARCH_Rank2) == 0) then
-		sg_desired_elecrate = 4
-	end
 	
-	
-	--Added by Bchamp 3/9/19 to customize ai elec rates
-	if (ResearchQ(RESEARCH_Rank2) == 1 or curRank == 2) then
-		sg_desired_elecrate = 6 	-- Set desired Elec rate to 3 rods after starting L2
-		if (NumBuildingActive( Foundry_EC ) > 0) then
-			sg_desired_elecrate = 11 + NumBuildingActive( Foundry_EC )*6
-		end
-	end
-
-	if (curRank == 3) then
-		sg_desired_elecrate = 16 + NumBuildingActive( Foundry_EC )*6
-	end
-
-	if (curRank >= 4) then
-		sg_desired_elecrate = 26 + NumBuildingActive( Foundry_EC )*6
-	end
-
-	if (curRank >= 2) then
-		-- on island map, desire more electricity
-		if (fact_closestGroundDist == 0) then
-	 		sg_desired_elecrate = sg_desired_elecrate + 6
+	 -- on island map, desire more electricity
+	 if (fact_closestGroundDist == 0) then
+	 		
+		sg_desired_elecrate = sg_desired_elecrate + 2
 	 
-		 -- on large map desire more electricity
-	 	elseif (fact_closestGroundDist > 700) then
+	 -- on large map desure more electricity
+	 elseif (fact_closestGroundDist > 700) then
 
-			sg_desired_elecrate = sg_desired_elecrate + 12
+		sg_desired_elecrate = sg_desired_elecrate + 4
 	
-		elseif (fact_closestGroundDist > 350) then --changed from 350 to 0 for testing. Bchamp 1/4/2019.
+	elseif (fact_closestGroundDist > 350) then
 
-			sg_desired_elecrate = sg_desired_elecrate + 6
+		sg_desired_elecrate = sg_desired_elecrate + 2
 		
-		end
-
+	end
 	
-		-- increase electricity if we have more scrap then elec and we are below rank4 and have a chamber
-		if (curRank < 4 and NumChambers()>0 and ElectricityAmount() < 50 and ScrapAmount() > 500) then
-			sg_desired_elecrate = sg_desired_elecrate+2
-		end
-		-- if have a 2 to 1 ratio of coal to elec, build more elec 
-		if (NumChambers()>0 and ElectricityAmount() < 200 and ScrapAmount() > 400) then
-			sg_desired_elecrate = sg_desired_elecrate+(ScrapAmount()/400)
-		end
+	-- increase electricity if we have more scrap then elec and we are below rank4 and have a chamber
+	if (curRank < 4 and NumChambers()>0 and ElectricityAmount() < 50 and ScrapAmount() > 500) then
+		sg_desired_elecrate = sg_desired_elecrate+1
+	end
+	-- if have a 12 to 1 ratio of coal to elec, build more elec 
+	if (NumChambers()>0 and ElectricityAmount() < 200 and ScrapAmount() > 1200) then
+		sg_desired_elecrate = sg_desired_elecrate+(ScrapAmount()/1200)
+	end
 	
-		-- if our lowest rank guy is high then get more elec to speed the ranking process
-		if (fact_lowrank_all > 2 and curRank < fact_lowrank_all) then
-			-- increase elec rate by lowest rank, so for rank3,4,5 increase by 2,4,6
-			sg_desired_elecrate = sg_desired_elecrate+(fact_lowrank_all-2)*2
-		end
-	end	
-
+	-- if our lowest rank guy is high then get more elec to speed the ranking process
+	if (fact_lowrank_all > 2 and curRank < fact_lowrank_all) then
+		-- increase elec rate by lowest rank, so for rank3,4,5 increase by 2,4,6
+		sg_desired_elecrate = sg_desired_elecrate+(fact_lowrank_all-2)*2
+	end
+	
 	-- must have 1 chamber and some creatures to desire more elec
 	if (NumChambers()>0 and fact_selfValue>1000) then
-		sg_desired_elecrate = sg_desired_elecrate+2
+		sg_desired_elecrate = sg_desired_elecrate+1
 		
 		-- an even better army
 		if (fact_selfValue >= 2500) then
@@ -319,11 +267,11 @@ function needmoreelec()
 		end
 	
 		if (curRank > 2) then
-			sg_desired_elecrate = sg_desired_elecrate+2
+			sg_desired_elecrate = sg_desired_elecrate+1
 		end
 		
 		if (curRank > 4) then
-			sg_desired_elecrate = sg_desired_elecrate+2
+			sg_desired_elecrate = sg_desired_elecrate+1
 		end
 	end
 	
@@ -331,14 +279,14 @@ function needmoreelec()
 	if (fact_armyAvgElec>60) then
 		sg_desired_elecrate = sg_desired_elecrate+(fact_armyAvgElec-40)/20
 	end
-
-	-- Adjust desired erate for LOD
-	if (g_LOD == 0 and sg_desired_elecrate >= 6) then
-		sg_desired_elecrate = sg_desired_elecrate*0.6
+	
+	-- don't build any more e sites if we have tons of elec
+	if (ElectricityAmountWithEscrow() > 3500) then
+		sg_desired_elecrate = 0
 	end
-
-	if (g_LOD == 1 and sg_desired_elecrate >= 8) then
-		sg_desired_elecrate = sg_desired_elecrate*0.8
+	
+	if (g_LOD == 0 and sg_desired_elecrate >= 6) then
+		sg_desired_elecrate = sg_desired_elecrate*0.7
 	end
 	
 	-- if have achieved our rate and our coal rate is good and we have a
@@ -381,7 +329,6 @@ function Logic_set_escrow()
 		SetRenewEscrowPercentage(35)
 	end
 	
-
 	-- if we just got our last rank then set escrow down
 	if (GetRank() == fact_army_maxrank) then
 		

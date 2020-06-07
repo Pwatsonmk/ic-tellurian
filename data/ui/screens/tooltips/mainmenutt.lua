@@ -39,7 +39,9 @@ tooltips =
 	{ "sigmachamber",			"statusbar_helptext",	"statusbar_helptext", 0, 25203, 0, Point_Below },
 	{ "training",			"statusbar_helptext",	"statusbar_helptext", 0, 25204, 0, Point_Below },
 	{ "gameoptions",			"statusbar_helptext",	"statusbar_helptext", 0, 25205, 0, Point_Below },
-	{ "creditsandmovies",			"statusbar_helptext",	"statusbar_helptext", 0, 25206, 0, Point_Below },
+	{ "modoptions",			"statusbar_helptext",	"statusbar_helptext", 0, 38240, 0, Point_Below },
+	{ "steamworkshop",			"statusbar_helptext",	"statusbar_helptext", 0, 38241, 0, Point_Below },
+	{ "creditsandmovies",		"statusbar_helptext",	"statusbar_helptext", 0, 25206, 0, Point_Below },
 	{ "exitgame",			"statusbar_helptext",	"statusbar_helptext", 0, 25207, 0, Point_Below },
 	
 }

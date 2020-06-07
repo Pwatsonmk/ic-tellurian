@@ -30,6 +30,7 @@ stock = {
 	"BOLAS_SPIDER",
 	"DIAMOND_PYTHON",
 	"OOGPISTER",
+	"OSTRICH",
 
 -- ICXP ANIMALS
 --	"KONG", 

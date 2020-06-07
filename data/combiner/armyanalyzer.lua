@@ -1,4 +1,3 @@
-
 AnalyzeArmy = function()
 
 	true = 1
@@ -35,7 +34,7 @@ AnalyzeArmy = function()
 
 	packherdFound = false
 	webFound = false
-        --autoFound = false
+        	autoFound = false
 	asslonerFound = false
 
 	-- creature cost, rank, and attribute totals
@@ -58,14 +57,25 @@ AnalyzeArmy = function()
 	
 	-- Melee and Range Assessment
 	meleeLowRank = false
+	meleeLowRankCheck = false
 	meleeAvgRank = false
+	meleeAvgRankCheck = false
 	meleeHighRank = false
+	meleeRank5Check = false
+	--
 	rangeLowRank = false
+	rangeLowRankCheck = false
 	rangeAvgRank = false
+	rangeAvgRankCheck = false
 	rangeHighRank = false
+	rangeRank5Check = false
+	--
 	artLowRank = false
+	artLowRankCheck = false
 	artAvgRank = false
+	artAvgRankCheck = false
 	artHighRank = false
+	artHighRankCheck = false
 	
 	-- Number of creatures in army
 	creatureCount = GetArmyCreatureCount()
@@ -73,7 +83,7 @@ AnalyzeArmy = function()
 	for index = 0, creatureCount - 1
 	do
 
-		creatureID = GetArmyCreatureID( index)
+		creatureID = GetArmyCreatureID( index )
 
 		-- Creature Costs, rank, and attributes
 		totalCoal = totalCoal + GetCreatureAttrib( creatureID, "cost")
@@ -149,6 +159,7 @@ AnalyzeArmy = function()
 		if (GetCreatureAttrib( creatureID, "is_immune") == 1) then
 			immuneFound = true
 		end
+
 		local range_dmgtype = GetCreatureAttrib(creatureID, "range_dmgtype")
 		if (math_and( range_dmgtype, DT_VenomSpray ) == DT_VenomSpray) then
 			totalChemical = totalChemical + 1
@@ -156,6 +167,10 @@ AnalyzeArmy = function()
 		local melee_dmgtype = GetCreatureAttrib(creatureID, "melee_dmgtype")
 		if (math_and( melee_dmgtype , DT_Poison ) == DT_Poison) then
 			totalChemical = totalChemical + 1
+		end
+
+		if (GetCreatureAttrib(creatureID, "range_dmgtype") == 16) then
+			sonicAttack = true
 		end
 		if (GetCreatureAttrib( creatureID, "stink_attack") == 1) then
 			totalChemical = totalChemical + 1
@@ -166,28 +181,55 @@ AnalyzeArmy = function()
 		if (GetCreatureAttrib( creatureID, "poison_touch") == 1) then
 			totalChemical = totalChemical + 1
 		end
-                if (GetCreatureAttrib( creatureID, "soiled_land") == 1) then
+             		if (GetCreatureAttrib( creatureID, "soiled_land") == 1) then
 			totalChemical = totalChemical + 1
 		end
 		-->>>>>>>>>>>New abilities for Creature Pack
-		if (GetCreatureAttrib( creatureID, "pack_hunter") == 1 or GetCreatureAttrib( creatureID, "herding") == 1 or GetCreatureAttrib( creatureID, "AutoDefense") == 1) then
-			packherdFound = true
+		if (GetCreatureAttrib( creatureID, "pack_hunter") == 1) then
+			packFound = true
 		end
+
+		if (GetCreatureAttrib( creatureID, "herding") == 1) then
+			herdFound = true
+		end
+		
+		-- checks for packherd bug
+		if (GetCreatureAttrib( creatureID, "pack_hunter") == 1) and (GetCreatureAttrib( creatureID, "herding") == 1) then
+			packHerdFound = true;
+			herdFound = nil
+		end
+
 		if (GetCreatureAttrib( creatureID, "web_throw") == 1) then
 			webFound = true
 		end
-                --if (GetCreatureAttrib( creatureID, "AutoDefense") == 1) then
-		--	autoFound = true
-		--end  
+		
+                		if (GetCreatureAttrib( creatureID, "AutoDefense") == 1) then
+			autoFound = true
+		end  
+
 		if (GetCreatureAttrib( creatureID, "deflection_armour") == 1) then
 			artilleryFound = true
 		end
-                if (GetCreatureAttrib( creatureID, "flash") == 1) then
+                		if (GetCreatureAttrib( creatureID, "flash") == 1) then
 			artilleryFound = true
-		end       
-                if (GetCreatureAttrib( creatureID, "assassinate") == 1 or GetCreatureAttrib( creatureID, "loner") == 1) then
+		end
+		if (GetCreatureAttrib( creatureID, "flash") == 1) then
+			flashFound = true
+		end  
+             	                 if (GetCreatureAttrib( creatureID, "assassinate") == 1 or GetCreatureAttrib( creatureID, "loner") == 1) then
 			asslonerFound = true
 		end
+
+		if (GetCreatureAttrib( creatureID, "stink_attack") == 1) then
+			stinkFound = true
+		end
+		if (GetCreatureAttrib( creatureID, "overpopulation") == 1) then
+			overpopFound = true
+		end
+		if (GetCreatureAttrib( creatureID, "poplow") == 1) or (GetCreatureAttrib( creatureID, "poplowtorso") == 1) then
+			colonyFound = true
+		end
+
 		-- Check for Piercing abilities
 		local melee_dmgtype = GetCreatureAttrib(creatureID, "melee_dmgtype")
 		if (math_and( melee_dmgtype , DT_HornNegateArmour ) == DT_HornNegateArmour) then
@@ -217,6 +259,15 @@ AnalyzeArmy = function()
 				rangeFound = true
 			end
 		end
+
+		if (GetCreatureAttrib( creatureID, "range3_damage") > 0) then
+			if (GetCreatureAttrib( creatureID, "range3_special") > 0) then
+				artilleryFound = true
+			else
+				rangeFound = true
+			end
+		end
+
 		if (GetCreatureAttrib( creatureID, "range4_damage") > 0) then
 			if (GetCreatureAttrib( creatureID, "range4_special") > 0) then
 				artilleryFound = true
@@ -230,7 +281,14 @@ AnalyzeArmy = function()
 			else
 				rangeFound = true
 			end
-                end
+		end
+		if (GetCreatureAttrib( creatureID, "range8_damage") > 0) then
+			if (GetCreatureAttrib( creatureID, "range8_special") > 0) then
+				artilleryFound = true
+			else
+				rangeFound = true
+			end
+               		end
 
 		-- melee damage assessment
 		if (rank == 1) and
@@ -238,26 +296,260 @@ AnalyzeArmy = function()
 		(GetCreatureAttrib( creatureID, "hitpoints") > 50) then
 			meleeLowRank = true
 		end
+
 		if (rank == 2) and
 		(GetCreatureAttrib( creatureID, "melee_damage") > 6) and
 		(GetCreatureAttrib( creatureID, "hitpoints") > 65) then
 			meleeLowRank = true
 		end
+
 		if (rank == 3) and
 		(GetCreatureAttrib( creatureID, "melee_damage") > 10) and
 		(GetCreatureAttrib( creatureID, "hitpoints") > 100) then
 			meleeAvgRank = true
 		end
+
 		if (rank == 4) and
 		(GetCreatureAttrib( creatureID, "melee_damage") > 14) and
 		(GetCreatureAttrib( creatureID, "hitpoints") > 180) then
 			meleeHighRank = true
 		end
+
 		if (rank == 5) and
 		(GetCreatureAttrib( creatureID, "melee_damage") > 19) and
 		(GetCreatureAttrib( creatureID, "hitpoints") > 225) then
 			meleeHighRank = true
 		end
+		--
+		
+		-- Rank 2 melee check
+
+		if (rank == 2) and
+		(GetCreatureAttrib( creatureID, "melee_damage") > 0) and
+		(GetCreatureAttrib( creatureID, "range2_damage") < 1) and
+		(GetCreatureAttrib( creatureID, "range2_special") < 1) and
+		(GetCreatureAttrib( creatureID, "range3_damage") < 1) and
+		(GetCreatureAttrib( creatureID, "range3_special") < 1) and
+		(GetCreatureAttrib( creatureID, "range4_damage") < 1) and
+		(GetCreatureAttrib( creatureID, "range4_special") < 1) and
+		(GetCreatureAttrib( creatureID, "range5_damage") < 1) and
+		(GetCreatureAttrib( creatureID, "range5_special") < 1) and
+		(GetCreatureAttrib( creatureID, "range8_damage") < 1) and
+		(GetCreatureAttrib( creatureID, "range8_special") < 1) then
+			meleeLowRankCheck = true
+		end
+		--
+
+		--Rank 3 melee check
+
+		if (rank == 3) and
+		(GetCreatureAttrib( creatureID, "melee_damage") > 0) and
+		(GetCreatureAttrib( creatureID, "range2_damage") < 1) and
+		(GetCreatureAttrib( creatureID, "range2_special") < 1) and
+		(GetCreatureAttrib( creatureID, "range3_damage") < 1) and
+		(GetCreatureAttrib( creatureID, "range3_special") < 1) and
+		(GetCreatureAttrib( creatureID, "range4_damage") < 1) and
+		(GetCreatureAttrib( creatureID, "range4_special") < 1) and
+		(GetCreatureAttrib( creatureID, "range5_damage") < 1) and
+		(GetCreatureAttrib( creatureID, "range5_special") < 1) and
+		(GetCreatureAttrib( creatureID, "range8_damage") < 1) and
+		(GetCreatureAttrib( creatureID, "range8_special") < 1) then
+			meleeAvgRankCheck = true
+		end
+		--
+	
+		--Rank 5 melee check
+
+		if (rank == 5) and
+		(GetCreatureAttrib( creatureID, "melee_damage") > 0) and
+		(GetCreatureAttrib( creatureID, "range2_damage") < 1) and
+		(GetCreatureAttrib( creatureID, "range2_special") < 1) and
+		(GetCreatureAttrib( creatureID, "range3_damage") < 1) and
+		(GetCreatureAttrib( creatureID, "range3_special") < 1) and
+		(GetCreatureAttrib( creatureID, "range4_damage") < 1) and
+		(GetCreatureAttrib( creatureID, "range4_special") < 1) and
+		(GetCreatureAttrib( creatureID, "range5_damage") < 1) and
+		(GetCreatureAttrib( creatureID, "range5_special") < 1) and
+		(GetCreatureAttrib( creatureID, "range8_damage") < 1) and
+		(GetCreatureAttrib( creatureID, "range8_special") < 1) then
+			meleeRank5Check = true
+		end
+		--
+
+		-- Rank 2 artillery check
+		if (rank == 2) and
+		(GetCreatureAttrib( creatureID, "range2_special") > 0) then
+			artLowRankCheck = true
+		end
+
+		if (rank == 2) and
+		(GetCreatureAttrib( creatureID, "range3_special") > 0) then
+			artLowRankCheck = true
+		end
+
+		if (rank == 2) and
+		(GetCreatureAttrib( creatureID, "range4_special") > 0) then
+			artLowRankCheck = true
+		end
+
+		if (rank == 2) and
+		(GetCreatureAttrib( creatureID, "range5_special") > 0) then
+			artLowRankCheck = true
+		end
+	
+		--Rank 3 artillery check
+		if (rank == 3) and
+		(GetCreatureAttrib( creatureID, "range2_special") > 0) then
+			artAvgRankCheck = true
+		end
+
+		if (rank == 3) and 
+		(GetCreatureAttrib( creatureID, "range3_special") > 0) then
+			artAvgRankCheck = true
+		end
+
+		if (rank == 3) and
+		(GetCreatureAttrib( creatureID, "range4_special") > 0) then
+			artAvgRankCheck = true
+		end
+
+		if (rank == 3) and
+		(GetCreatureAttrib( creatureID, "range5_special") > 0) then
+			artAvgRankCheck = true
+		end
+
+		-- Rank 4 artillery check
+		if (rank == 4) and 
+		(GetCreatureAttrib( creatureID, "range2_special") > 0) then
+			artHighRankCheck = true
+		end
+
+		if (rank == 4) and
+		(GetCreatureAttrib( creatureID, "range3_special") > 0) then
+			artHighRankCheck = true
+		end
+
+		if (rank == 4) and
+		(GetCreatureAttrib( creatureID, "range4_special") > 0) then
+			artHighRankCheck = true
+		end
+
+		if (rank == 4) and
+		(GetCreatureAttrib( creatureID, "range5_special") > 0) then
+			artHighRankCheck = true
+		end
+
+		-- Rank 5 artillery check
+		if (rank == 5) and
+		(GetCreatureAttrib( creatureID, "range2_special") > 0) then
+			artHighRankCheck = true
+		end
+
+		if (rank == 5) and
+		(GetCreatureAttrib( creatureID, "range3_special") > 0) then
+			artHighRankCheck = true
+		end
+
+		if (rank == 5) and
+		(GetCreatureAttrib( creatureID, "range4_special") > 0) then
+			artHighRankCheck = true
+		end
+
+		if (rank == 5) and
+		(GetCreatureAttrib( creatureID, "range5_special") > 0) then
+			artHighRankCheck = true
+		end
+
+		-- Double ranged check
+
+		if (GetCreatureAttrib( creatureID, "range2_damage") > 1) and
+		(GetCreatureAttrib( creatureID, "range3_damage") > 1) then
+			doubleRange = true
+		end
+
+		if (GetCreatureAttrib( creatureID, "range2_damage") > 1) and
+		(GetCreatureAttrib( creatureID, "range4_damage") > 1) then
+			doubleRange = true
+		end
+
+		if (GetCreatureAttrib( creatureID, "range2_damage") > 1) and
+		(GetCreatureAttrib( creatureID, "range5_damage") > 1) then
+			doubleRange = true
+		end
+
+		if (GetCreatureAttrib( creatureID, "range2_damage") > 1) and
+		(GetCreatureAttrib( creatureID, "range8_damage") > 1) then
+			doubleRange = true
+		end
+
+		if (GetCreatureAttrib( creatureID, "range3_damage") > 1) and
+		(GetCreatureAttrib( creatureID, "range4_damage") > 1) then
+			doubleRange = true
+		end
+
+		if (GetCreatureAttrib( creatureID, "range3_damage") > 1) and
+		(GetCreatureAttrib( creatureID, "range5_damage") > 1) then
+			doubleRange = true
+		end
+
+		if (GetCreatureAttrib( creatureID, "range3_damage") > 1) and
+		(GetCreatureAttrib( creatureID, "range8_damage") > 1) then
+			doubleRange = true
+		end
+
+		if (GetCreatureAttrib( creatureID, "range4_damage") > 1) and
+		(GetCreatureAttrib( creatureID, "range5_damage") > 1) then
+			doubleRange = true
+		end
+
+		if (GetCreatureAttrib( creatureID, "range4_damage") > 1) and
+		(GetCreatureAttrib( creatureID, "range8_damage") > 1) then
+			doubleRange = true
+		end
+
+		if (GetCreatureAttrib( creatureID, "range5_damage") > 1) and
+		(GetCreatureAttrib( creatureID, "range8_damage") > 1) then
+			doubleRange = true
+		end
+
+		if (GetCreatureAttrib( creatureID, "range2_damage") > 1) and
+		(GetCreatureAttrib( creatureID, "range3_damage") > 1) then
+			doubleRange = true
+		end
+
+		if (GetCreatureAttrib( creatureID, "range2_damage") > 1) and
+		(GetCreatureAttrib( creatureID, "range4_damage") > 1) then
+			doubleRange = true
+		end
+		--
+
+		--Now for artillery
+
+		if (GetCreatureAttrib( creatureID, "range2_special") > 1) and
+		(GetCreatureAttrib( creatureID, "range4_special") > 1) then
+			doubleRange = true
+		end
+
+		if (GetCreatureAttrib( creatureID, "range3_special") > 1) and
+		(GetCreatureAttrib( creatureID, "range4_special") > 1) then
+			doubleRange = true
+		end
+
+		if (GetCreatureAttrib( creatureID, "range2_special") > 1) and
+		(GetCreatureAttrib( creatureID, "range5_special") > 1) then
+			doubleRange = true
+		end
+
+		if (GetCreatureAttrib( creatureID, "range3_special") > 1) and
+		(GetCreatureAttrib( creatureID, "range5_special") > 1) then
+			doubleRange = true
+		end
+
+		if (GetCreatureAttrib( creatureID, "range4_special") > 1) and
+		(GetCreatureAttrib( creatureID, "range5_special") > 1) then
+			doubleRange = true
+		end
+		--
 
 		-- range damage assessment
 		if (rank == 1) and
@@ -266,24 +558,60 @@ AnalyzeArmy = function()
 		(GetCreatureAttrib( creatureID, "hitpoints") > 40) then
 			rangeLowRank = true
 		end
+
 		if (rank == 1) and
 		(GetCreatureAttrib( creatureID, "range4_damage") > 3) and
 		(GetCreatureAttrib( creatureID, "range4_special") < 1) and
 		(GetCreatureAttrib( creatureID, "hitpoints") > 40) then
 			rangeLowRank = true
 		end
+
 		if (rank == 2) and
 		(GetCreatureAttrib( creatureID, "range2_damage") > 4) and
 		(GetCreatureAttrib( creatureID, "range2_special") < 1) and
 		(GetCreatureAttrib( creatureID, "hitpoints") > 75) then
 			rangeLowRank = true
 		end
+		
 		if (rank == 2) and
 		(GetCreatureAttrib( creatureID, "range4_damage") > 4) and
 		(GetCreatureAttrib( creatureID, "range4_special") < 1) and
 		(GetCreatureAttrib( creatureID, "hitpoints") > 75) then
 			rangeLowRank = true
 		end
+		--
+
+		if (rank == 2) and
+		(GetCreatureAttrib( creatureID, "range4_damage") > 0) and
+		(GetCreatureAttrib( creatureID, "range4_special") < 1) then
+			rangeLowRankCheck = true
+		end
+
+		if (rank == 2) and
+		(GetCreatureAttrib( creatureID, "range2_damage") > 0) and
+		(GetCreatureAttrib( creatureID, "range2_special") < 1) then
+			rangeLowRankCheck = true
+		end
+
+		if (rank == 2) and
+		(GetCreatureAttrib( creatureID, "range3_damage") > 0) and
+		(GetCreatureAttrib( creatureID, "range3_special") < 1) then
+			rangeLowRankCheck = true
+		end
+
+		if (rank == 2) and
+		(GetCreatureAttrib( creatureID, "range5_damage") > 0) and
+		(GetCreatureAttrib( creatureID, "range5_special") < 1) then
+			rangeLowRankCheck = true
+		end
+
+		if (rank == 2) and
+		(GetCreatureAttrib( creatureID, "range8_damage") > 0) and
+		(GetCreatureAttrib( creatureID, "range8_special") < 1) then
+			rangeLowRankCheck = true
+		end
+		--
+
 		if (rank == 3) and
 		(GetCreatureAttrib( creatureID, "range2_damage") > 7) and
 		(GetCreatureAttrib( creatureID, "range2_special") < 1) and
@@ -296,6 +624,25 @@ AnalyzeArmy = function()
 		(GetCreatureAttrib( creatureID, "hitpoints") > 120) then
 			rangeAvgRank = true
 		end
+
+		if (rank == 3) and
+		(GetCreatureAttrib( creatureID, "range2_damage") > 0) and
+		(GetCreatureAttrib( creatureID, "range2_special") < 1) then
+			rangeAvgRankCheck = true		
+		end
+
+		if (rank == 3) and
+		(GetCreatureAttrib( creatureID, "range4_damage") > 0) and
+		(GetCreatureAttrib( creatureID, "range4_special") < 1) then
+			rangeAvgRankCheck = true		
+		end
+
+		if (rank == 3) and
+		(GetCreatureAttrib( creatureID, "range8_damage") > 0) and
+		(GetCreatureAttrib( creatureID, "range8_special") < 1) then
+			rangeAvgRankCheck = true		
+		end
+
 		if (rank == 4) and
 		(GetCreatureAttrib( creatureID, "range2_damage") > 10) and
 		(GetCreatureAttrib( creatureID, "range2_special") < 1) and
@@ -319,6 +666,24 @@ AnalyzeArmy = function()
 		(GetCreatureAttrib( creatureID, "range4_special") < 1) and
 		(GetCreatureAttrib( creatureID, "hitpoints") > 250) then
 			rangeHighRank = true
+		end
+
+		if (rank == 5) and
+		(GetCreatureAttrib( creatureID, "range2_damage") > 0) and
+		(GetCreatureAttrib( creatureID, "range2_special") < 1) then
+			rangeRank5Check = true		
+		end
+
+		if (rank == 5) and
+		(GetCreatureAttrib( creatureID, "range4_damage") > 0) and
+		(GetCreatureAttrib( creatureID, "range4_special") < 1) then
+			rangeRank5Check = true		
+		end
+
+		if (rank == 5) and
+		(GetCreatureAttrib( creatureID, "range8_damage") > 0) and
+		(GetCreatureAttrib( creatureID, "range8_special") < 1) then
+			rangeRank5Check = true		
 		end
 
 		-- artillery damage assessment
@@ -409,7 +774,8 @@ AnalyzeArmy = function()
 		speed = max( speed_max, max( airspeed_max, waterspeed_max ) );
 
 		-- Power of the creature.  Used to rank it.
-		power = sqrt( damage_rank * hitpoints / ( 1-armour ) );
+		power = (((hitpoints/(1-armour))^(0.608))*((0.22*damage) + 2.8));
+
 
 		-- adding up power values
 
@@ -498,8 +864,6 @@ AnalyzeArmy = function()
 			totalPower = totalPower + 1
 		end
 
-
-	
 	-- Creatures in Army?
 	if (creatureCount == 0) then
 		AddItem(56100)
@@ -514,7 +878,6 @@ AnalyzeArmy = function()
 		avgDefense = totalDefense / creatureCount
 		avgMelee = totalMelee / creatureCount
 		avgPower = totalPower / creatureCount
-
 
 		-- Average Coal Cost
 		if (avgCoal > 250) then
@@ -568,9 +931,9 @@ AnalyzeArmy = function()
 		end
 
 		-- Defense Assessment
-		if (avgDefense > 0.50) then
+		if (avgDefense > 0.35) then
 			AddItem( 56150)
-		elseif (avgDefense < 0.35) then
+		elseif (avgDefense < 0.23) then
 			AddItem( 56152)
 		else
 			AddItem( 56154)
@@ -582,8 +945,7 @@ AnalyzeArmy = function()
 		elseif (avgMelee < 9) then
 			AddConItem( 56158)
 		end
-
-
+		--
 
 		-- Melee Damage Assessment by rank
 		if (meleeLowRank == true) then
@@ -628,20 +990,17 @@ AnalyzeArmy = function()
 		if (totalRank3 > 2) then
 			AddItem( 56170)
 		end
-		if (totalRank4 > 2) then
+		if (totalRank4 > 1) then
 			AddItem( 56172)
 		end
 		if (totalRank5 > 2) then
 			AddItem( 56174)
 		end
-
-
+		--
 
 		-- rank 1 creatures present?
 		if (rank1 == true) then
-			AddProItem( 56010)
-		else
-			AddConItem( 56012)
+			AddItem( 56010)
 		end
 	
 		-- rank 2 creatures present?
@@ -650,6 +1009,14 @@ AnalyzeArmy = function()
 		else
 			AddConItem( 56016)
 		end
+
+--		if (rank2 == true) and (rank1 == true) then
+--		
+--			AddProItem( 58081 )
+--			AddConItem( 58083 )
+--			AddItem( 58085 )
+--		
+--		end
 	
 		-- rank 3 creatures present?
 		if (rank3 == true) then
@@ -671,31 +1038,31 @@ AnalyzeArmy = function()
 		else
 			AddConItem( 56028)
 		end
-	
+		--
 	
 		-- too many of a rank?
-		if (totalLowRank > 4) then
-			AddConItem( 56176)
-		end
-		if (totalHighRank > 3) then
+		--if (totalLowRank > 3) then
+		--	AddConItem( 56176)
+		--end
+		if (totalHighRank > 4) then
 			AddConItem( 56178)
 		end
-		if (totalRank1 > 4) then
+		if (totalRank1 > 1) then
 			AddConItem( 56180)
 		end
-		if (totalRank2 > 4) then
+		if (totalRank2 > 3) then
 			AddConItem( 56182)
 		end
-		if (totalRank3 > 4) then
+		if (totalRank3 > 3) then
 			AddConItem( 56184)
 		end
-		if (totalRank4 > 4) then
+		if (totalRank4 > 2) then
 			AddConItem( 56186)
 		end
 		if (totalRank5 > 4) then
 			AddConItem( 56188)
 		end
-
+		--
 
 		-- check movement types
 		if (flyerFound == true) then
@@ -711,7 +1078,7 @@ AnalyzeArmy = function()
 		if (amphibFound == false) then
 			AddConItem( 56044)
 		end
-	
+		--
 	
 		-- special abilities
 		if (pierceFound == true) then
@@ -725,7 +1092,37 @@ AnalyzeArmy = function()
 		else
 			AddConItem( 56048)
 		end
-	
+
+	---------------------------------------------------------
+	-- Check for micro-intensive abilities --
+	---------------------------------------------------------
+
+		needsMicro = 0
+
+		if (webFound == true) then
+			needsMicro = needsMicro + 1
+		end
+
+		if (assLonerFound == true) then
+			needsMicro = needsMicro + 1
+		end
+
+		if (stinkFound == true) then
+			needsMicro = needsMicro + 1
+		end
+
+		if (flashFound == true) then
+			needsMicro = needsMicro + 1
+		end
+
+		if needsMicro >= 3 then
+			AddItem(58081)
+		end
+
+	------------------------
+	-- Normal stuff --
+	------------------------
+
 		if (artilleryFound == true) then
 			AddProItem( 56058)
 		else
@@ -738,7 +1135,7 @@ AnalyzeArmy = function()
 			AddConItem( 56162)
 		end
 
-		if (totalChemical > 2) then
+		if (totalChemical > 3) then
 			AddConItem( 56164)
 		end
 
@@ -762,30 +1159,135 @@ AnalyzeArmy = function()
 		-->>>>>>>New abilities
 		if (jumpFound == true) then
 			AddProItem( 56228)
-		else
-			AddConItem( 56230)
 		end
 
-		if (packherdFound == true) then
-			AddProItem( 56232)
-		else
-			AddConItem( 56234)
+		if (packFound == true) then
+			AddProItem(58099)
 		end
-                if (webFound == true) then
+
+		if (herdFound == true) then
+			AddProItem(58101)
+		end
+
+		if (packHerdFound == true) then
+			AddItem(58085)
+		end
+
+               		if (webFound == true) then
 			AddProItem( 56236)
-		else
-			AddConItem( 56238)
 		end
-		--if (autoFound == true) then
-		--	AddProItem( 30232)
-		--else
-		--	AddConItem( 30233)
-		--end
+
+		if (autoFound == true) then
+			AddProItem(58103)
+		end
+
 		if (asslonerFound == true) then
 			AddProItem(56240)
-		else
-			AddConItem(56242)
-		end	
+		end
+
+		if (overpopFound == true) then
+			AddProItem(58087)
+		end
+
+		if (colonyFound == true) then
+			AddProItem(58089)
+		end
+
+	---------------------------------------------------------------------
+	-- Checks for important unit types at each level --
+	---------------------------------------------------------------------
+
+	--Checks for melee
+
+	if (rank2 == false) then
+		meleeLowRankCheck = nil
+	elseif (rank3 == false) then
+		meleeAvgRankCheck = nil
 	end
+	if (rank5 == false) then
+		meleeRank5Check = nil
+	end
+	--
+
+	if meleeLowRankCheck == false then
+		AddConItem(58107)
+	end
+
+	if meleeAvgRankCheck == false then
+		AddConItem(58109)
+	end
+
+	if meleeRank5Check == false then
+		AddConItem(58111)
+	end	
+
+	--Checks for ranged
+
+	if (rank2 == false) then
+		rangeLowRankCheck = nil
+	elseif (rank3 == false) then
+		rangeAvgRankCheck = nil
+	end
+	if (rank5 == false) then
+		rangeRank5Check = nil
+	end
+	--
+	
+	if rangeLowRankCheck == false then
+		AddConItem(58091)
+	end
+
+	if rangeAvgRankCheck == false then
+		AddConItem(58093)
+	end
+
+	if rangeRank5Check == false then
+		AddConItem(58095)
+	end
+	--
+
+	--Checks for artillery
+
+	if (rank2 == false) then
+		artLowRankCheck = nil
+	elseif (rank3 == false) then
+		artAvgRankCheck = nil
+	end
+	if (rank4 == false) or (rank5 == false) then
+		artHighRankCheck = nil
+	end
+	--
+
+	if (artLowRankCheck == false) and (artAvgRankCheck == false) then
+		AddConItem(58113)
+	end
+
+	if artHighRankCheck == false then
+		AddConItem(58115)
+	end
+	--
+
+	--Checks for special types
+
+	--Do we have sonic?
+	if sonicAttack == true then
+		AddProItem(58119)
+	end
+
+	---------------------------------------------------------
+	-- Other meta-oriented changes here --
+	---------------------------------------------------------	
+
+	--Is army complete?
+	if creatureCount < 9 then
+		AddConItem(58097)
+	end
+
+	--Double ranged units?
+	if doubleRange == true then
+		AddConItem(58117)
+	end
+
+end
 
 end

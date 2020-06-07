@@ -36,4 +36,6 @@ tooltips =
 	{ "sendmessage_button",			"statusbar_helptext",	"statusbar_helptext", 0, 26951, 0, Point_Below },
 	{ "chatentryedittext",			"statusbar_helptext",	"statusbar_helptext", 0, 26952, 0, Point_Below },
 	{ "chattextscrollbox",			"statusbar_helptext",	"statusbar_helptext", 0, 26953, 0, Point_Below },
+	{ "helptext_label",			"statusbar_helptext",	"statusbar_helptext", 0, 38019, 0, Point_Below },
+	{ "helptext_label0",			"statusbar_helptext",	"statusbar_helptext", 0, 38020, 0, Point_Below },
 }
