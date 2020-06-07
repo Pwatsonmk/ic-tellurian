@@ -33,14 +33,6 @@ AbilitiesList =
 	-- bodypart is required for compatibility sakes.
 	-- Updated abilities body part toggle (such as stink which we want on either the tail or torso depending on the animal)
 	-- will be read from the creatures lua file instead of this file.
-	Tinyr = 
-	{
-		gameattributename 	= "tiny",
-		bodypart		= part_torso,
-		name			= 37520,
-		shortdesc		= 37521,
-		showonlyincombiner	= 0,
-	},	
 	AutoDefense = 
 	{
 		gameattributename 	= "AutoDefense",
@@ -88,6 +80,14 @@ AbilitiesList =
 		name			= 37502,
 		shortdesc		= 37503,
 		showonlyincombiner	= 0,
+	},
+	Oversized = 
+	{
+		gameattributename 	= "big",
+		bodypart		= part_creature,
+		name			= 58005,
+		shortdesc		= 58006,
+		showonlyincombiner	= 1,
 	},
 	Infestation = 
 	{
@@ -262,7 +262,7 @@ AbilitiesList =
 		gameattributename 	= "web_throw",
 		bodypart		= part_tail,
 		name			= 37496,
-		shortdesc		= 37597,
+		shortdesc		= 37497,
 		showonlyincombiner	= 0,
 	},
 	SoiledLand =

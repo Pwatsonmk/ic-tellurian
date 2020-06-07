@@ -1,4 +1,4 @@
--- Narwhal
+-- hoob
 limbattributes = {
 isFromExcel = {1,1.0},
 ["endurance_bonus"]={1,0},
@@ -6,10 +6,10 @@ isFromExcel = {1,1.0},
 ["sight_radius1"]={4,25},
 ["night_sight_radius"]={4,0},
 ["stocktype"]={1,5},
-["armour-head"]={4,0.11},
-["armour-front"]={2,0.0},
+["armour-head"]={4,0.1},
+["armour-front"]={2,0.05},
 ["armour-back"]={3,0.0},
-["armour-torso"]={6,0.3},
+["armour-torso"]={6,0.15},
 ["exp_armour"]={1,0},
 ["exp_dodge"]={1,-0.125},
 ["hitpoints-head"]={4,150},

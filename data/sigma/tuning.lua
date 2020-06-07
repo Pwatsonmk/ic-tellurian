@@ -1,11 +1,24 @@
 ---------------------------------------------------------------------
 -- File    : Tuning.lua
--- Desc    : 
+-- Desc    : Tellurian Mod edited version 
 -- Created : Wednesday, June 20, 2001
 -- Author  : 
 -- 
 -- (c) 2001 Relic Entertainment Inc.
 -- 
+
+
+--CHANGES as of 12/18/2017
+--Defense upgrade set to 3.
+--Plague duration and spread speed reduced (duration is now 25 seconds, spreads every 3).
+--Defile damage increased to 0.2.
+--Level 4 regen reduced to 1.75.
+--Stink cloud duration reduced; 64@L1, 84@L2, 104@L3, 124@L4, 144@L5; endurance cost increased to 100.
+--Poison damage reduce changed to 0.85.
+--Deflect chances reduced.
+--Quill burst damage and friendly fire reduced.
+--High ground bonus reduced, required height difference increased; range damage multiplier against fliers reduced.
+
 
 -- * Global Tuning Values
 
@@ -29,7 +42,7 @@ Poison =
 	speedmultiplier			= 0.75,
 	
 	-- The amount to multiply the creature's attack damage by when poisoned
-	damagemultiplier		= 0.75,
+	damagemultiplier		= 0.85,
 	
 	-- The poisoned victom has a reduced sight radius to this value
 	poisonsightradius		= 0.0,
@@ -70,7 +83,7 @@ Endurance =
 Defense = 
 {
 	-- the max your defence can be set to through modifications
-	defensemax		= 0.8,
+	defensemax		= 0.6,
 }
 
 
@@ -80,7 +93,7 @@ Defense =
 Loner =
 {
 	-- The radius at which the loner bonus becomes effective (in metres)
-	lonerRadius			= 25.0,
+	lonerRadius			= 30.0,
 
 	-- Include henchmen in radius check?
 	-- yes = 1 or no = 0 (default) 
@@ -103,9 +116,9 @@ Loner =
 	-- This is a modifier to the above base percentage.
 	artilleryBonusModRank1		= 6.0,
 	artilleryBonusModRank2		= 3.0,
-	artilleryBonusModRank3		= 4.0,
-	artilleryBonusModRank4		= 6.0,
-	artilleryBonusModRank5		= 7.0,
+	artilleryBonusModRank3		= 3.0,
+	artilleryBonusModRank4		= 4.0,
+	artilleryBonusModRank5		= 5.0,
 
 	-- Direct ranged bonus per creature size
 	-- This *is a multiplier*, e.g. a 50% bonus should be written as 1.5.
@@ -124,9 +137,9 @@ Loner =
 	-- This is a modifier to the above base percentage.
 	rangedBonusModRank1		= 6.0,
 	rangedBonusModRank2		= 3.0,
-	rangedBonusModRank3		= 4.0,
-	rangedBonusModRank4		= 6.0,
-	rangedBonusModRank5		= 7.0,
+	rangedBonusModRank3		= 3.0,
+	rangedBonusModRank4		= 4.0,
+	rangedBonusModRank5		= 5.0,
 
 	-- Melee bonus per creature size
 	-- This *is a multiplier*, e.g. a 50% bonus should be written as 1.5.
@@ -145,9 +158,9 @@ Loner =
 	-- This is a modifier to the above base percentage.
 	meleeBonusModRank1		= 6.0,
 	meleeBonusModRank2		= 3.0,
-	meleeBonusModRank3		= 4.0,
-	meleeBonusModRank4		= 6.0,
-	meleeBonusModRank5		= 7.0,
+	meleeBonusModRank3		= 3.0,
+	meleeBonusModRank4		= 4.0,
+	meleeBonusModRank5		= 5.0,
 
 	-- Damage Reduction
 	-- The is the percentage of damage reduction a loner creature has
@@ -197,28 +210,28 @@ Deflection =
 	-- Valid range is 0.0 (0% - never deflect) to 1.0 (100% - always deflect)
 
 	-- Base deflection chance per creature size
-	deflectionBaseSize1	= 0.30,
-	deflectionBaseSize2	= 0.31,
-	deflectionBaseSize3	= 0.32,
-	deflectionBaseSize4	= 0.33,
-	deflectionBaseSize5	= 0.34,
-	deflectionBaseSize6	= 0.35,
-	deflectionBaseSize7	= 0.36,
-	deflectionBaseSize8	= 0.37,
-	deflectionBaseSize9	= 0.38,
-	deflectionBaseSize10	= 0.40,
+	deflectionBaseSize1	= 0.255,
+	deflectionBaseSize2	= 0.26,
+	deflectionBaseSize3	= 0.265,
+	deflectionBaseSize4	= 0.27,
+	deflectionBaseSize5	= 0.275,
+	deflectionBaseSize6	= 0.28,
+	deflectionBaseSize7	= 0.285,
+	deflectionBaseSize8	= 0.29,
+	deflectionBaseSize9	= 0.295,
+	deflectionBaseSize10	= 0.3,
 
 	-- Deflection modifier per creature rank (+/-)
 	deflectionModRank1	= 0.0,
 	deflectionModRank2	= 0.0,
 	deflectionModRank3	= 0.0,
-	deflectionModRank4	= 0.05,
-	deflectionModRank5	= 0.1,
+	deflectionModRank4	= 0.0,
+	deflectionModRank5	= 0.0,
 	
 	-- Deflection modifier per defenders attack type (+/-)
 	-- Order of preference (artillery, direct ranged, melee)
-	deflectionModArtillery	= 0.1,
-	deflectionModRanged	= -0.1,
+	deflectionModArtillery	= 0.0,
+	deflectionModRanged	= 0.0,
 	deflectionModMelee	= 0.0,
 
 	-- Deflect sonic attacks?
@@ -233,10 +246,10 @@ Deflection =
 Flash = 
 {
 	-- Endurance cost
-	enduranceCost		= 54.0,
+	enduranceCost		= 100.0,
 	
 	-- Duration in game ticks
-	duration		= 96.0, -- about 10 seconds
+	duration		= 72.0, -- about 10 seconds
 
 	-- Flash Radius in metres (based on flashing creatures' size)
 	effectiveRadiusSize1	= 40.0,
@@ -251,7 +264,7 @@ Flash =
 	effectiveRadiusSize10	= 40.0,
 
 	-- Reduced size radius in metres
-	reducedSightRadius 	= 12.0,
+	reducedSightRadius 	= 1.0,
 
 	-- Height above the ground that initial effect will happen (in metres)
 	fxTargetHeight		= 8.0,
@@ -264,11 +277,11 @@ Flash =
 HealthRegen =
 {
 	-- the amount of health that regenerates per second, by creature rank
-	regenamount1		= 0.5,
-	regenamount2		= 1,
-	regenamount3		= 1.5,
-	regenamount4		= 2.0,
-	regenamount5		= 2.5,
+	regenamount1		= 0.25,
+	regenamount2		= 0.75,
+	regenamount3		= 1.25,
+	regenamount4		= 1.75,
+	regenamount5		= 2.0,
 }
 
 ---------------------------------------------------------------------
@@ -290,16 +303,16 @@ PackBonus =
 	minentitycount			= 4.0,
 
 	-- the base damage modifier, new damage is this * normal damage
-	basedamagemodifier		= 1.50,
+	basedamagemodifier		= 1.3,
 
 	-- the base defense modifier, new defense is this * normal damage
-	basedefensemodifier		= 1.5,
+	basedefensemodifier		= 1.3,
 
 	-- the search radius that the pack bonus is effective for, meters
-	searchradius			= 30.0,
+	searchradius			= 20.0,
 
 	-- the amount of sim ticks that need to pass for packing to be reset
-	delayticks				= 16,
+	delayticks				= 8,
 }
 
 ---------------------------------------------------------------------
@@ -347,7 +360,7 @@ ResearchBonus =
 
 	-- hitpoint bonus to give to bramble fences with the strengthen-fences 
 	-- research
-	strengthenFenceMultiplier		= 4.0,
+	strengthenFenceMultiplier		= 5.0,
 
 	-- collection rate bonus to give to all electricity collectors with the 
 	-- strengthen-electrical-grid research
@@ -392,14 +405,14 @@ SiteDecal =
 StinkCloud =
 {
 	-- the minimum number of entities needed for the bonus to kick in
-	enduranceCost			= 54.0,
+	enduranceCost			= 100.0,
 
 	-- how long the cloud lasts, in ticks, per creature rank
-	duration1				= 84.0, 
-	duration2				= 112.0, 
-	duration3				= 112.0, -- about 10 seconds
-	duration4				= 112.0, 
-	duration5				= 144.0, -- Deliberate change to nerf L5 StinkFliers -- 144
+	duration1				= 64.0, 
+	duration2				= 84.0, 
+	duration3				= 104.0, -- about 10 seconds
+	duration4				= 124.0, 
+	duration5				= 144.0,
 
 	-- damage radius = radiusOffset + creature size (in meters) * radiusScale
 	radiusOffset			= 16.0,
@@ -424,24 +437,24 @@ StinkCloud =
 ElectricBurst =
 {
 	-- the minimum number of entities needed for the bonus to kick in
-	enduranceCost			= 50.0,
+	enduranceCost			= 80.0,
 
 	-- this is the duration of the attack in ticks, and modifies the base damage
 	-- new damage is this * dmgPerTick (see below)
-	duration				= 5.0,
+	duration				= 3.0,
 
 	-- damage radius : C = (creature size (in meters)) O = offset, S = scale
 	-- Final radius = O + C*S  (where O is the minimum radius)
-	radiusOffset			= 8.0,
+	radiusOffset			= 12.0,
 	radiusScale				= 1.0,
 
 	-- damage per tick
 	-- new damage is this * duration (see above)
 	dmgPerTick1				= 0.0,
-	dmgPerTick2				= 10.0,
-	dmgPerTick3				= 25.0,
-	dmgPerTick4				= 75.0,
-	dmgPerTick5				= 125.0,
+	dmgPerTick2				= 20.0,
+	dmgPerTick3				= 34.0,
+	dmgPerTick4				= 45.0,
+	dmgPerTick5				= 67.0,
 
 	-- not used!
 	dmgToBuilding			= .10
@@ -457,20 +470,20 @@ QuillBurst =
 
 	-- this is the duration of the attack in ticks, and modifies the base damage
 	-- new damage is this * dmgPerTick (see below)
-	duration				= 1.0,
+	duration				= 5.0,
 
 	-- damage radius : C = (creature size (in meters)) O = offset, S = scale
 	-- Final radius = O + C*S  (where O is the minimum radius)
-	radiusOffset			= 9.0,
-	radiusScale				= 1.0,
+	radiusOffset			= 7.0,
+	radiusScale				= 1.25,
 
 	-- damage per tick
 	-- new damage is this * duration (see above)
-	dmgPerTick1				= 50.0,
-	dmgPerTick2				= 60.0,
-	dmgPerTick3				= 100.0,
-	dmgPerTick4				= 250.0,
-	dmgPerTick5				= 500.0,
+	dmgPerTick1				= 1.5,
+	dmgPerTick2				= 2.5,
+	dmgPerTick3				= 5.0,
+	dmgPerTick4				= 7.5,
+	dmgPerTick5				= 10.0,
 
 	-- not used
 	dmgToBuilding			= 0
@@ -486,16 +499,16 @@ WebThrow =
 
 	-- this is the duration of the attack in ticks, and modifies the base damage
 	-- new damage is this * normal damage
-	duration				= 96.0,
+	duration				= 30.0,
 
 	-- attack range : C = (creature size (in meters)) O = offset, S = scale
 	-- Final radius = O + C*S  (where O is the minimum radius)
-	rangeOffset				= 13.0,
+	rangeOffset				= 6.0,
 	rangeScale				= 0.5,
 
 	-- damage radius : C = (creature size (in meters)) O = offset, S = scale
 	-- Final radius = O + C*S  (where O is the minimum radius)
-	radiusOffset			= 8.0,
+	radiusOffset				= 6.0,
 	radiusScale				= 0.5,
 	
 	-- height above the ground that the initial web effect will happen
@@ -514,16 +527,16 @@ Assassinate =
 	-- Attack damage done by the assassination attempt.
 	-- This is a percentage of the victims maximum hitpoints and it ignores
 	-- all defenses and damage reduction (valid values 0.0 to 1.0).
-	damageTotalBaseSize1	= 0.50,
-	damageTotalBaseSize2	= 0.50,
-	damageTotalBaseSize3	= 0.50,
-	damageTotalBaseSize4	= 0.50,
-	damageTotalBaseSize5	= 0.50,
-	damageTotalBaseSize6	= 0.50,
-	damageTotalBaseSize7	= 0.50,
-	damageTotalBaseSize8	= 0.50,
-	damageTotalBaseSize9	= 0.50,
-	damageTotalBaseSize10	= 0.50,
+	damageTotalBaseSize1	= 0.40,
+	damageTotalBaseSize2	= 0.40,
+	damageTotalBaseSize3	= 0.40,
+	damageTotalBaseSize4	= 0.40,
+	damageTotalBaseSize5	= 0.40,
+	damageTotalBaseSize6	= 0.40,
+	damageTotalBaseSize7	= 0.40,
+	damageTotalBaseSize8	= 0.40,
+	damageTotalBaseSize9	= 0.40,
+	damageTotalBaseSize10	= 0.40,
 }
 
 ---------------------------------------------------------------------
@@ -532,14 +545,14 @@ Assassinate =
 Infestation =
 {
 	-- Endurance cost to use this ability
-	enduranceCost		= 50.0,
+	enduranceCost		= 100.0,
 
 	-- Duration of the attack in ticks, and modifies the base damage
 	-- new damage is this * normal damage
-	duration				= 500.0,
+	duration				= 375.0,
 	
 	-- Damage per tick to the bulding
-	dmgPerTick				= 5,
+	dmgPerTick				= 4.00,
 	
 	-- Is infestation fully effective on building with struture defence ON?
 	-- 1 = YES, infest with full damage ; 0 = NO, cannot infest
@@ -616,7 +629,7 @@ Digging =
 	
 	-- a multiplier for health regeneration when underground
 	-- e.g. 0.5 means half, 2.0 means double
-	healthRegenMultiplier		= 2.0,
+	healthRegenMultiplier		= 1.0,
 }
 ---------------------------------------------------------------------
 -- Effect
@@ -709,38 +722,38 @@ Effect =
 
 AttackBonus =
 {
-	-- multiplier of damage applied to a building when striked with barrier destroy damage
-	barrierBuildingBonusMult		= 2.0,
+	-- multiplier of damage applied to a building when struck with barrier destroy damage
+	barrierBuildingBonusMult		= 1.5,
 
-	-- multiplier of damage applied to a bramble fence when striked with barrier destroy damage
+	-- multiplier of damage applied to a bramble fence when struck with barrier destroy damage
 	barrierFenceBonusMult			= 3.0,
 
-	-- multiplier of damage applied to a building when striked with electric type damage
+	-- multiplier of damage applied to a building when struck with electric type damage
 	electricBuildingBonusMult		= 0.8,
 
-	-- multiplier of damage applied to a building when striked with horn negate armour type damage
+	-- multiplier of damage applied to a building when struck with horn negate armour type damage
 	negateArmourBuildingBonusMult	= 1.0,
 
-	-- multiplier of damage applied to a creature when striked with horn negate armour type damage
+	-- multiplier of damage applied to a creature when struck with horn negate armour type damage
 	negateArmourCreatureBonusMult	= 0.35,
 
 	-- minimum elevation difference (in meters) between the attacker and the attackee for the terrain-height bonus to kick in 
-	terrainHeightBonusMinElevDiff		= 2.0,
+	terrainHeightBonusMinElevDiff		= 10.0,
 
 	-- multiplier of damage applied to an entity when the attacker attacks from higher elevation
-	terrainHeightBonusMult			= 2.0,
+	terrainHeightBonusMult			= 1.25,
 
-	-- multiplier of damage applied to a building when striked with direct range attack
+	-- multiplier of damage applied to a building when struck with direct range attack
 	directRangeBuildingMult			= 1.0,
 
-	-- multiplier of damage applied to a bramble fence when striked with direct range attack
+	-- multiplier of damage applied to a bramble fence when struck with direct range attack
 	directRangeFenceMult			= 1.0,
 
-	-- multiplier of damage applied to a building when striked with artillery attack
+	-- multiplier of damage applied to a building when struck with artillery attack
 	artilleryBuildingMult			= 1.0,
 
 	-- multiplier of damage applied to a flyer when it is attacked by a non-flyer unit using a direct ranged attack
-	nonFlyerToFlyerDirectRangeDamageMult	= 1.4,
+	nonFlyerToFlyerDirectRangeDamageMult	= 1.2,
 
 	-- fraction of a flyer's defense to remove when it is attacked by a non-flyer unit using a direct ranged attack
 	nonFlyerToFlyerDirectRangeDefenseMult	= 0.0,
@@ -758,7 +771,7 @@ AttackBonus =
 SonicAttack =
 {
 	-- angle of the cone - should match up with effect
-	cone_angle		= 7,
+	cone_angle		= 15,
 	
 	-- duration of effect in seconds
 	duration		= 32,
@@ -886,7 +899,7 @@ Henchman =
 	sonicDmgMult = 0.25,
 
 	-- damage multiplier for burst attack on henchman
-	burstDmgMult = 0.6,
+	burstDmgMult = 0.35,
 
 	-- damage multiplier for artillery attack on henchmen
 	artilleryDmgMult = 0.5,
@@ -939,7 +952,7 @@ SonarPulse =
 }
 
 ---------------------------------------------------------------------
--- SoiledLand
+-- Defile Land
 
 SoiledLand =
 {
@@ -963,10 +976,10 @@ SoiledLand =
 	dmgIsPercentage		= 1,
 	
 	-- Damage (percentage or point-based) received by the soiled victim per tick
-	dmgPerTick			= 1.2,
+	dmgPerTick			= 0.2,
 	
 	-- The amount to multiply the creature's speed by when soiled (normal speed = 1.0)
-	speedMultiplier		= 0.5,
+	speedMultiplier		= 0.3,
 	
 	-- The time (in ticks) it takes the soiled damage on animal to expire 
 	-- after leaving the soiled land
@@ -986,14 +999,14 @@ SoiledLand =
 Plague =
 {
 	-- How much damage the plague does per second, per attacker rank
-	damagePerSecond1	= 2.0,
-	damagePerSecond2	= 3.0,
+	damagePerSecond1	= 3.0,
+	damagePerSecond2	= 4.0,
 	damagePerSecond3	= 5.0,
-	damagePerSecond4	= 12.0,
-	damagePerSecond5	= 20.0,
+	damagePerSecond4	= 10.0,
+	damagePerSecond5	= 15.0,
 	
 	-- How long (seconds) does the plague last
-	timeSeconds			= 30.0,
+	timeSeconds			= 25.0,
 
 	-- How far does a plagued entity search to spread the plague
 	spreadRadius		= 20.0,
@@ -1002,7 +1015,7 @@ Plague =
 	enduranceCost		= 100.0,
 
 	-- plague will transfer every this number of seconds
-	transferRateSeconds	= 1.0
+	transferRateSeconds	= 3.0
 }
 
 ---------------------------------------------------------------------
@@ -1015,7 +1028,7 @@ Player =
 	starting_renew_res  = 100.0,
 	
 	-- starting resources for a player (QuickStart)
-	quickstart_gather_res = 100.0,
+	quickstart_gather_res = 1500.0,
 	quickstart_renew_res  = 500.0,
 
 	-- resource amount modifier for scrap yards
@@ -1109,16 +1122,16 @@ Flyer =
 	stoppedSpeed 	= 1.5,
 
 	-- fliers will attack every... this number of seconds
-	secondsPerAttack = 2.0,
+	secondsPerAttack = 4.0,
 
 	-- number of ticks it takes a flyer to swoop down to deliver a triggered attack
-	swoopDownTicks = 1.0,
+	swoopDownTicks = 10.0,
 
 	-- number of ticks it takes a flyer to follow thru after swooping down
-	swoopUpTicks = 2.0,
+	swoopUpTicks = 5.0,
 
 	-- the number of seconds of damage a flyer's first attack counts as
-	firstAttackSeconds = 2.0,
+	firstAttackSeconds = 1.0,
 
 	-- melee damage multiplier
 	meleeDmgMult = 1.0,
@@ -1162,7 +1175,7 @@ CreatureUpgrade =
 {
 	-- amount to add to a creature's defense
 	-- (defense is represented as a percentage)
-	defenseBonus = 10,
+	defenseBonus = 3,
 
 	-- amount to add to a creature's speed
 	speedBonus = 5,
@@ -1211,7 +1224,7 @@ CreatureUpgrade =
 
 	-- amount to reduce an entity's defense by when it is 
 	--  attacked by an attacker with splash-damage upgrade
-	splashDmgDefenseMultiplier = 0.40,
+	splashDmgDefenseMultiplier = 0.1,
 
 	-- area attack radius multiplier
 	areaAttackRadiusMult = 1.25,
@@ -1285,46 +1298,46 @@ SwampSlow =
 	--                <= 1.0 (no slowdown)
 	-- e.g. 0.75 is slowdown to 75% of previous speed
 	slowdown1		= 1.0,
-	slowdown2		= 0.9,
-	slowdown3		= 0.8,
-	slowdown4		= 0.7,
-	slowdown5		= 0.6,
-	slowdown6		= 0.5,
-	slowdown7		= 0.4,
-	slowdown8		= 0.3,
-	slowdown9		= 0.2,
-	slowdown10		= 0.1,
+	slowdown2		= 1.0,
+	slowdown3		= 1.0,
+	slowdown4		= 1.0,
+	slowdown5		= 1.0,
+	slowdown6		= 0.9,
+	slowdown7		= 0.9,
+	slowdown8		= 0.9,
+	slowdown9		= 0.9,
+	slowdown10		= 0.85,
 }
 
 ---------------------------------------------------------------------
--- Jumping (Short Range Flight)
+-- Hovering
 
 Jumping =
 {
 	-- Endurance cost to use this ability
-	enduranceCost		= 33.33,
+	enduranceCost		= 75,
 	
 	-- Maximum jump distance 
 	maxDistance			= 200.0,
 		
 	-- Speed while jumping, in meters per tick
-	speed				= 1.0,
+	speed				= 0.5,
 	
 	-- Height at the top of the parabola 
 	maxHeight			= 8.0,
 		
 	-- The maximum distance of horizontal deviation from a straight line path
 	-- (since the flight path is erratic)
-	maxPathDeviation	= 0.0,
+	maxPathDeviation	= 0.3,
 	
 	-- A multiplier for the amplitude of the vertical wave-like flight behaviour 
 	-- Valid range is >= 0.0 (no wave)
 	--                <= 1.0 (hitting the ground)
-	amplitudeMultiplier	= 0.0,
+	amplitudeMultiplier	= 0.08,
 	
 	-- Ther period of the vertical wave-like flight behaviour
 	-- e.g. 8 means there it takes 8 ticks per wave
-	periodTicks			= 5,
+	periodTicks			= 8,
 }
 
 
@@ -1353,13 +1366,13 @@ FriendlyFire =
 	--                <= 1.0 (usual damaged received)
 	
 	-- burst attacks
-	electricBurstMultiplier	= 0.25,
-	quillBurstMultiplier	= 0.25,
+	electricBurstMultiplier	= 0.5,
+	quillBurstMultiplier	= 0.2,
 	
 	-- artillery attacks
 	rockMultiplier			= 1.0,
 	waterSpitMultiplier		= 1.0, --also deliberate
-	chemSprayMultiplier		= 0.50, --deliberate
+	chemSprayMultiplier		= 0.75, --deliberate
 }
 
 ---------------------------------------------------------------------

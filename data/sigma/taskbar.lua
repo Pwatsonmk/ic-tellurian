@@ -1898,6 +1898,9 @@ labselection = function()
 		BindButtonToLabDefense( "command_big_icon09", labcommands[2][2], "dolabdefense", "dolabdefense_turnon_tooltip", labcommands[2][4], 1, id )
 	end
 
+	-- kill self
+	BindButton( "command_formation_icon01", commands[4][2],  "dokillconfirm", "commandstooltip", commands[4][4], 4 )		-- kill
+
 end
 
 
@@ -4237,9 +4240,10 @@ dohenchmanunloadnow = function( index )
 end
 
 --
+
 doresourceconversion = function( type )
 
-	DoResourceConversion( type )
+    DoResourceConversion( type )
 
 end
 
