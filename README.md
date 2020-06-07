@@ -10,4 +10,4 @@ This repository aims to provide a history of the balance changes that have gone 
 
 It focuses on the .lua files, as these are the key components which control the gameplay balance and can be helpfully compared line-by-line. Other binary files are excluded as they cannot be compared in a useful manner.
 
-A base version of the Impossible Creatures and Impossible Creatures: Insect Invasion .lua files are provided here to form a starting point to compare our balance changes against. To compare these base versions or any version of Tellurian, visit the Releases section.
+A base version of the Impossible Creatures and Impossible Creatures: Insect Invasion .lua files are provided here to form a starting point to compare our balance changes against. To compare these base versions or any version of Tellurian, visit the [Releases section](https://github.com/Pwatsonmk/ic-tellurian/releases).
