@@ -34,10 +34,20 @@ if (getgameattribute("loner") == 1) then
 	else
 	LonerCost = 1.0;                          
 end
-if (getgameattribute("slow") == 1) then
-	SlowCost = 2.8;
+if (getgameattribute("fml") == 1) then
+	blehCost = 0.0;
 	else
-	SlowCost = 1.0;                          
+	blehCost = 1.0;                          
+end
+if (getgameattribute("headflashdisplay") == 1) then
+	bmCost = 0.0;
+	else
+	bmCost = 1.0;                          
+end
+if (getgameattribute("fly") == 1) then
+	cheese = 1.4;
+	else
+	cheese = 1.0;                          
 end
 
 
@@ -113,7 +123,7 @@ end
 if airspeed_max > 0 then
 	AttackRateMain = 4;
 end
-
+setgameattribute("airspeed_max", airspeed_max*cheese);
 --setgameattribute( "melee4_rate", AttackRateMain );
 --setgameattribute( "melee2_rate", AttackRateMain );
 --setgameattribute( "melee3_rate", AttackRateMain );
@@ -235,10 +245,10 @@ end
 
 flyerrankmod = 1.1
 
-rank2pow = 70;
-rank3pow = 118;
+rank2pow = 60;
+rank3pow = 120;
 rank4pow = 240;
-rank5pow = 440;
+rank5pow = 480;
 if getgameattribute("is_flyer") == 1 then
 	rank2pow = rank2pow * flyerrankmod;
 	rank3pow = rank3pow * flyerrankmod;
@@ -270,7 +280,7 @@ if (CreatureRank == 1) then
 		        max_power = rank5pow;
 				CostGather = 320;
 		        else
-		    	max_power = 900;
+		    	max_power = 960;
 			    CostGather = 500;
 end
 
@@ -282,10 +292,10 @@ end
 ------------------------------------------
 --Health Limits
 ------------------------------------------
-rank1lim = 100;
-rank2lim = 250;
-rank3lim = 700;
-rank4lim = 1200;
+rank1lim = 1000;
+rank2lim = 2500;
+rank3lim = 7000;
+rank4lim = 12000;
 rank5lim = 35000;
 
 if getgameattribute("hard_shell") == 1 then
@@ -316,11 +326,13 @@ end
 --	setgameattribute(CreatureRank , 5);
 --end
 if (getgameattribute("poplow") == 1) then
-	Pop = 1;
-	else
-	Pop = (size/2)+0.5;                          
+	Pop = 1;                      
 end
-
+if (getgameattribute("poplowtorso") == 1) then
+	Pop = 1;                       
+	else
+	Pop = power/150;                          
+end
 
 if damager < 1 then
   setgameattribute("melee4_damage", getgameattribute("melee4_damage")+damagedif);
@@ -497,9 +509,13 @@ if ( getgameattribute("is_swimmer") == 1 and getgameattribute("is_land") == 0) t
 	setgameattribute( "can_dig", 0 );
 end
 
-if getgameattribute("loner") == 1 then
+--if getgameattribute("loner") == 1 then
+--	setgameattribute("herding", 0);
+--	setgameattribute("pack_hunter", 0);
+--end
+
+if getgameattribute("hard_shell") == 1 then
 	setgameattribute("herding", 0);
-	setgameattribute("pack_hunter", 0);
 end
 
 -- Ability type constants.
@@ -533,6 +549,8 @@ AbilityData =
 	--MinRank 0
 	{ ABT_Ability, "is_immune", 0, 10, 0, 5 },
 
+	{ ABT_Ability, "poison_pincers", 2, 10, 0, 5 },
+
 	{ ABT_Ability, "keen_sense", 0, 10, 0, 0 },
 
 	{ ABT_Ability, "can_dig", 0, 10, 0, 10 },
@@ -545,7 +563,7 @@ AbilityData =
 
 	{ ABT_Ability, "stink",0, 50, 0, 5 },
 
-	{ ABT_Ability, "flash", 0, 50, 0, 10 },
+	{ ABT_Ability, "flash", 0, 0, 0, 0 },
 
 	{ ABT_Ability, "end_bonus", 0, EndCost, 0 },
 
@@ -584,24 +602,26 @@ AbilityData =
 	{ ABT_Ability, "infestation", 2, 30, 0, 0 },
 
 	--MinRank 3
-	{ ABT_Ability, "hard_shell", 3, 0, 0, 0 }, --Special Case
+	{ ABT_Ability, "hard_shell", 3, 30, 30, 5 }, --Special Case
 
 	{ ABT_Ability, "charge_attack", 3, 15, 0, 5 },
 
 	{ ABT_Ability, "is_flyer", 3, 25, 0, 15 },
 
-	{ ABT_Ability, "electric_burst", 3, 0, 0, 0 }, --Special Case
+	{ ABT_Ability, "electric_burst", 2, 0, 0, 0 }, --Special Case
 
-	{ ABT_Ability, "poison_touch", 3, 30, 0, 10 },
+	{ ABT_Ability, "poison_touch", 2, 30, 0, 10 },
+
+	{ ABT_Ability, "tiny", 3, 18, 0, 4 },
 
 	{ ABT_Ability, "web_throw", 3, 0, 0, 0 },  --Special Case
 
- 	{ ABT_Ability, "poison_bite", 3,  0, 0, 0}, --Special Case
+ 	{ ABT_Ability, "poison_bite", 2,  0, 0, 0}, --Special Case
 
- 	{ ABT_Ability, "poison_sting", 3,  0, 0, 10},    --Special Case
+ 	{ ABT_Ability, "poison_sting", 2,  0, 0, 10},    --Special Case
 
 	--MinRank 4
-	{ ABT_Ability, "loner", 4, 0, 0, 0 },   --Special Case
+	{ ABT_Ability, "loner", 2, 0, 0, 0 },   --Special Case
 
 	{ ABT_Ability, "soiled_land", 4, 0, 0, 0},  --Special Case
 
@@ -613,7 +633,7 @@ AbilityData =
 	--MinRank 3
 	{ ABT_Range, DT_Sonic, 3, 30, 0 },
 
-	{ ABT_Range, DT_VenomSpray, 3, 0, 0 },
+	{ ABT_Range, DT_VenomSpray, 2, 0, 0 },
 
 
 	--MinRank 0
@@ -625,7 +645,7 @@ AbilityData =
 	--MinRank 3
 	{ ABT_Melee, DT_HornNegateArmour, 3, 30, 0, 10 },
 
-	{ ABT_Melee, DT_Poison, 3, 0, 0, 0 },
+	{ ABT_Melee, DT_Poison, 2, 0, 0, 0 },
 };
 
 -- Total the costs and find min rank for all abilities.
@@ -681,11 +701,11 @@ for index, part in BodyPartsThatCanHaveRange do
 		if ( range_artillerytype( part ) == 0 ) then
 			has_direct = 1;
 			RangeCostMult = 1.15;
-			CostRenew = CostRenew + 40 + 10*(CreatureRank - 1);
+			CostRenew = CostRenew + 30 + 10*(CreatureRank - 1);
 		else
 			has_artillery = 1;
 			RangeCostMult = 1.2;
-			CostRenew = CostRenew + 40 + 10*(CreatureRank - 1);
+			CostRenew = CostRenew + 30 + 10*(CreatureRank - 1);
 		end
 	end
 end
@@ -783,11 +803,22 @@ if getgameattribute("herding") == 1 then
 end
 
 if getgameattribute("hard_shell") == 1 then
-	CostRenew = CostRenew + ((Power(damage*mflyerrankmod, hitpoints, getgameattribute("armour"))/power)-1)*200*RangeCostMult;
+	CostRenew = CostRenew + ((Power((damage+1)*mflyerrankmod, hitpoints, getgameattribute("armour"))/power)-1)*200*RangeCostMult;
+end
+
+if getgameattribute("hard_shell") == 1 then
+	CostGather = CostGather + ((Power((damage+1)*mflyerrankmod, hitpoints, getgameattribute("armour"))/power)-1)*200*RangeCostMult;
 end
 
 if getgameattribute("pack_hunter") == 1 then
 	CostRenew = CostRenew + ((Power(damage*1.4*mflyerrankmod, hitpoints, armour)/power)-1)*180*RangeCostMult;
+end
+
+if getgameattribute("flash") == 1 then
+	CostRenew = CostRenew + (50+(10*CreatureRank))*blehCost;
+end
+if getgameattribute("headflashdisplay") == 1 then
+	CostRenew = CostRenew + (50+(10*CreatureRank));
 end
 
 ActualHealth = hitpoints/(1-armour);
@@ -819,8 +850,8 @@ end
 
 --if getgameattribute("is_flyer") == 0 then
 build_time = (8+24 * CreatureRank)*(power*1.1/max_power)*Popmult;
-CostGather = (CostGather + speedCost + sightCost)*(power*1.1/max_power)*RangeCostMult*1.1+(2/CreatureRank)*1.4;
-CostRenew = CostRenew * (power*1.1/max_power)*1.2+(3.5*CreatureRank);
+CostGather = (CostGather + speedCost + sightCost)*(power*1.1/max_power)*RangeCostMult*1.1+(2/CreatureRank)*1.25;
+CostRenew = CostRenew * (power*1.1/max_power)*1.2;
 --	else
 --	if (PhysRank == 1) then
 --		max_power = rank2pow;
@@ -855,7 +886,7 @@ if getgameattribute("quill_burst") == 1 then
 end
 
 if getgameattribute("electric_burst") == 1 then
-	CostRenew = CostRenew + 55 + 10*CreatureRank;
+	CostRenew = CostRenew + 10 + 10*CreatureRank;
 end
                             
 if getgameattribute("web_throw") == 1 then
@@ -868,29 +899,27 @@ if getgameattribute("soiled_land") == 1 then
 end
 
 if getgameattribute("loner") == 1 then
-	CostRenew = CostRenew + ((Power(damage*6*mflyerrankmod, hitpoints/0.25, armour)/power)-1)*50;
+	CostRenew = CostRenew + ((Power(damage*6*mflyerrankmod, hitpoints/0.25, armour)/power)-1)*15*CreatureRank;
 	CostGather = CostGather + 3 * speedCost;
 end
+
 
 ----------------------------------------
 --Post ui tricks
 ----------------------------------------
 --Size fixes
-if getgameattribute("size") == 1 then
-	setgameattribute("size", 2);
-end
---if getgameattribute("size") == 9 then
---	setgameattribute("size", 8);
---end
---if getgameattribute("size") == 10 then
---	setgameattribute("size", 8);
---end
+
 if getgameattribute("size") == 10 then
 	setgameattribute("size", 9);
 end
-if getgameattribute("size") >= 11 then
+if getgameattribute("size") == 11 then
 	setgameattribute("size", 10);
 end
+if getgameattribute("size") >= 12 then
+	setgameattribute("size", 10);
+end
+
+
 
 ----------------------------------------
 --Diagnostic Code
@@ -907,12 +936,27 @@ end
 ----------------------------------------
 
 if has_artillery == 1 and getgameattribute("is_flyer") == 1 then
-	CostRenew = CostRenew+30;
+	CostRenew = CostRenew+20;
 end
 
-if getgameattribute("bobcost") == 1 then
-	CostRenew = CostRenew+30;
+--if getgameattribute("bobcost") == 1 then
+--	CostRenew = CostRenew+20;
+--end
+
+
+if getgameattribute("wtf") == 1 then
+	CostRenew = 0;
 end
+if getgameattribute("wtf") == 1 then
+	CostGather = 0;
+end
+if getgameattribute("wtf") == 1 then
+	build_time = 0;
+end
+if getgameattribute("wtf") == 1 then
+	CreatureRank = 1;
+end
+
 
 if CreatureRank == 3 then
 	CostRenew = CostRenew*0.75
@@ -931,15 +975,22 @@ if CreatureRank == 1 then
 end
 
 if getgameattribute("hard_shell") == 1 and getgameattribute("regeneration") == 1 then
-	CostRenew = CostRenew+30;
+	CostRenew = CostRenew+40;
 end
 
+
 if getgameattribute ("armour") >= 0.6 and getgameattribute("regeneration") == 1 then
-	CostRenew = CostRenew+60;
+	CostRenew = CostRenew+30;
 end
 
 if CreatureRank <= 2 and getgameattribute ("armour") >= 0.5 then
-	CostRenew = CostRenew+30;
+	CostRenew = CostRenew+15;
+end
+if CreatureRank <= 2 and getgameattribute ("damage") >= 16 then
+	CostRenew = CostRenew+20;
+end
+if CreatureRank <= 2 and getgameattribute ("damage") >= 12 and getgameattribute("pack_hunter") == 1 then
+	CostRenew = CostRenew+20;
 end
 
 if has_artillery == 1 then
@@ -967,7 +1018,7 @@ if getgameattribute("herding") == 1 and getgameattribute("armour") >= 0.4 then
 end
 
 if getgameattribute("herding") == 1 and getgameattribute("armour") >= 0.59 then
-	CostGather = CostGather*1.25;
+	CostGather = CostGather*1.05;
 end
 
 

@@ -17,8 +17,8 @@ function init_basebuild()
 	sg_buildstructure[Aviary_EC] = 1
 	sg_buildstructure[ResourceRenew_EC]=1
 	sg_buildstructure[GeneticAmplifier_EC]=1
-	sg_buildstructure[LandingPad_EC] = 0
-	sg_buildstructure[BrambleFence_EC] = 0
+	sg_buildstructure[LandingPad_EC] = 1
+	sg_buildstructure[BrambleFence_EC] = 1
 	
 	--local randFactor = 1000
 	--if (g_LOD == 0) then
@@ -27,15 +27,15 @@ function init_basebuild()
 	--	randFactor = 6
 	--end
 	
-	-- randomly decide if we will ever build fences
-	--if (Rand(10) > randFactor) then
-	--	sg_buildstructure[BrambleFence_EC] = 1
-	--end
+--	 randomly decide if we will ever build fences
+--	if (Rand(10) > 5) then
+--		sg_buildstructure[BrambleFence_EC] = 1
+--	end
 	
 	sg_lightningrod_cap = 4
 	
 	-- the distance from the base the AI will build its chamber (using PH_OutsideBase flag)
-	icd_chamberDistFromBase = 35
+	icd_chamberDistFromBase = 25
 	
 	if (g_LOD == 0 ) then
 		RegisterTimerFunc("dobasebuild", 8.0 )
@@ -55,13 +55,13 @@ end
 
 function IsChamberBeingBuilt()
 
-	if (NumBuildingQ( RemoteChamber_EC) - NumBuildingActive( RemoteChamber_EC)) > 0 then
+	if (NumBuildingQ( RemoteChamber_EC) - NumBuildingActive( RemoteChamber_EC)) > 1 then
 		return 1
 	end
-	if (NumBuildingQ( WaterChamber_EC) - NumBuildingActive( WaterChamber_EC)) > 0 then
+	if (NumBuildingQ( WaterChamber_EC) - NumBuildingActive( WaterChamber_EC)) > 1 then
 		return 1
 	end
-	if (NumBuildingQ( Aviary_EC) - NumBuildingActive( Aviary_EC)) > 0 then
+	if (NumBuildingQ( Aviary_EC) - NumBuildingActive( Aviary_EC)) > 1 then
 		return 1
 	end
 	return 0
@@ -605,7 +605,7 @@ function dowaterchamber()
 		return 0
 	end
 	
-	if (NumBuildingQ( WaterChamber_EC ) < 1 and IsChamberBeingBuilt() == 0 and 
+	if (NumBuildingQ( WaterChamber_EC ) < 2 and IsChamberBeingBuilt() == 0 and 
 		CanBuildWithEscrow( WaterChamber_EC )==1) then
 			ReleaseGatherEscrow();
 			ReleaseRenewEscrow();

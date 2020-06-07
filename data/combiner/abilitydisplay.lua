@@ -33,6 +33,14 @@ AbilitiesList =
 	-- bodypart is required for compatibility sakes.
 	-- Updated abilities body part toggle (such as stink which we want on either the tail or torso depending on the animal)
 	-- will be read from the creatures lua file instead of this file.
+	Tinyr = 
+	{
+		gameattributename 	= "tiny",
+		bodypart		= part_torso,
+		name			= 37520,
+		shortdesc		= 37521,
+		showonlyincombiner	= 0,
+	},	
 	AutoDefense = 
 	{
 		gameattributename 	= "AutoDefense",
@@ -65,9 +73,17 @@ AbilitiesList =
 		shortdesc		= 37499,
 		showonlyincombiner	= 0,
 	},
-	Flash = 
+	HeadFlashShow = 
 	{
-		gameattributename 	= "flash",
+		gameattributename 	= "headflashdisplay",
+		bodypart		= part_head,
+		name			= 37502,
+		shortdesc		= 37503,
+		showonlyincombiner	= 0,
+	},
+	TailFlashShow = 
+	{
+		gameattributename 	= "tailflashdisplay",
 		bodypart		= part_tail,
 		name			= 37502,
 		shortdesc		= 37503,
@@ -93,14 +109,14 @@ AbilitiesList =
 	{
 		gameattributename 	= "poplowtorso",
 		bodypart		= part_torso,
-		name			= 37530,
+		name			= 37533,
 		shortdesc		= 37531,
 		showonlyincombiner	= 0,
 	},
 	Jumping = 
 	{
 		gameattributename 	= "can_SRF",
-		bodypart		= part_torso,
+		bodypart		= part_wings,
 		name			= 37508,
 		shortdesc		= 37509,
 		showonlyincombiner	= 0,
@@ -294,6 +310,14 @@ AbilitiesList =
 		gameattributename 	= "poison_sting",
 		bodypart		= part_tail,
 		name			= 37519,
+		shortdesc		= 6201,
+		showonlyincombiner	= 0,
+	},
+	PoisonPincer =
+	{
+		gameattributename 	= "poison_pincers",
+		bodypart		= part_pincers,
+		name			= 37532,
 		shortdesc		= 6201,
 		showonlyincombiner	= 0,
 	},

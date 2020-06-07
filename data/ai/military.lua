@@ -5,23 +5,23 @@ function init_military()
 
 	aitrace("init_military()")
 	
-	icd_groundgroupminsize = 5;
-	icd_groundgroupmaxsize = 18;
+	icd_groundgroupminsize = 8;
+	icd_groundgroupmaxsize = 40;
 	
-	icd_watergroupminsize = 5;
-	icd_watergroupmaxsize = 18;
+	icd_watergroupminsize = 8;
+	icd_watergroupmaxsize = 40;
 	
-	icd_airgroupminsize = 4;
-	icd_airgroupmaxsize = 18;
+	icd_airgroupminsize = 8;
+	icd_airgroupmaxsize = 40;
 	
 	icd_groundgroupminvalue = 500;
-	icd_groundgroupmaxvalue = 3500;
+	icd_groundgroupmaxvalue = 7500;
 	
 	icd_watergroupminvalue = 400;
-	icd_watergroupmaxvalue = 3500;
+	icd_watergroupmaxvalue = 7500;
 	
 	icd_airgroupminvalue = 500;
-	icd_airgroupmaxvalue = 3500;
+	icd_airgroupmaxvalue = 7500;
 		
 	icd_groundattackpercent = 100
 	icd_waterattackpercent = 100

@@ -70,7 +70,7 @@ Endurance =
 Defense = 
 {
 	-- the max your defence can be set to through modifications
-	defensemax		= 0.75,
+	defensemax		= 0.8,
 }
 
 
@@ -80,7 +80,7 @@ Defense =
 Loner =
 {
 	-- The radius at which the loner bonus becomes effective (in metres)
-	lonerRadius			= 30.0,
+	lonerRadius			= 25.0,
 
 	-- Include henchmen in radius check?
 	-- yes = 1 or no = 0 (default) 
@@ -88,7 +88,7 @@ Loner =
 
 	-- Artillery ranged bonus per creature size
 	-- This *is a multiplier*, e.g. a 50% bonus should be written as 1.5.
-	artilleryBonusBaseSize1		= 1.0,
+	artilleryBonusBaseSize1		= 20.0,
 	artilleryBonusBaseSize2		= 1.0,
 	artilleryBonusBaseSize3		= 1.0,
 	artilleryBonusBaseSize4		= 1.0,
@@ -101,11 +101,11 @@ Loner =
 
 	-- Artillery bonus modifier per creature rank (+/-)
 	-- This is a modifier to the above base percentage.
-	artilleryBonusModRank1		= 4.0,
-	artilleryBonusModRank2		= 4.0,
+	artilleryBonusModRank1		= 6.0,
+	artilleryBonusModRank2		= 3.0,
 	artilleryBonusModRank3		= 4.0,
-	artilleryBonusModRank4		= 4.0,
-	artilleryBonusModRank5		= 4.0,
+	artilleryBonusModRank4		= 6.0,
+	artilleryBonusModRank5		= 7.0,
 
 	-- Direct ranged bonus per creature size
 	-- This *is a multiplier*, e.g. a 50% bonus should be written as 1.5.
@@ -122,11 +122,11 @@ Loner =
 
 	-- Ranged bonus modifier per creature rank (+/-)
 	-- This is a modifier to the above base percentage.
-	rangedBonusModRank1		= 4.0,
-	rangedBonusModRank2		= 4.0,
+	rangedBonusModRank1		= 6.0,
+	rangedBonusModRank2		= 3.0,
 	rangedBonusModRank3		= 4.0,
-	rangedBonusModRank4		= 4.0,
-	rangedBonusModRank5		= 4.0,
+	rangedBonusModRank4		= 6.0,
+	rangedBonusModRank5		= 7.0,
 
 	-- Melee bonus per creature size
 	-- This *is a multiplier*, e.g. a 50% bonus should be written as 1.5.
@@ -143,11 +143,11 @@ Loner =
 
 	-- Melee bonus modifier per creature rank (+/-)
 	-- This is a modifier to the above base percentage.
-	meleeBonusModRank1		= 4.0,
-	meleeBonusModRank2		= 4.0,
+	meleeBonusModRank1		= 6.0,
+	meleeBonusModRank2		= 3.0,
 	meleeBonusModRank3		= 4.0,
-	meleeBonusModRank4		= 4.0,
-	meleeBonusModRank5		= 4.0,
+	meleeBonusModRank4		= 6.0,
+	meleeBonusModRank5		= 7.0,
 
 	-- Damage Reduction
 	-- The is the percentage of damage reduction a loner creature has
@@ -169,12 +169,12 @@ Loner =
 	damageReductionModRank2		= 0.0,
 	damageReductionModRank3		= 0.0,
 	damageReductionModRank4		= 0.0,
-	damageReductionModRank5		= 0.0,
+	damageReductionModRank5		= 0.25,
 
 	-- Build speed modifier per creature rank (multiplies to base tick)
 	buildSpeedModRank1			= 4.0,
-	buildSpeedModRank2			= 4.0,
-	buildSpeedModRank3			= 4.0,
+	buildSpeedModRank2			= 2.0,
+	buildSpeedModRank3			= 3.0,
 	buildSpeedModRank4			= 4.0,
 	buildSpeedModRank5			= 4.0,
 	
@@ -217,7 +217,7 @@ Deflection =
 	
 	-- Deflection modifier per defenders attack type (+/-)
 	-- Order of preference (artillery, direct ranged, melee)
-	deflectionModArtillery	= 0.0,
+	deflectionModArtillery	= 0.1,
 	deflectionModRanged	= -0.1,
 	deflectionModMelee	= 0.0,
 
@@ -293,13 +293,13 @@ PackBonus =
 	basedamagemodifier		= 1.50,
 
 	-- the base defense modifier, new defense is this * normal damage
-	basedefensemodifier		= 1.35,
+	basedefensemodifier		= 1.5,
 
 	-- the search radius that the pack bonus is effective for, meters
-	searchradius			= 20.0,
+	searchradius			= 30.0,
 
 	-- the amount of sim ticks that need to pass for packing to be reset
-	delayticks				= 8,
+	delayticks				= 16,
 }
 
 ---------------------------------------------------------------------
@@ -438,10 +438,10 @@ ElectricBurst =
 	-- damage per tick
 	-- new damage is this * duration (see above)
 	dmgPerTick1				= 0.0,
-	dmgPerTick2				= 0.0,
+	dmgPerTick2				= 10.0,
 	dmgPerTick3				= 25.0,
-	dmgPerTick4				= 50.0,
-	dmgPerTick5				= 75.0,
+	dmgPerTick4				= 75.0,
+	dmgPerTick5				= 125.0,
 
 	-- not used!
 	dmgToBuilding			= .10
@@ -468,9 +468,9 @@ QuillBurst =
 	-- new damage is this * duration (see above)
 	dmgPerTick1				= 50.0,
 	dmgPerTick2				= 60.0,
-	dmgPerTick3				= 80.0,
-	dmgPerTick4				= 150.0,
-	dmgPerTick5				= 250.0,
+	dmgPerTick3				= 100.0,
+	dmgPerTick4				= 250.0,
+	dmgPerTick5				= 500.0,
 
 	-- not used
 	dmgToBuilding			= 0
@@ -490,12 +490,12 @@ WebThrow =
 
 	-- attack range : C = (creature size (in meters)) O = offset, S = scale
 	-- Final radius = O + C*S  (where O is the minimum radius)
-	rangeOffset				= 15.0,
+	rangeOffset				= 13.0,
 	rangeScale				= 0.5,
 
 	-- damage radius : C = (creature size (in meters)) O = offset, S = scale
 	-- Final radius = O + C*S  (where O is the minimum radius)
-	radiusOffset			= 9.0,
+	radiusOffset			= 8.0,
 	radiusScale				= 0.5,
 	
 	-- height above the ground that the initial web effect will happen
@@ -785,10 +785,10 @@ SonicAttack =
 DoctorHeal =
 {
 	-- number of health points per second a henchman will heal
-	healthPerSecond		= 1.5,
+	healthPerSecond		= 5,
 
 	-- maximum distance between the doctor and the patient
-	healRange		= 30.0,
+	healRange		= 35.0,
 }
 
 ---------------------------------------------------------------------
@@ -819,7 +819,7 @@ ChargeInfo =
 	-- multiply to melee damage to get charge damage.
 	damagemultiplier	= 2.0,
 	-- Charge speed is a modifier to speed whilst charging..
-	speedmultiplier		= 2.0,
+	speedmultiplier		= 3.0,
 
 	-- set to 1.0 if the charger requires a clear straight line to the target before charging
 	requiresStraightLine = 0.0,
@@ -843,7 +843,7 @@ LeapInfo =
 	-- multiply to melee damage to get charge damage.
 	damagemultiplier	= 1.5,
 	-- Leap speed is a modifier to speed whilst charging..
-	speedmultiplier		= 2.0,
+	speedmultiplier		= 3.0,
 
 	-- the creature will leap (at most) every this number of seconds
 	leapRateSeconds		= 3.0,
@@ -886,7 +886,7 @@ Henchman =
 	sonicDmgMult = 0.25,
 
 	-- damage multiplier for burst attack on henchman
-	burstDmgMult = 0.1,
+	burstDmgMult = 0.6,
 
 	-- damage multiplier for artillery attack on henchmen
 	artilleryDmgMult = 0.5,
@@ -914,10 +914,10 @@ Frenzy =
 	dmgIssuedMult		= 2.0,
 
 	-- Damage received multiplier, i.e. I take normal damage times x, when frenzied
-	dmgReceivedMult		= 2.0,
+	dmgReceivedMult		= 1.5,
 
 	-- When a creature is fenzied it's movement rate is multiplied by x,
-	moveRateMult		= 1.45,
+	moveRateMult		= 1.5,
 
 	-- Minimum ammount of endurance needed to trigger frenzy attack
 	enduranceMinimum	= 22.5,
@@ -935,7 +935,7 @@ SonarPulse =
 	revealRadius		= 100.0,
 
 	-- Reveal timeout, how many seconds does the reveal area last for
-	duration			= 30.0,
+	duration			= 40.0,
 }
 
 ---------------------------------------------------------------------
@@ -986,14 +986,14 @@ SoiledLand =
 Plague =
 {
 	-- How much damage the plague does per second, per attacker rank
-	damagePerSecond1	= 3.0,
-	damagePerSecond2	= 5.0,
-	damagePerSecond3	= 8.0,
-	damagePerSecond4	= 10.0,
-	damagePerSecond5	= 15.0,
+	damagePerSecond1	= 2.0,
+	damagePerSecond2	= 3.0,
+	damagePerSecond3	= 5.0,
+	damagePerSecond4	= 12.0,
+	damagePerSecond5	= 20.0,
 	
 	-- How long (seconds) does the plague last
-	timeSeconds			= 25.0,
+	timeSeconds			= 30.0,
 
 	-- How far does a plagued entity search to spread the plague
 	spreadRadius		= 20.0,
@@ -1034,13 +1034,13 @@ AIPlayer =
 	-- electricity bonus for AI
 	resRenewBonusEasy = 0.75,
 	resRenewBonusStandard = 1.00,
-	resRenewBonusHard = 1.25,
+	resRenewBonusHard = 1.2,
 	resRenewBonusHardest = 1.75,
 	
 	-- coal bonus for AI
 	resGatherBonusEasy = 0.75,
 	resGatherBonusStandard = 1.00,
-	resGatherBonusHard = 1.25,
+	resGatherBonusHard = 1.2,
 	resGatherBonusHardest = 1.75,
 }
 
@@ -1061,7 +1061,7 @@ Diplomacy =
 {
 	-- Radius that guys will attack within when in Territorial Stance
 	scrapDonationInc	= 100.0,
-	electricityDonationInc	= 50.0,
+	electricityDonationInc	= 100.0,
 }
 
 ---------------------------------------------------------------------
@@ -1109,13 +1109,13 @@ Flyer =
 	stoppedSpeed 	= 1.5,
 
 	-- fliers will attack every... this number of seconds
-	secondsPerAttack = 3.0,
+	secondsPerAttack = 2.0,
 
 	-- number of ticks it takes a flyer to swoop down to deliver a triggered attack
-	swoopDownTicks = 3.0,
+	swoopDownTicks = 1.0,
 
 	-- number of ticks it takes a flyer to follow thru after swooping down
-	swoopUpTicks = 4.0,
+	swoopUpTicks = 2.0,
 
 	-- the number of seconds of damage a flyer's first attack counts as
 	firstAttackSeconds = 2.0,
@@ -1152,7 +1152,7 @@ GarrisonHeal =
 AttackGround =
 {
 	-- the error radius, so that AttackGround aim isn't perfect
-	errorRadius	= 3.0,
+	errorRadius	= 2.0,
 }
 
 ---------------------------------------------------------------------
@@ -1233,7 +1233,7 @@ Death =
 Construction =
 {
 	--	 the max distance (in meters) to search in order to find a construction site to move to after the current one is finished
-	constructionSiteSearchRadius = 15.0,
+	constructionSiteSearchRadius = 25.0,
 
 }
 
@@ -1285,15 +1285,15 @@ SwampSlow =
 	--                <= 1.0 (no slowdown)
 	-- e.g. 0.75 is slowdown to 75% of previous speed
 	slowdown1		= 1.0,
-	slowdown2		= 1.0,
-	slowdown3		= 1.0,
-	slowdown4		= 1.0,
-	slowdown5		= 0.95,
-	slowdown6		= 0.95,
-	slowdown7		= 0.9,
-	slowdown8		= 0.9,
-	slowdown9		= 0.85,
-	slowdown10		= 0.85,
+	slowdown2		= 0.9,
+	slowdown3		= 0.8,
+	slowdown4		= 0.7,
+	slowdown5		= 0.6,
+	slowdown6		= 0.5,
+	slowdown7		= 0.4,
+	slowdown8		= 0.3,
+	slowdown9		= 0.2,
+	slowdown10		= 0.1,
 }
 
 ---------------------------------------------------------------------
@@ -1353,12 +1353,12 @@ FriendlyFire =
 	--                <= 1.0 (usual damaged received)
 	
 	-- burst attacks
-	electricBurstMultiplier	= 1.0,
-	quillBurstMultiplier	= 2.5,
+	electricBurstMultiplier	= 0.25,
+	quillBurstMultiplier	= 0.25,
 	
 	-- artillery attacks
 	rockMultiplier			= 1.0,
-	waterSpitMultiplier		= 1.5, --also deliberate
+	waterSpitMultiplier		= 1.0, --also deliberate
 	chemSprayMultiplier		= 0.50, --deliberate
 }
 
