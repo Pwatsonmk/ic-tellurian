@@ -1,13 +1,13 @@
-# ic-tellurian
+# Impossible Creatures: Tellurian
 
-Tellurian is a mod for Impossible Creatures which we hope will:
+Tellurian is a mod for Impossible Creatures which adds new stock creatures and includes significant balance changes, which have greatly increased the variety of creatures and strategies which are viable to use in-game. This provides a whole new gameplay experience.
 
-1) Balance IC, so that as many stock creatures are as useful as possible.
+Tellurian can be downloaded from [Moddb](https://www.moddb.com/mods/tellurian) or the [Steam workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=655968653).
 
-2) Fill out the IC genetic library with new, interesting stock creatures that are useful without being overpowered.
+## Tellurian over time
 
-3) Provide a whole new experience without sacrificing the fundamental feel of IC.
+This repository aims to provide a history of the balance changes that have gone into Tellurian over time. This will allow us to visualise these changes in a way that can help to guide future development and provide transparency to the community on what is being changed in each release.
 
-4) Introduce modelling and modding techniques which have never before been available to anyone besides the Impossible Creatures developers themselves.
+It focuses on the .lua files, as these are the key components which control the gameplay balance and can be helpfully compared line-by-line. Other binary files are excluded as they cannot be compared in a useful manner.
 
-5) Be continually updated, and improved, so that no creatures remain overpowered or "abused" for long.
+A base version of the Impossible Creatures and Impossible Creatures: Insect Invasion .lua files are provided here to form a starting point to compare our balance changes against. To compare these base versions or any version of Tellurian, visit the [Releases section](https://github.com/Pwatsonmk/ic-tellurian/releases).
