@@ -1,6 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Ignore by filetype
+*.7z
 *.army
 *.bmp
 *.ebp
@@ -9,6 +10,7 @@
 *.jpg
 *.lsc
 *.max
+*.md
 *.mp3
 *.pat
 *.png
@@ -22,16 +24,18 @@
 *.spt
 *.tga
 *.txr
+*.txt
 *.wav
 
 
 # Ignore by name
-*/toolconfig.lua
+*/toolconfig.luaW
 
 # Ignore by path
 data/art/ebps/nis/*
 data/art/ebps/stock/Thumbs.db
 data/art/ebps/stock/stock.txt
 data/art/font/*
+data/defprofile/singleplayer/*
 data/scenarios/*
 data/islands/*
