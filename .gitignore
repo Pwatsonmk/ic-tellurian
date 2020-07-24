@@ -22,6 +22,7 @@
 *.sgm
 *.smp
 *.spt
+*.spt_
 *.tga
 *.txr
 *.txt
@@ -29,7 +30,7 @@
 
 
 # Ignore by name
-*/toolconfig.luaW
+*/toolconfig.lua
 
 # Ignore by path
 data/art/ebps/nis/*
