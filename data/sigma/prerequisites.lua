@@ -174,6 +174,15 @@ prerequisites =
 		reqitem = ResourceRenew_EC,
 		limit   = 4,
 	},
+	
+		bramblefencelimit = 
+	{
+		newtype = TYPE_Limit,
+		newitem = BrambleFence_EC,
+		reqtype = TYPE_Limit,
+		reqitem = BrambleFence_EC,
+		limit   = 150,				
+	},
 
 --	antiairtowerlimit = 
 --	{

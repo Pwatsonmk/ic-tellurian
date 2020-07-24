@@ -1,7 +1,7 @@
 -- chemspray
 
 gameattributes = {
-speed = 25,
+speed = 35,
 heighttodistratio = 0.3,
 
 deathcount = 8,
@@ -15,8 +15,8 @@ damageradius_size5 = 4.4,
 damageradius_size6 = 5.5,
 damageradius_size7 = 5.5,
 damageradius_size8 = 5.5,
-damageradius_size9 = 5.5,
-damageradius_size10 = 5.5,
+damageradius_size9 = 6.2,
+damageradius_size10 = 6.2,
 
 
 simcollides = 0,

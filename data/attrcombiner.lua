@@ -1,22 +1,37 @@
 --Tellurian Attrcombiner (5/1/2019)
 
---Changelog (since Tel 2.4 release):
---Power from ranged distance slightly increased.
---Colony/Conglomerate cost eliminated for units that only take up 1 pop space.
---Immunity cost reduced.
---Sonic minimum level changed to L2. Sonic base cost reduced.
---Power equation modified to slightly reduce power of low damage units.
---Build time for low power units significantly reduced.
+--Changelog for Tel 2.7
+--Power is different for differnt types of ranged attacks dependent on range distance (using damager)
+--Double range is no longer charged; unit is charged for its most powerful attack, at shortest range,
+--for most expensive damagetype.
+--Added ranged piercing ability for porcupine.
+--Power used to calculate certain ability pricing. Abilities affected:
+--Herding, Pack, Barrier Destroy, Horns, Camouflage, Ranged Piercing, Digging
+--Extensive code changes to support this.
+--Poplow cost fixed so that units with 150-299 power are not charged.
+--Leap attack cost lowered by 5 elec since leap time got nerfed in tuning.lua
+--Pure swimmer cost lowered.
 
 --Let's go!
 
+--deleteStart
 function combine_creature()
+--deleteEnd
 
 -----------------
 -----------------
 --vars and shit--
 -----------------
 -----------------
+
+--Elec, coal, rank, minrank bein set up here
+CostRenew = 0;
+CostGather = 0;
+CreatureRank = 0;
+MinRank = 0;
+
+herdCost = 0;
+popdivide = 150;
 
 -----------------
 --uncapped vars--
@@ -27,6 +42,18 @@ speed_max 	= getgameattribute( "speed_max" );
 airspeed_max 	= getgameattribute( "airspeed_max" );
 waterspeed_max 	= getgameattribute( "waterspeed_max" );
 
+---- We raise the speed if it's below min caps.
+
+if (speed_max < 15) then
+	speed_max = 15;
+end
+	
+if (waterspeed_max > 0 and waterspeed_max < 12) then
+	waterspeed_max = 12;
+end
+
+---- Now we calculate effective speed.
+
 if (getgameattribute("is_flyer") == 1) then
 	speed = airspeed_max*1.3;
 end
@@ -36,7 +63,7 @@ if (getgameattribute("is_swimmer") == 1 and getgameattribute("is_land") == 1) th
 end
 
 if (getgameattribute("is_swimmer") == 1 and getgameattribute("is_land") == 0) then
-	speed = waterspeed_max*0.7;
+	speed = waterspeed_max*0.4;
 end
 
 if (getgameattribute("is_swimmer") == 0 and getgameattribute("is_land") == 1) then
@@ -62,13 +89,89 @@ damage4 	= getgameattribute( "range4_damage" );
 damage5 	= getgameattribute( "range5_damage" );
 damage8 	= getgameattribute( "range8_damage" );
 
-RangeCostMult 	= 1.0;
+--Initialize damager
+damager = 0;
+minRangeDist = 1000;
 
-damager = max (damage2, max (damage4, max(damage5, max(damage3, damage8))));
+-- These will be set to flag if the creature has any direct or any artillery range attack.
+has_direct = nil;
+has_artillery = nil;
+has_sonic = nil;
 
-if (range_max > 0) then
-	damager = damager*(1+(range_max/28));
+--Ranged Costs and MinRank
+-- used to determine whether the range type is splash damage
+
+function get_range_var( limb, var )
+	local str = "range"..limb.."_"..var
+
+	if checkgameattribute(str) == 1 then
+		return getgameattribute( str )
+	else
+		return 0;
+	end
 end
+
+function range_artillerytype( limb )
+	-- if this creature has a special field it has artillery
+	return get_range_var( limb, "special");
+end
+
+BodyPartsThatCanHaveRange = { 2, 3, 4, 5, 8 };
+
+-- determine type of ranged attack and set range damage to be equal to the
+-- highest damage ranged attack, with minRangeDist being the minimum ranged distance.
+
+--pairsBelow
+for index, part in BodyPartsThatCanHaveRange do
+--endPairs
+	part_damage = getgameattribute( "range" .. part .. "_damage" );
+	part_range = getgameattribute( "range" .. part .. "_max" );
+	part_dtype = getgameattribute( "range" .. part .. "_dmgtype" );
+	if ( part_damage > 0 ) then
+		if ( part_range < minRangeDist ) then
+			minRangeDist = part_range;
+		end
+		
+		if ( part_damage > damager ) then
+			damager = part_damage;
+		end		
+		
+		if ( range_artillerytype( part ) == 0 ) then
+			if ( part_dtype == 16 ) then --sonic attack identified
+				has_sonic = 1;								
+			else --directranged, non-sonic
+				has_direct = 1;					
+			end
+			
+		else --artillery
+			has_artillery = 1;			
+		end
+	end
+end
+
+
+-- Now we sort out power and costs on ranged attacks. The following code also
+-- determines how to charge multiple ranged attacks.
+-- NOTE: It is possible, using this method, that combining ranged attacks could
+-- result in unintended cost discounts for very exotic art/range combos.
+ if ( damager > 0 ) then
+	 -- Ask if one of the range attacks is sonic.
+	 if ( has_sonic == 1 ) then
+		 damager = damager*(1+(minRangeDist/20));
+		 CostRenew = CostRenew + (damager * 3);
+		
+	 else -- Ask if one of the range attacks is not artillery.
+		 if ( has_direct == 1 ) then
+			 damager = damager*(1+(minRangeDist/28));
+			 CostRenew = CostRenew + (damager * 1.5);
+			
+		 else -- Then we've got only an artillery attack.
+			 damager = damager*1.1*(1+(minRangeDist/35));
+			 CostRenew = CostRenew + (damager * 1.7);
+			
+		 end
+	 end
+ end
 
 if damager > damagem then
 	rangedrmod = 0.92;
@@ -83,6 +186,17 @@ if damager > 0 then
 	else
 	damage = damagem;
 end
+
+-- The following array simply stores melee damage, range damage
+-- (factoring in multiple attacks and distance) and combined damage.
+-- It is used later to target specific attack types in ability costing.
+AttackTypes = 
+{
+	damagem,
+	damager,
+	damage
+};
+	
 
 --Makes anglerflash free so ya don't get double charged!! wahey!!
 if (getgameattribute("headflashdisplay") == 1) then
@@ -142,12 +256,6 @@ end
 -----------------
 -----------------
 
---Elec, coal, rank, minrank bein set up here
-CostRenew = 0;
-CostGather = 0;
-CreatureRank = 0;
-MinRank = 0;
-
 if 	getgameattribute("speed_max") == 0 and
 	getgameattribute("waterspeed_max") == 0 and
 	getgameattribute("airspeed_max") == 0 then
@@ -204,6 +312,7 @@ CreatureRank = Rank( power, rank_cmp );
 -----------------
 -----------------
 
+--deleteStart
 setgameattribute("powerdisplay", Power(damage, hitpoints, armour));
 
 -- Attribute data.
@@ -228,6 +337,7 @@ AttributeData =
 	{ "waterspeed_max", 1, 12, nil, {12.0, 20.0, 25.0, 30.0}, "waterspeed", 1 },
 	{ "airspeed_max", 1, 16, nil, {16.0, 20.0, 24.0, 28.0}, "airspeed", 1 },
 	{ "sight_radius1", nil, nil, nil, {20.0, 30.0, 35.0, 45.0}, "sightradius", 1 },
+	--{ "powerdisplay", nil, nil, nil, {rank2pow, rank3pow, rank4pow, rank5pow}, "sightradius", 1 },
 	{ "size", nil, 1, nil, {0, 3, 6, 9}, "size", 1},
 
 	{ "melee_damage", 1, 0, nil, {1.0, 10.0, 17.0, 26.0}, "damage", 1 },
@@ -239,6 +349,7 @@ AttributeData =
 };
 
 -- Apply boundaries and rank attributes.
+
 for k, at in AttributeData do
 
 	local attribute = at[AT_Name];
@@ -347,6 +458,8 @@ setattribute( "range2_damage_val", val );
 end
 end
 
+--deleteEnd
+
 -----------------
 -----------------
 --ability  cost--
@@ -368,6 +481,16 @@ end
 
 if (getgameattribute("is_swimmer") == 1 and getgameattribute("is_land") == 0) then
 	setgameattribute("can_dig", 0);
+end
+
+if (getgameattribute("pack_hunter") == 1 and getgameattribute("herding") == 1) then
+	setgameattribute("herding", 0);
+end
+
+--not unusable, but removing so that loner units won't be charged for herding or pack hunter
+if (getgameattribute("loner") == 1) then
+	setgameattribute("herding", 0);
+	setgameattribute("pack_hunter", 0);
 end
 
 -- Ability type constants.
@@ -392,6 +515,11 @@ AB_CostGather = 5;
 AB_CostRenewIncrement = 6;
 AB_CostRenewIncrementStartRank = 7;
 
+RB_DamageCost = 3;
+RB_EhpCost = 4;
+RB_MaxCost = 5;
+RB_AttType = 6;
+
 AbilityData =
 {
 	--All special case abilities are charged after power discount is applied, this is presently only to abilities that already have
@@ -401,55 +529,83 @@ AbilityData =
 	--{ ability_type, ability_id, minrank, costrenew, costgather, costrenew plus perrank, Rank that the increase starts at }
 
 	{ ABT_Ability, 	"is_immune", 		0, 	5, 	0, 	2.5 },
-	{ ABT_Ability, 	"keen_sense", 		0, 	10, 	0, 	0 },
-	{ ABT_Ability, 	"can_dig", 		0, 	10, 	0, 	10 },
-	{ ABT_Ability, 	"sonar_pulse", 		0, 	15, 	0, 	5 },
-	{ ABT_Ability, 	"is_stealthy", 		0, 	20, 	0, 	10 },
-	{ ABT_Ability, 	"stink_attack", 	0, 	50, 	0, 	5 },
-	{ ABT_Ability, 	"stink",		0, 	50, 	0, 	5 },
-	{ ABT_Ability, 	"flash", 		0, 	0, 	0, 	0 },
-	{ ABT_Ability, 	"end_bonus", 		0, 	10, 	0,	0 },
+	{ ABT_Ability, 	"keen_sense", 		0, 	10, 0, 	0 },
+	{ ABT_Ability, 	"can_dig", 			0, 	0, 	0, 	0 },
+	{ ABT_Ability, 	"sonar_pulse", 		0, 	15, 0, 	5 },
+	{ ABT_Ability, 	"is_stealthy", 		0, 	0, 	0, 	0 },	--special
+	{ ABT_Ability, 	"stink_attack", 	0, 	50, 0, 	5 },
+	{ ABT_Ability, 	"stink",			0, 	50, 0, 	5 },
+	{ ABT_Ability, 	"flash", 			0, 	0, 	0, 	0 },
+	{ ABT_Ability, 	"end_bonus", 		0, 	10, 0,	0 },
  	{ ABT_Ability, 	"speed_boost", 		0, 	0, 	0, 	0 },
  	{ ABT_Ability, 	"overpopulation", 	2, 	0, 	0, 	0 },	--special
-	{ ABT_Ability, 	"poplow", 		1, 	0, 	0, 	0 },	--special
+	{ ABT_Ability, 	"poplow", 			1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"poplowtorso", 		1, 	0, 	0, 	0 },	--special
-	{ ABT_Ability, 	"herding", 		1, 	0, 	0, 	0 },	--special
+	{ ABT_Ability, 	"herding", 			1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"pack_hunter", 		1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"regeneration", 	1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"frenzy_attack", 	1, 	0, 	0, 	0 },	--special
-	{ ABT_Ability, 	"plague_attack", 	1, 	50, 	0, 	5 },
-	{ ABT_Ability, 	"Autodefense", 		1, 	15, 	0, 	5 },
-	{ ABT_Ability, 	"assassinate", 		1, 	10, 	10, 	20 },
-	{ ABT_Ability, 	"can_SRF", 		1, 	15, 	0, 	10 },
+	{ ABT_Ability, 	"plague_attack", 	1, 	50, 0, 	5 },
+	{ ABT_Ability, 	"AutoDefense", 		1, 	15, 0, 	5 },
+	{ ABT_Ability, 	"assassinate", 		1, 	10, 10,	20 },
+	{ ABT_Ability, 	"can_SRF", 			1, 	15, 0, 	10 },
 	{ ABT_Ability, 	"quill_burst", 		2, 	0, 	0, 	0 },	--special
-	{ ABT_Ability, 	"leap_attack", 		2, 	15, 	0, 	5 },
+	{ ABT_Ability, 	"leap_attack", 		2, 	10, 0, 	5 },
 	{ ABT_Ability, 	"is_swimmer", 		2, 	0, 	0,	0 },
-	{ ABT_Ability, 	"deflection_armour", 	2, 	0, 	0, 	0 },	--special
-	{ ABT_Ability, 	"infestation", 		2, 	30, 	0, 	0 },
-	{ ABT_Ability, 	"charge_attack", 	3, 	15, 	0, 	5 },
+	{ ABT_Ability, 	"deflection_armour",2, 	0, 	0, 	0 },	--special
+	{ ABT_Ability, 	"infestation", 		2, 	30, 0, 	0 },
+	{ ABT_Ability, 	"charge_attack", 	3, 	15, 0, 	5 },
 	{ ABT_Ability, 	"is_flyer", 		3, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"electric_burst", 	2, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"poison_touch", 	3, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"web_throw", 		3, 	0, 	0, 	0 },	--special
- 	{ ABT_Ability, 	"poison_bite", 		3,  	0, 	0, 	0 },	--accounted for in damagetype
- 	{ ABT_Ability, 	"poison_sting", 	3,  	0, 	0, 	0 },	--accounted for in damagetype
+ 	{ ABT_Ability, 	"poison_bite", 		3,  0, 	0, 	0 },	--accounted for in damagetype
+ 	{ ABT_Ability, 	"poison_sting", 	3,  0, 	0, 	0 },	--accounted for in damagetype
 	{ ABT_Ability, 	"poison_pincers", 	3, 	0, 	0, 	0 },	--accounted for in damagetype
-	{ ABT_Ability, 	"loner", 		2, 	0, 	0, 	0 },	--special
-	{ ABT_Ability, 	"soiled_land", 		3, 	50, 	0, 	0 },
+	{ ABT_Ability, 	"loner", 			2, 	0, 	0, 	0 },	--special
+	{ ABT_Ability, 	"soiled_land", 		3, 	50, 0, 	0 },
+	{ ABT_Ability, 	"ranged_piercing", 	2, 	0, 	0, 	0 }, --special
+	{ ABT_Ability, 	"flash", 			0, 	35, 0, 	5 },
+	{ ABT_Ability, 	"headflashdisplay", 0, 	35, 0, 	5 },
 
 	{ ABT_Range, 	DT_Electric, 		2, 	0, 	0,	0 },
-	{ ABT_Range, 	DT_Poison, 		3, 	0, 	0,	0 },
-	{ ABT_Range, 	DT_Sonic, 		2, 	0, 	0,	0 },
+	{ ABT_Range, 	DT_Poison, 			3, 	0, 	0,	0 },
+	{ ABT_Range, 	DT_Sonic, 			2, 	0, 	0,	0 },
 	{ ABT_Range, 	DT_VenomSpray, 		3, 	0, 	0,	0 },
 
 	{ ABT_Melee, 	DT_BarrierDestroy, 	0, 	0, 	0, 	0},     --special
-	{ ABT_Melee, 	DT_HornNegateFull, 	2, 	30, 	0, 	10 },
-	{ ABT_Melee, 	DT_HornNegateArmour, 	3, 	0, 	0, 	0 },	--special
-	{ ABT_Melee, 	DT_Poison, 		3, 	0, 	0, 	0 },	--special
+	{ ABT_Melee, 	DT_HornNegateFull, 	2, 	30, 0, 	10 },
+	{ ABT_Melee, 	DT_HornNegateArmour,3, 	0, 	0, 	0 },	--special
+	{ ABT_Melee, 	DT_Poison, 			3, 	0, 	0, 	0 },	--special
+};
+
+-- Set points for max EHP and Melee (arbitrary)
+ehpMax = 3000;
+dammMax = 100;
+
+AbilityRefPoints =
+{
+	--The following abilities are scaled based on reference points.
+	--{ ability_type, ability_id, damageCost, ehpCost, maxCost, AttackType}
+	-- Attack Type 1 is melee, 2 is range, 3 is combined.
+
+	{ ABT_Ability, 	"herding", 			120, 	150, 	350,	3 },
+	{ ABT_Ability, 	"pack_hunter", 		160, 	190, 	500,	3 },
+	{ ABT_Ability, 	"is_stealthy", 		200, 	90, 	300,	3 },
+	{ ABT_Ability, 	"can_dig", 			150, 	60, 	210, 	3 },
+	{ ABT_Ability, 	"regeneration", 	110, 	110, 	250,	3 },
+	{ ABT_Ability, 	"frenzy_attack", 	170, 	120, 	400,	3 },	
+	{ ABT_Ability, 	"ranged_piercing", 	80, 	50, 	200,	2 },
+
+	{ ABT_Melee, 	DT_BarrierDestroy, 		140, 	60, 	400, 	1 },
+	{ ABT_Melee, 	DT_HornNegateArmour, 	200, 	120, 	550,	1 },
+
 };
 
 -- Total the costs and find min rank for all abilities.
+--pairsStart
 for n, ab in AbilityData do
+--pairsEnd
 	-- If we have this ability...
 	if ABT_CheckFunctions[ab[AB_AbilityType]]( ab[AB_Id] ) == 1 then
 		-- add on the costs.
@@ -459,68 +615,37 @@ for n, ab in AbilityData do
 		if ab[AB_CostGather] then
 			CostGather = CostGather + ab[AB_CostGather];
 		end
-		-- check for min rank.
-		CreatureRank = max( CreatureRank, ab[AB_MinRank] );
-	end
-end
-
---Ranged Costs and MinRank
--- used to determine whether the range type is splash damage
-
-function get_range_var( limb, var )
-	local str = "range"..limb.."_"..var
-
-	if checkgameattribute(str) == 1 then
-		return getgameattribute( str )
-	end
-	return 0;
-end
-
-function range_artillerytype( limb )
-	-- if this creature has a special field it has artillery
-	return get_range_var( limb, "special");
-	end
-
--- These will be set to flag if the creature has any direct or any artillery range attack.
-has_direct = nil;
-has_artillery = nil;
-
---Ranged unit minimum rank
-if damager > 0 then
-	CreatureRank = max(CreatureRank, 2);
-end
-
-BodyPartsThatCanHaveRange = { 2, 3, 4, 5, 8 };
-
-for index, part in BodyPartsThatCanHaveRange do
-	part_damage = getgameattribute( "range" .. part .. "_damage" );
-	if ( part_damage > 0 ) then
-		-- if not artillery range
-		if ( range_artillerytype( part ) == 0 ) then
-			has_direct = 1;
-
-			if ( hasrangedmgtype(DT_Sonic) == 1 ) then
-				CostRenew = CostRenew + (damager * 3);
-			else
-				CostRenew = CostRenew + (damager * 1.5);
-			end
-		else
-			has_artillery = 1;
-			CostRenew = CostRenew + (damager * 1.7);
-		end
-	end
-end
-
--- Total the costs and find min rank for all abilities.
- for n, ab in AbilityData do
-	-- If we have this ability...
-	if ABT_CheckFunctions[ab[AB_AbilityType]]( ab[AB_Id] ) == 1 then
-		
 		-- add on the costs.
 		if ab[AB_CostRenewIncrement] then
 			CostRenew = CostRenew + ab[AB_CostRenewIncrement] * (CreatureRank - 1);
 		end
 		
+		-- check for min rank.
+		CreatureRank = max( CreatureRank, ab[AB_MinRank] );
+	end
+end
+
+
+-- Total the costs for reference-point ability costs
+--pairsStart
+ for n, ab in AbilityRefPoints do
+--pairsEnd
+	-- If we have this ability...
+	if ABT_CheckFunctions[ab[AB_AbilityType]]( ab[AB_Id] ) == 1 then
+		
+		-- Calculate shape value.				
+		shapeValue = (ab[RB_MaxCost]-ab[RB_EhpCost]-ab[RB_DamageCost])/(ehpMax*dammMax);
+		
+		-- add on the costs.
+		abCost = (shapeValue*AttackTypes[ab[RB_AttType]]*(hitpoints/(1-armour)))+((hitpoints/(1-armour))*ab[RB_EhpCost]/ehpMax)+(AttackTypes[ab[RB_AttType]]*ab[RB_DamageCost]/dammMax);
+		
+		if (ab[AB_Id] == "herding") then
+			herdCost = abCost;
+		
+		else
+			CostRenew = CostRenew + abCost;
+		
+		end		
 	end
 end
 
@@ -537,10 +662,10 @@ if (CreatureRank == 1) then
 		    CostGather = 170;
 		    elseif (CreatureRank == 4) then
 		        max_power = rank5pow;
-				CostGather = 275;
+				CostGather = 240;
 		        else
 		    	max_power = 1000;
-			    CostGather = 450;
+			    CostGather = 420;
 end
 
 -----------------
@@ -549,52 +674,28 @@ end
 -----------------
 -----------------
 
--- The 0.65 here is equal to 1 - the horns multiplier from tuning.lua
-if hasmeleedmgtype(DT_HornNegateArmour) == 1 then
-	CostRenew = CostRenew + ((( ((1-(maxArmour*0.65))/(1-maxArmour)) *damagem)-damagem)*(CreatureRank*2));
-end
+-- Here's where we actually charge for herding.
+if (herdCost > 0) then	
+	extraArmour = (armour*0.3);
+	armourOverCap = (armour + extraArmour) - maxArmour;
+	
+	if (armourOverCap > 0) then
+		CostRenew = CostRenew + ((1 - (armourOverCap / extraArmour)) * herdCost);
+	
+	else	
+		CostRenew = CostRenew + herdCost;
+		
+	end
+end	
 
 -- This is applying a cost to venom spray (can't do it from the above table)
 if hasrangedmgtype(DT_VenomSpray) == 1 then
 	CostRenew = CostRenew + 1000;
 end
 
--- The 1.5 here is the barrier destroy multiplier for damage to structures from tuning.lua
-if hasmeleedmgtype(DT_BarrierDestroy) == 1 then
-	CostRenew = CostRenew + (((damage*1.5) - damage)*2.5);
-end
-
-if getgameattribute("frenzy_attack") == 1 then
-	CostRenew = CostRenew + (damage*3);
-end
-
-if (getgameattribute("poplow") == 1) and (power/150 > 1) then
-	CostRenew = CostRenew + (power*0.1);
-end
-
-if (getgameattribute("poplowtorso") == 1) and (power/150 > 1) then
-	CostRenew = CostRenew + (power*0.1);
-end
-
-if (getgameattribute("herding") == 1) and (getgameattribute("pack_hunter") == 0) then
-	herdarmour = min(armour*1.3, maxArmour);
-	CostRenew = CostRenew + 10 + (((hitpoints/(1-herdarmour)) - (hitpoints/(1-armour)))/4);
-end
-
-if getgameattribute("pack_hunter") == 1 then
-	CostRenew = CostRenew + (((damage*1.3) - damage)*10);
-end
-
-if getgameattribute("flash") == 1 then
-	CostRenew = CostRenew + (50+(10*CreatureRank))*flCost;
-end
-
-if getgameattribute("headflashdisplay") == 1 then
-	CostRenew = CostRenew + (50+(10*CreatureRank));
-end
-
-if getgameattribute("regeneration") == 1 then
-	CostRenew = CostRenew+(CreatureRank*40*armour);
+--poplow cost
+if (((getgameattribute("poplow") == 1) or (getgameattribute("poplowtorso") == 1)) and (power/popdivide >= 2)) then
+	CostRenew = CostRenew + ((power-popdivide)/popdivide*20);
 end
 
 if getgameattribute("deflection_armour") == 1 then
@@ -619,10 +720,23 @@ if (getgameattribute("poison_touch") == 1) and (hasmeleedmgtype(DT_Poison) == 0)
 end
 
 -- Build time
-
 build_time = (30 * CreatureRank)*((power*1.2/max_power)^1.2)*popMult;
-CostGather = (CostGather)*speedCost*((power*1.3/max_power)^0.8)*RangeCostMult*1.1+(2/CreatureRank)*1.25;
-CostRenew = CostRenew*((power*1.3/max_power)^0.8);
+
+-- FINAL COST SCALERS. These basically control how good spam is; a higher exponent benefits spam more,
+-- because it increases the range of costs within a level.
+-- Let's build a table of exponents to allow us to control cost curve per level:
+CostExpo =
+{
+	0.8, -- Level 1 cost exponent
+	0.8, -- Level 2 cost exponent
+	0.8, -- Level 3 cost exponent
+	0.8, -- Level 4 cost exponent
+	0.7, -- Level 5 cost exponent
+}
+	
+CostGather = (CostGather)*speedCost*((power*1.3/max_power)^(CostExpo[CreatureRank]))*1.1;
+CostRenew = CostRenew*((power*1.3/max_power)^(CostExpo[CreatureRank]));
+
 
 if getgameattribute("overpopulation") == 0 then
 build_time = max(build_time, 16);
@@ -686,9 +800,9 @@ end
 
 --Popspace calc
 if (getgameattribute("poplow") == 1) or (getgameattribute("poplowtorso") == 1) then
-	Pop = power/300;
-	else
-	Pop = power/150;
+	Pop = (power/popdivide)/2;
+else
+	Pop = power/popdivide;
 end
 
 
@@ -702,4 +816,8 @@ setattribute( "costrenew", CostRenew );
 setattribute( "cost", CostGather );
 setattribute( "popsize", Pop )
 
+setgameattribute("Power", power);
+
+--deleteStart
 end
+--deleteEnd

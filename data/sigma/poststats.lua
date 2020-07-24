@@ -372,7 +372,7 @@ end
 
 function ArmyMostLosses( idplayer, retValue )
 
-	return ArmyFindMax( idplayer, Stats_CreatureLosses, retValue, 0 )
+	return ArmyFindMax( idplayer, Stats_CreatureLosses, retValue, 1 )
 	
 end
 
@@ -390,7 +390,7 @@ end
 
 function ArmyMostBuilt( idplayer, retValue)
 
-	return ArmyFindMax( idplayer, Stats_CreatureTotal, retValue, 0)
+	return ArmyFindMax( idplayer, Stats_CreatureTotal, retValue, 1)
 	
 end
 

@@ -1,4 +1,4 @@
--- tuna
+-- Tuna
 limbattributes = {
 isFromExcel = {1,1.0},
 ["endurance_bonus"]={1,0},
@@ -15,7 +15,7 @@ isFromExcel = {1,1.0},
 ["hitpoints-head"]={4,45},
 ["hitpoints-front"]={2,0},
 ["hitpoints-back"]={3,0},
-["hitpoints-torso"]={6,115},
+["hitpoints-torso"]={6,114},
 ["exp_hitpoints"]={1,1.4},
 ["speed_mid-front"]={2,0},
 ["speed_mid-torso"]={6,0},

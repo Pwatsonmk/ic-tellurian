@@ -49,6 +49,6 @@ tooltips =
 	{ "roomname_header0",	"statusbar_helptext",	"statusbar_helptext", 0, 38014, 0, Point_Below },
 	{ "ipaddresslabel",	"ability_tooltip",	"ability_tooltip", 38027, 38031, 0, Self_Above },
 	
-
-	
+	{ "command_label",				"statusbar_helptext",	"statusbar_helptext", 0, 38019, 0, Point_Below },
+	{ "tab_label",					"statusbar_helptext",	"statusbar_helptext", 0, 38020, 0, Point_Below },
 }

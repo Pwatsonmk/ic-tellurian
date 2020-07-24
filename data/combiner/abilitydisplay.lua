@@ -281,7 +281,7 @@ AbilitiesList =
 	--	shortdesc		= 37511,
 	--	showonlyincombiner	= 0,
 	--},
-        Overpopulation = 
+    Overpopulation = 
 	{
 		gameattributename 	= "overpopulation",
 		bodypart		= part_creature,
@@ -289,14 +289,14 @@ AbilitiesList =
 		shortdesc		= 37513,
 		showonlyincombiner	= 0,
 	},
-        --ImaginaryHovering = 
-	--{
-	--	gameattributename 	= "imaginary_hovering",
-	--	bodypart		= part_head,
-	--	name			= 37514,
-	--	shortdesc		= 37515,
-	--	showonlyincombiner	= 0,
-	--},
+    RangedPiercing = 
+	{
+		gameattributename 	= "ranged_piercing",
+		bodypart		= part_head,
+		name			= 37514,
+		shortdesc		= 37515,
+		showonlyincombiner	= 0,
+	},
 	Poison =
 	{
 		gameattributename 	= "poison_bite",

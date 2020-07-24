@@ -1,8 +1,8 @@
 -- PROJECTILES
 
 gameattributes = {
-speed = 25,
-heighttodistratio = 0.6,
+speed = 35,
+heighttodistratio = 0.5,
 
 deathcount = 8,
 

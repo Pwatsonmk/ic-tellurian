@@ -439,11 +439,49 @@
 		{4261, 4262},	-- Health	
 		{4263, 4264},	-- Armor
 		{4265, 4266}, 	-- Speed
-		{4267, 4268},	-- Sight of Radius
+		{4267, 4268},	-- Sight Radius
 		{4269, 4270},	-- Size
 		{4277, 4278},	-- Melee Damage
-		{0, 0},			-- Range attack 0
-		{0, 0},			-- Range attack 1
+		{0, 0},		-- Range attack 0
+		{0, 0},		-- Range attack 1
+	}
+	
+	henchattributes = 
+	{
+		{56253, 56254},	-- Gather
+		{56249, 56250},	-- Melee Damage
+		{56247, 56248}, -- Sight Radius
+		{56245, 56246},	-- Land Speed
+		{56251, 56252},	-- Water Speed
+	}
+	
+	gyroattributes = 
+	{
+		{56253, 56254},	-- Gather
+		{56247, 56248}, -- Sight Radius
+		{52211, 56246},	-- Air Speed
+	}
+	
+	rexattributes = 
+	{
+		{52209, 52210},	-- Neurotoxin
+		{52213, 52214}, -- Sight Radius
+		{52211, 52212},	-- Land Speed
+		{52215, 52216},	-- Water Speed
+	}
+
+	lucyattributes = 
+	{
+		{56253, 52217},	-- Gather
+		{52213, 52218}, -- Sight Radius
+		{52211, 52219},	-- Land Speed
+		{52215, 52220},	-- Water Speed
+	}
+	
+	costdisplay = 
+	{
+		{39541, 39543},	--coal
+		{39542, 39544}, --elec  
 	}
 
 	henchman_modalmodes = 
@@ -617,6 +655,11 @@
 		{ CHARABILITYTYPE_RexKeenSense, 	38404, 38405 },
 		{ CHARABILITYTYPE_RexNeuroToxin, 	38406, 38407 },
 		{ CHARABILITYTYPE_RexPack, 		38408, 38409 },
+	}
+	
+	lucy_abilities = 
+	{
+		{ 52221, 52222 },
 	}
 
 	singleselectinfotable = 
@@ -812,6 +855,79 @@ dospeedfast = function( dummy )
 end
 
 -- 
+
+gathericontooltip = function( index )
+
+	if index >= 1 and index <= getn( henchattributes ) then
+
+		local titleid	= henchattributes[ index ][1]
+		local descid	= henchattributes[ index ][2] 
+		
+		HelpTextTitle( titleid )
+		HelpTextTextWithoutRequirements( descid )
+
+	end
+
+end
+
+gyrotooltip = function( index )
+
+	if index >= 1 and index <= getn( gyroattributes ) then
+
+		local titleid	= gyroattributes[ index ][1]
+		local descid	= gyroattributes[ index ][2] 
+		
+		HelpTextTitle( titleid )
+		HelpTextTextWithoutRequirements( descid )
+
+	end
+
+end
+
+targeticontooltip = function( index )
+
+	if index >= 1 and index <= getn( rexattributes ) then
+
+		local titleid	= rexattributes[ index ][1]
+		local descid	= rexattributes[ index ][2] 
+		
+		HelpTextTitle( titleid )
+		HelpTextTextWithoutRequirements( descid )
+
+	end
+
+end
+
+
+lucytooltip = function( index )
+
+	if index >= 1 and index <= getn( lucyattributes ) then
+
+		local titleid	= lucyattributes[ index ][1]
+		local descid	= lucyattributes[ index ][2] 
+		
+		HelpTextTitle( titleid )
+		HelpTextTextWithoutRequirements( descid )
+
+	end
+
+end
+
+unitcosttooltip = function( index )
+
+	if index >= 1 and index <= getn( costdisplay ) then
+
+		local titleid	= costdisplay[ index ][1]
+		local descid	= costdisplay[ index ][2] 
+		
+		HelpTextTitle( titleid )
+		HelpTextTextWithoutRequirements( descid )
+
+	end
+
+end
+
+
 chattooltip = function( enabled, index )
 
 	HelpTextTitle( 40952 )
@@ -1058,6 +1174,21 @@ rexabilitytooltip = function( ability, dummy )
 	end
 
 end
+--
+
+lucyabilitytooltip = function( index )
+
+	if index >= 1 and index <= getn( rexattributes ) then
+
+		local titleid	= lucy_abilities[ index ][1]
+		local descid	= lucy_abilities[ index ][2] 
+		
+		HelpTextTitle( titleid )
+		HelpTextTextWithoutRequirements( descid )
+
+	end
+
+end
 
 
 --
@@ -1192,36 +1323,90 @@ infocentercreature = function( id )
 	else
 		BindLabelToCreatureAbility	( "textlabel_infoline08",	"unitabilitytooltip", ebpid, 5, 0 )
 	end
+	
+	--display cost
+	
+	ShowHud("icon_gather")
+	ShowHud("icon_renew")
+	ShowHud("gather_backlabel")
+	ShowHud("renew_backlabel")
+	
+	BindLabelToCreatureAttribute( "costgather_tooltip", "unitcosttooltip", owner, ebpid, 0 )
+	BindLabelToCreatureAttribute( "costrenew_tooltip", "unitcosttooltip", owner, ebpid, 1 )
+	BindLabelToEBPCostGather( "gather_label", ebpid)
+	BindLabelToEBPCostRenew( "renew_label", ebpid)
 
 end
 
 --
 infocenterhenchman = function( id )
 
-	--BindLabelToHenchmanState( "ui/ingame/enemycreatureicon.tga", id )
+	local ebpid = EntityEBP( id )
+	local owner = EntityOwner( id )
 
-	--display dps
-	BindLabelToText		    ( "textlabel_infoline03", 40005 )
+	ShowHud("attribute_backlabel")
+	ShowHud("attribute_backlabel1")
+
+	--BindLabelToHenchmanState( "henchmenaction_icon", id )
+
+	-- display dps
+	
+	BindIconToCreatureAttribute( "meleedamage_staticon_hench", "gathericontooltip", ebpid, 1 )
+	BindLabelToCreatureAttribute( "meleedamage_number_hench", "gathericontooltip", owner, ebpid, 1 )
+	ShowHud("meleedamage_staticon_hench")
+	BindLabelToText( "meleedamage_number_hench", 40005 )
 
 	-- tag reload
+	
 	if EntityHasTagReload( id ) == 1 then
 
-		BindLabelToText		    ( "reload_label", 40780 )
-		BindBarToEntityTagReload( "reload_statbar", id )
+		BindLabelToText		    ( "textlabel_infoline01", 40780 )
+		BindBarToEntityTagReload( "progress_statbar01", id )
 
 	end
 
 	--display speed and sight (incl. upgrades)
 
 	if (IsResearched( RESEARCH_HenchmanMotivationalSpeech ) == 1) then
-		BindLabelToText( "textlabel_upgradeline04", 40004 ) else
-		BindLabelToText( "textlabel_infoline04", 40006)
+		BindIconToCreatureAttribute( "hench_speed_upgrade", "gathericontooltip", ebpid, 3 )
+		BindLabelToCreatureAttribute( "hench_land_upgrade", "gathericontooltip", owner, ebpid, 3 )
+		BindLabelToCreatureAttribute( "hench_water_upgrade", "gathericontooltip", owner, ebpid, 4 )
+		ShowHud("hench_speed_upgrade")
+		BindLabelToText( "hench_land_upgrade", 40004 )
+		BindLabelToText( "hench_water_upgrade", 40012 )
+	else
+		BindIconToCreatureAttribute( "hench_speed_icon", "gathericontooltip", ebpid, 3 )
+		BindLabelToCreatureAttribute( "landspeed_number_hench", "gathericontooltip", owner, ebpid, 3 )
+		BindLabelToCreatureAttribute( "waterspeed_number_hench", "gathericontooltip", owner, ebpid, 4 )
+		ShowHud("hench_speed_icon")
+		BindLabelToText( "landspeed_number_hench", 40006)
+		BindLabelToText( "waterspeed_number_hench", 40011)
 	
 	end
 
 	if (IsResearched( RESEARCH_HenchmanBinoculars ) == 1) then
-		BindLabelToText( "textlabel_upgradeline05", 40010 ) else
-		BindLabelToText( "textlabel_infoline05", 40007 )
+		BindIconToCreatureAttribute( "hench_sight_upgrade", "gathericontooltip", ebpid, 2 )
+		BindLabelToCreatureAttribute( "sight_upgrade_hench", "gathericontooltip", owner, ebpid, 2 )
+		ShowHud("hench_sight_upgrade")
+		BindLabelToText( "sight_upgrade_hench", 40010 )
+	else
+		BindIconToCreatureAttribute( "sightradius_staticon_hench", "gathericontooltip", ebpid, 2 )
+		BindLabelToCreatureAttribute( "sightradius_number_hench", "gathericontooltip", owner, ebpid, 2 )
+		ShowHud("sightradius_staticon_hench")
+		BindLabelToText( "sightradius_number_hench", 40007 )
+
+	end
+
+	if (IsResearched( RESEARCH_HenchmanYoke ) == 1) then
+		BindIconToCreatureAttribute( "gather_icon_upgrade", "gathericontooltip", ebpid, 0 )
+		BindLabelToCreatureAttribute( "gather_upgrade", "gathericontooltip", owner, ebpid, 0 )
+		ShowHud("gather_icon_upgrade")
+		BindLabelToText( "gather_upgrade", 40249)
+	else
+		BindIconToCreatureAttribute( "gather_staticon", "gathericontooltip", ebpid, 0 )
+		BindLabelToCreatureAttribute( "gather_number", "gathericontooltip", owner, ebpid, 0 )
+		ShowHud("gather_staticon")
+		BindLabelToText( "gather_number", 40248)
 
 	end
 
@@ -1229,26 +1414,56 @@ end
 
 --
 infocentergyrocopter = function( id )
+	
+	local ebpid = EntityEBP( id )
+	local owner = EntityOwner( id )
 
 	--BindLabelToHenchmanState( "henchmenaction_icon", id )
 
 	-- tag reload
+	
 	if EntityHasTagReload( id ) == 1 then
 
-		BindLabelToText		    ( "reload_label", 40780 )
-		BindBarToEntityTagReload( "reload_statbar", id )
+		BindLabelToText		    ( "textlabel_infoline01", 40780 )
+		BindBarToEntityTagReload( "progress_statbar01", id )
 
 	end
 
-	--display speed and sight (incl. upgrades)
+	--display stats (incl. upgrades)
 
-	BindLabelToText( "textlabel_infoline04", 40013)
+	ShowHud("attribute_backlabel")
+	ShowHud("attribute_backlabel1")
 
 	if (IsResearched( RESEARCH_HenchmanBinoculars ) == 1) then
-		BindLabelToText( "textlabel_upgradeline05", 40015 ) else
-		BindLabelToText( "textlabel_infoline05", 40014 )
+		BindIconToCreatureAttribute( "hench_sight_upgrade", "gyrotooltip", ebpid, 1 )
+		BindLabelToCreatureAttribute( "sight_upgrade_hench", "gyrotooltip", owner, ebpid, 1 )
+		ShowHud("hench_sight_upgrade")
+		BindLabelToText( "sight_upgrade_hench", 40010 )
+	else
+		BindIconToCreatureAttribute( "sightradius_staticon_hench", "gyrotooltip", ebpid, 1 )
+		BindLabelToCreatureAttribute( "sightradius_number_hench", "gyrotooltip", owner, ebpid, 1 )
+		ShowHud("sightradius_staticon_hench")
+		BindLabelToText( "sightradius_number_hench", 40007 )
 
 	end
+
+	if (IsResearched( RESEARCH_HenchmanYoke ) == 1) then
+		BindIconToCreatureAttribute( "gather_icon_upgrade", "gyrotooltip", ebpid, 0 )
+		BindLabelToCreatureAttribute( "gather_upgrade", "gyrotooltip", owner, ebpid, 0 )
+		ShowHud("gather_icon_upgrade")
+		BindLabelToText( "gather_upgrade", 40247)
+	else
+		BindIconToCreatureAttribute( "gather_staticon", "gyrotooltip", ebpid, 0 )
+		BindLabelToCreatureAttribute( "gather_number", "gyrotooltip", owner, ebpid, 0 )
+		ShowHud("gather_staticon")
+		BindLabelToText( "gather_number", 40246)
+
+	end
+	
+	BindIconToCreatureAttribute( "gyro_speed_staticon", "gyrotooltip", ebpid, 2 )
+	BindLabelToCreatureAttribute( "gyro_airspeed_number", "gyrotooltip", owner, ebpid, 2 )
+	ShowHud("gyro_speed_staticon")
+	BindLabelToText( "gyro_airspeed_number", 40013)
 
 end
 
@@ -1256,11 +1471,17 @@ end
 --
 infocenterrex = function( id )
 
+	local ebpid = EntityEBP( id )
+	local owner = EntityOwner( id )
+
+	ShowHud("attribute_backlabel")
+	ShowHud("attribute_backlabel1")
+
 	-- tag reload
 	if EntityHasTagReload( id ) == 1 then
 
-		BindLabelToText		    ( "reload_label", 40782 )
-		BindBarToEntityTagReload( "reload_statbar", id )
+		BindLabelToText		    ( "textlabel_infoline01", 40782 )
+		BindBarToEntityTagReload( "progress_statbar01", id )
 
 	end
 
@@ -1288,6 +1509,29 @@ infocenterrex = function( id )
 		end
 	end
 
+	-- Neurotoxin 
+
+	BindIconToCreatureAttribute( "rex_neurotoxin", "targeticontooltip", ebpid, 0 )
+	BindLabelToCreatureAttribute("neurotox_number", "targeticontooltip", owner, ebpid, 0)
+	ShowHud("rex_neurotoxin")
+	BindLabelToText("neurotox_number", 40244 )
+
+	-- Sight radius
+
+	BindIconToCreatureAttribute( "rex_sightradius", "targeticontooltip", ebpid, 1 )
+	BindLabelToCreatureAttribute("sightradius_number_hench", "targeticontooltip", owner, ebpid, 1)
+	ShowHud("rex_sightradius")
+	BindLabelToText("sightradius_number_hench", 40245 )
+
+	-- Speed
+
+	BindIconToCreatureAttribute( "hench_speed_icon", "targeticontooltip", ebpid, 2 )
+	BindLabelToCreatureAttribute("landspeed_number_hench", "targeticontooltip", owner, ebpid, 2)
+	BindLabelToCreatureAttribute("waterspeed_number_hench", "targeticontooltip", owner, ebpid, 3)
+	ShowHud("hench_speed_icon")
+	BindLabelToText("landspeed_number_hench", 40007 )
+	BindLabelToText("waterspeed_number_hench", 40243 )
+
 end
 
 --
@@ -1298,8 +1542,8 @@ infocentersoundbeamtower = function( id )
 	-- sonic boom
 	if SonicBoomIsOpen() == 1 then
 
-		BindLabelToText		    ( "reload_label", 40784 )
-		BindBarToSonicBoomRecharge( "reload_statbar", id )
+		BindLabelToText		    ( "textlabel_infoline01", 40784 )
+		BindBarToSonicBoomRecharge( "progress_statbar01", id )
 
 	end
 
@@ -1313,8 +1557,8 @@ infocenterantiairtower = function( id )
 	-- air burst
 	if AirBurstIsOpen() == 1 then
 
-		BindLabelToText		    ( "reload_label", 40785 )
-		BindBarToAirBurstRecharge( "reload_statbar", id )
+		BindLabelToText		    ( "textlabel_infoline01", 40785 )
+		BindBarToAirBurstRecharge( "progress_statbar01", id )
 
 	end
 
@@ -1357,13 +1601,56 @@ end
 --
 infocenterlucy = function( id )
 
+	
+	local ebpid = EntityEBP( id )
+	local owner = EntityOwner( id )
+	
+	ShowHud("attribute_backlabel")
+	ShowHud("attribute_backlabel1")
+
 	-- tag reload
 	if EntityHasTagReload( id ) == 1 then
 
-		BindLabelToText		( "reload_label", 40783 )
-		BindBarToEntityTagReload( "reload_statbar", id )
+		BindLabelToText		( "textlabel_infoline01", 40783 )
+		BindBarToEntityTagReload( "progress_statbar01", id )
 
 	end
+	
+	-- Gather
+	
+	if (IsResearched( RESEARCH_HenchmanYoke ) == 1) then
+		BindIconToCreatureAttribute( "gather_icon_upgrade", "gathericontooltip", ebpid, 0 )
+		BindLabelToCreatureAttribute( "gather_upgrade", "gathericontooltip", owner, ebpid, 0 )
+		ShowHud("gather_icon_upgrade")
+		BindLabelToText( "gather_upgrade", 40240)
+	else
+		BindIconToCreatureAttribute( "gather_staticon", "lucytooltip", ebpid, 0 )
+		BindLabelToCreatureAttribute( "gather_number", "lucytooltip", owner, ebpid, 0 )
+		ShowHud("gather_staticon")
+		BindLabelToText( "gather_number", 40245)
+		
+		end
+		
+	-- Sight radius
+
+	BindIconToCreatureAttribute( "rex_sightradius", "lucytooltip", ebpid, 1 )
+	BindLabelToCreatureAttribute("sightradius_number_hench", "lucytooltip", owner, ebpid, 1)
+	ShowHud("rex_sightradius")
+	BindLabelToText("sightradius_number_hench", 40245 )
+
+	-- Speed
+
+	BindIconToCreatureAttribute( "hench_speed_icon", "lucytooltip", ebpid, 2 )
+	BindLabelToCreatureAttribute("landspeed_number_hench", "lucytooltip", owner, ebpid, 2)
+	BindLabelToCreatureAttribute("waterspeed_number_hench", "lucytooltip", owner, ebpid, 3)
+	ShowHud("lucy_speed_staticon")
+	BindLabelToText("landspeed_number_hench", 40242 )
+	BindLabelToText("waterspeed_number_hench", 40243 )
+	
+	-- Sabotage
+	
+	BindLabelToCreatureAttribute("textlabel_infoline03", "lucyabilitytooltip", owner, ebpid, 0)
+	BindLabelToText("textlabel_infoline03", 52221)
 
 end
 
@@ -1379,7 +1666,6 @@ infocenterenemy = function()
 
 		if	type == Creature_EC or
 			type == Animal_EC or
-			type == Henchman_EC or
 			type == Rex_EC or
 			type == Lucy_EC or
 			type == Gyrocopter_EC or
@@ -1397,6 +1683,7 @@ infocenterenemy = function()
 			type == GenStruct_EC or
 			type == GeneticAmplifier_EC or
 			type == LandingPad_EC or
+			type == Henchman_EC or
 			type == Fire_EC
 		then
 			
@@ -1553,6 +1840,26 @@ infocentersingle = function( id )
 
 	-- basic stats
 	infocentersinglebasicstats( id )
+	
+	-- owner
+    if EntityBelongsToPlayer( id ) == 0 then
+
+        -- owner
+        BindLabelToPlayerName  ( "textlabel_playerinfo1", EntityOwner( id ) )
+        BindLabelToPlayerColour( "color_label",           EntityOwner( id ) )
+        
+        -- ally/enemy
+        if not( LocalPlayer() == 0) then
+            if SelectionIsEnemy() == 1 then
+                BindLabelToText( "textlabel_infoline02", 40971 )
+
+            elseif SelectionIsAlly() == 1 then
+                BindLabelToText( "textlabel_infoline02", 40970 )
+
+            end
+        end    
+
+    end
 
 	-- special states
 	if EntityType( id ) == Creature_EC then
@@ -2169,9 +2476,6 @@ buildingsmenu  = function()
 	end
 
 end
-
-
-
 --
 tooltip_ebp = function( enabled, ebpid )
 
@@ -2187,6 +2491,13 @@ tooltip_ebp = function( enabled, ebpid )
 		HelpTextEBPPrerequisite(ebpid)
 
 	end
+
+end
+
+tooltip_cost = function( enabled, ebpid )
+	
+		HelpTextTitle( 39542 )
+		HelpTextEBPCost(ebpid)
 
 end
 
@@ -2397,20 +2708,21 @@ gyrocopterpassengermulti = function( gyro_id )
 	-- gyro passenger multi list
 	local multibuttons =
 	{
-		{ "multiselect_icon15",	"multiselect_statbar15" },
-		{ "multiselect_icon16",	"multiselect_statbar16" },
-		{ "multiselect_icon17",	"multiselect_statbar17" },
-		{ "multiselect_icon18",	"multiselect_statbar18" },
-
-		{ "multiselect_icon24",	"multiselect_statbar24" },
-		{ "multiselect_icon25",	"multiselect_statbar25" },
-		{ "multiselect_icon26",	"multiselect_statbar26" },
-		{ "multiselect_icon27", "multiselect_statbar27" },
-
-		{ "multiselect_icon33", "multiselect_statbar33" },
-		{ "multiselect_icon34", "multiselect_statbar34" },
-		{ "multiselect_icon35", "multiselect_statbar35" },
-		{ "multiselect_icon36", "multiselect_statbar36" },
+		{ "gyro_multi1",	"gyro_statbar1" },
+		{ "gyro_multi2",	"gyro_statbar2" },
+		{ "gyro_multi3",	"gyro_statbar3" },
+		{ "gyro_multi4",	"gyro_statbar4" },
+		{ "gyro_multi5",	"gyro_statbar5" },
+		{ "gyro_multi6",	"gyro_statbar6" },
+		
+		{ "gyro_multi7",	"gyro_statbar7" },
+		{ "gyro_multi8",	"gyro_statbar8" },
+		{ "gyro_multi9",	"gyro_statbar9" },
+		{ "gyro_multi10",	"gyro_statbar10" },
+		{ "gyro_multi11",	"gyro_statbar11" },
+		{ "gyro_multi12",	"gyro_statbar12" },
+	
+		
 	}
 
 	local count = PassengerCount( gyro_id )
@@ -3206,6 +3518,8 @@ foundryselection = function()
 	BindButtonToResourceConversion( "command_big_icon02", foundry_commands[2][2], "doresourceconversion", "foundrytooltip", foundry_commands[2][4], foundry_commands[2][5] )
 	BindButtonToResourceConversion( "command_big_icon03", foundry_commands[3][2], "doresourceconversion", "foundrytooltip", foundry_commands[3][4], foundry_commands[3][5] )
 	BindButtonToResourceConversion( "command_big_icon04", foundry_commands[4][2], "doresourceconversion", "foundrytooltip", foundry_commands[4][4], foundry_commands[4][5] )
+
+	BindButtonToUnitEBP( "command_buildhenchman", HK_Lab_CreateHenchman, "dobuildunit", "tooltip_henchmanbutton", id, GathererEBP() )
 
 end
 

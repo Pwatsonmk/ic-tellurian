@@ -45,6 +45,6 @@ tooltips =
 	{ "players_sort",	"statusbar_helptext",	"statusbar_helptext", 0, 26209, 0, Point_Below },
 	{ "password_sort",	"statusbar_helptext",	"statusbar_helptext", 0, 26210, 0, Point_Below },
 
-
-	
+	{ "command_label",				"statusbar_helptext",	"statusbar_helptext", 0, 38022, 0, Point_Below },
+	{ "tab_label",					"statusbar_helptext",	"statusbar_helptext", 0, 38020, 0, Point_Below },
 }

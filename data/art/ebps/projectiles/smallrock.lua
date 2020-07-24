@@ -1,7 +1,7 @@
 -- smallrock
 
 gameattributes = {
-speed = 25,
+speed = 35,
 heighttodistratio = 0.25,
 
 deathcount = 8,
@@ -14,9 +14,9 @@ damageradius_size4 = 4.2,
 damageradius_size5 = 4.2,
 damageradius_size6 = 5.25,
 damageradius_size7 = 5.25,
-damageradius_size8 = 5.25,
-damageradius_size9 = 5.25,
-damageradius_size10 = 5.25,
+damageradius_size8 = 5.75,
+damageradius_size9 = 6.0,
+damageradius_size10 = 6.0,
 
 
 simcollides = 0,

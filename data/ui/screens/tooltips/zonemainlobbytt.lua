@@ -34,7 +34,7 @@ tooltips =
 	--  0/1 to auto-resize
 	--  tooltip mode, See choices above 
 	--{ "roomname_header",				"statusbar_helptext",	"statusbar_helptext", 0, 31851, 0, Point_Below },
-	{ "players_header",				"statusbar_helptext",	"statusbar_helptext", 0, 31852, 0, Point_Below },
+	{ "players_header",				"statusbar_helptext",	"statusbar_helptext", 0, 37521, 0, Point_Below },
 	{ "rooms_header",				"statusbar_helptext",	"statusbar_helptext", 0, 31855, 0, Point_Below },
 	{ "playerstats_button",				"statusbar_helptext",	"statusbar_helptext", 0, 31853, 0, Point_Below },
 	{ "joinroom_button",				"statusbar_helptext",	"statusbar_helptext", 0, 31856, 0, Point_Below },
@@ -60,5 +60,6 @@ tooltips =
 	{ "server_link",				"statusbar_helptext",	"statusbar_helptext", 0, 38015, 0, Point_Below },
 	{ "score_header",				"statusbar_helptext",	"statusbar_helptext", 0, 38021, 0, Point_Below },
 
-
+	{ "command_label",				"statusbar_helptext",	"statusbar_helptext", 0, 38022, 0, Point_Below },
+	{ "tab_label",					"statusbar_helptext",	"statusbar_helptext", 0, 38020, 0, Point_Below },
 }

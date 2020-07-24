@@ -7,10 +7,19 @@
 -- (c) 2001 Relic Entertainment Inc.
 -- 
 
---CHANGES in Tellurian 2.6 (as of 29/04/2019):
---Plague duration reduced (duration is now 15 seconds).
---Attack ground error radius increased from 2 to 4.
---Frenzy endurance cost per second increased from 7.5 to 8.5.
+--CHANGES in Tellurian 2.7 (as of 29/05/2020):
+--Stink slowdown reduced to 30% from 50%.
+--Stink radius offset reduced to 13m from 16m.
+--Frenzy damage taken reduced to 1.3x from 1.5x.
+--Leap damage time reduced to 1s from 2s.
+--Quill burst damage doubled at all levels.
+--Range unit bonus damage against fliers increased to 1.25x from 1.2x.
+--
+--CHANGES TO OTHER NON-ATTRCOMBINER TUNING LUAS:
+--Artillery projectile speeds increased to 35 from 25.
+--Fence cap added; you can now build a limit of 100 fences.
+--Creaturescalinginfo.lua modified to REMOVE SUBTILE UNITS.
+
 
 -- * Global Tuning Values
 
@@ -407,7 +416,7 @@ StinkCloud =
 	duration5				= 144.0,
 
 	-- damage radius = radiusOffset + creature size (in meters) * radiusScale
-	radiusOffset			= 16.0,
+	radiusOffset			= 13.0,
 	radiusScale				= 0.0,
 
 	-- 
@@ -420,7 +429,7 @@ StinkCloud =
 	descentSpeed			= 8.0,	-- descend 8m per second	
 
 	--
-	reducedVictimSpeedTo	= 0.5,  -- 50% of full speed
+	reducedVictimSpeedTo	= 0.7,  -- 70% of full speed
 }
 
 ---------------------------------------------------------------------
@@ -471,11 +480,11 @@ QuillBurst =
 
 	-- damage per tick
 	-- new damage is this * duration (see above)
-	dmgPerTick1				= 1.5,
-	dmgPerTick2				= 2.5,
-	dmgPerTick3				= 5.0,
-	dmgPerTick4				= 7.5,
-	dmgPerTick5				= 10.0,
+	dmgPerTick1				= 3,
+	dmgPerTick2				= 5,
+	dmgPerTick3				= 10,
+	dmgPerTick4				= 15,
+	dmgPerTick5				= 20.0,
 
 	-- not used
 	dmgToBuilding			= 0
@@ -745,7 +754,7 @@ AttackBonus =
 	artilleryBuildingMult			= 1.0,
 
 	-- multiplier of damage applied to a flyer when it is attacked by a non-flyer unit using a direct ranged attack
-	nonFlyerToFlyerDirectRangeDamageMult	= 1.2,
+	nonFlyerToFlyerDirectRangeDamageMult	= 1.25,
 
 	-- fraction of a flyer's defense to remove when it is attacked by a non-flyer unit using a direct ranged attack
 	nonFlyerToFlyerDirectRangeDefenseMult	= 0.0,
@@ -861,7 +870,7 @@ LeapInfo =
 
 	-- how many seconds of damage a leap attack does.  
 	--	Used to determine the damage of a leap attack by multiplying the attackers damagePerSecond
-	secondsOfDamage		= 2.0
+	secondsOfDamage		= 1.0
 }
 
 ---------------------------------------------------------------------
@@ -919,7 +928,7 @@ Frenzy =
 	dmgIssuedMult		= 1.5,
 
 	-- Damage received multiplier, i.e. I take normal damage times x, when frenzied
-	dmgReceivedMult		= 1.5,
+	dmgReceivedMult		= 1.3,
 
 	-- When a creature is fenzied it's movement rate is multiplied by x,
 	moveRateMult		= 1.5,
@@ -1064,7 +1073,7 @@ Stance =
 
 Diplomacy =
 {
-	-- Radius that guys will attack within when in Territorial Stance
+	-- Percentage of donation received by recipient.
 	scrapDonationInc	= 100.0,
 	electricityDonationInc	= 100.0,
 }
