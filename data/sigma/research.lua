@@ -149,7 +149,7 @@ research =
 		name          = 40263,
 		icon          = "ui/ingame/research11.tga",
 		cost          = 200,
-		costrenew     = 250,
+		costrenew     = 500,
 		researchticks = 320,
 		structure     = VetClinic_EC,
 	},

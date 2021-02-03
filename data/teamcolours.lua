@@ -21,7 +21,7 @@ teamcolours[4]  = {r=51,g=255,b=235}     --player  4 : cyan       /original
 teamcolours[5]  = {r=255,g=163,b=15}     --player  5 : orange     /original
 teamcolours[6]  = {r=168,g=0,b=255}      --player  6 : purple     /original
 teamcolours[7]  = {r=255,g=102,b=166}    --player  7 : pink       /mod
-teamcolours[8]  = {r=255,g=255,b=100}      --player  8 : yellow     /mod
+teamcolours[8]  = {r=255,g=255,b=0}      --player  8 : yellow     /mod
 teamcolours[9]  = {r=100,g=100,b=100}       --player  9 : charcoal   /mod
 
 -- the game won't crash up to here, from 11th and above it will...

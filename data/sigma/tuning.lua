@@ -7,11 +7,10 @@
 -- (c) 2001 Relic Entertainment Inc.
 -- 
 
---CHANGES in Tellurian 2.8 (as of 08/07/2020):
---
---CHANGES TO OTHER NON-ATTRCOMBINER TUNING LUAS:
---Anti-air damage per tick upgraded to 15 from 10.
-
+--CHANGES in Tellurian 2.6 (as of 29/04/2019):
+--Plague duration reduced (duration is now 15 seconds).
+--Attack ground error radius increased from 2 to 4.
+--Frenzy endurance cost per second increased from 7.5 to 8.5.
 
 -- * Global Tuning Values
 
@@ -94,7 +93,7 @@ Loner =
 
 	-- Artillery ranged bonus per creature size
 	-- This *is a multiplier*, e.g. a 50% bonus should be written as 1.5.
-	artilleryBonusBaseSize1		= 20.0,
+	artilleryBonusBaseSize1		= 1.0,
 	artilleryBonusBaseSize2		= 1.0,
 	artilleryBonusBaseSize3		= 1.0,
 	artilleryBonusBaseSize4		= 1.0,
@@ -178,11 +177,11 @@ Loner =
 	damageReductionModRank5		= 0.25,
 
 	-- Build speed modifier per creature rank (multiplies to base tick)
-	buildSpeedModRank1			= 2.0,
+	buildSpeedModRank1			= 4.0,
 	buildSpeedModRank2			= 2.0,
-	buildSpeedModRank3			= 2.0,
-	buildSpeedModRank4			= 2.0,
-	buildSpeedModRank5			= 2.0,
+	buildSpeedModRank3			= 3.0,
+	buildSpeedModRank4			= 4.0,
+	buildSpeedModRank5			= 4.0,
 	
 	-- Speed increase 
 	--This *is a multiplier*, e.g. a 50% bonus should be written as 1.5.
@@ -408,7 +407,7 @@ StinkCloud =
 	duration5				= 144.0,
 
 	-- damage radius = radiusOffset + creature size (in meters) * radiusScale
-	radiusOffset			= 13.0,
+	radiusOffset			= 16.0,
 	radiusScale				= 0.0,
 
 	-- 
@@ -421,7 +420,7 @@ StinkCloud =
 	descentSpeed			= 8.0,	-- descend 8m per second	
 
 	--
-	reducedVictimSpeedTo	= 0.7,  -- 70% of full speed
+	reducedVictimSpeedTo	= 0.5,  -- 50% of full speed
 }
 
 ---------------------------------------------------------------------
@@ -472,11 +471,11 @@ QuillBurst =
 
 	-- damage per tick
 	-- new damage is this * duration (see above)
-	dmgPerTick1				= 3,
-	dmgPerTick2				= 5,
-	dmgPerTick3				= 10,
-	dmgPerTick4				= 15,
-	dmgPerTick5				= 20.0,
+	dmgPerTick1				= 1.5,
+	dmgPerTick2				= 2.5,
+	dmgPerTick3				= 5.0,
+	dmgPerTick4				= 7.5,
+	dmgPerTick5				= 10.0,
 
 	-- not used
 	dmgToBuilding			= 0
@@ -746,7 +745,7 @@ AttackBonus =
 	artilleryBuildingMult			= 1.0,
 
 	-- multiplier of damage applied to a flyer when it is attacked by a non-flyer unit using a direct ranged attack
-	nonFlyerToFlyerDirectRangeDamageMult	= 1.25,
+	nonFlyerToFlyerDirectRangeDamageMult	= 1.3,
 
 	-- fraction of a flyer's defense to remove when it is attacked by a non-flyer unit using a direct ranged attack
 	nonFlyerToFlyerDirectRangeDefenseMult	= 0.0,
@@ -764,7 +763,7 @@ AttackBonus =
 SonicAttack =
 {
 	-- angle of the cone - should match up with effect
-	cone_angle		= 15,
+	cone_angle		= 18,
 	
 	-- duration of effect in seconds
 	duration		= 32,
@@ -773,13 +772,13 @@ SonicAttack =
 	speedReduction  = 0.05,
 
 	-- how much percent of your speed can be reduced to
-	speedMinPercentage = 0.3,
+	speedMinPercentage = 0.5,
 	
 	-- reduction per hit for loner unit
-	speedReductionForLoner  = 0.1,
+	speedReductionForLoner  = 0.5,
 
 	-- how much percent of loner's speed can be reduced to
-	speedMinPercentageForLoner = 0.1,
+	speedMinPercentageForLoner = 0.5,
 	
 	-- damage multiplier for loner unit (1.0 is par value)
 	dmgMultiplierForLoner = 2.0,
@@ -862,7 +861,7 @@ LeapInfo =
 
 	-- how many seconds of damage a leap attack does.  
 	--	Used to determine the damage of a leap attack by multiplying the attackers damagePerSecond
-	secondsOfDamage		= 1.0
+	secondsOfDamage		= 2.0
 }
 
 ---------------------------------------------------------------------
@@ -920,7 +919,7 @@ Frenzy =
 	dmgIssuedMult		= 1.5,
 
 	-- Damage received multiplier, i.e. I take normal damage times x, when frenzied
-	dmgReceivedMult		= 1.3,
+	dmgReceivedMult		= 1.5,
 
 	-- When a creature is fenzied it's movement rate is multiplied by x,
 	moveRateMult		= 1.5,
@@ -1065,7 +1064,7 @@ Stance =
 
 Diplomacy =
 {
-	-- Percentage of donation received by recipient.
+	-- Radius that guys will attack within when in Territorial Stance
 	scrapDonationInc	= 100.0,
 	electricityDonationInc	= 100.0,
 }
@@ -1311,7 +1310,7 @@ Jumping =
 	enduranceCost		= 75,
 	
 	-- Maximum jump distance 
-	maxDistance			= 150.0,
+	maxDistance			= 200.0,
 		
 	-- Speed while jumping, in meters per tick
 	speed				= 0.5,

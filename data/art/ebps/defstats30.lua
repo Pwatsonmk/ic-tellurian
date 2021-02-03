@@ -7,7 +7,7 @@ dofilepath("data:art/ebps/defbuilding.lua")
 ext = gameattributes;
 
 -- healthextinfo
-ext.hitpoints = 2000
+ext.hitpoints = 1000
 
 -- costextinfo
 ext.cost = 200
