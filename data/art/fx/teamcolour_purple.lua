@@ -3,7 +3,7 @@ properties = {
 property_16 = {
 name = [[Mesh]],
 type = [[VARTYPE_STRING]],
-value = [[DATA:ART/FX/TEAM COLOUR/OBJECTS/TC_VER1_PURPLE.SGM]],
+value = [[DATA:ART/FX/TEAM_COLOUR/PURPLE.SGM]],
 },
 property_15 = {
 name = [[Texture]],

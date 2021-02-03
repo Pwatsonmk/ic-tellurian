@@ -32,6 +32,7 @@ stock = {
 	"OOGPISTER",
 	"OSTRICH",
 	"GIANT_PACIFIC_OCTOPUS",
+	"GAZELLE",
 
 -- ICXP ANIMALS
 --	"KONG", 

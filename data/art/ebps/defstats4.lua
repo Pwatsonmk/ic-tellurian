@@ -37,8 +37,8 @@ building = 1,
 ghost_enable = 1,
 minimap_enable = 1,
 minimap_teamcolour = 0,
-minimap_colour_r = 255,
-minimap_colour_g = 255,
-minimap_colour_b = 0,
+minimap_colour_r = 185,
+minimap_colour_g = 185,
+minimap_colour_b = 85,
 
 }

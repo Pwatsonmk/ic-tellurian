@@ -7,18 +7,10 @@
 -- (c) 2001 Relic Entertainment Inc.
 -- 
 
---CHANGES in Tellurian 2.7 (as of 29/05/2020):
---Stink slowdown reduced to 30% from 50%.
---Stink radius offset reduced to 13m from 16m.
---Frenzy damage taken reduced to 1.3x from 1.5x.
---Leap damage time reduced to 1s from 2s.
---Quill burst damage doubled at all levels.
---Range unit bonus damage against fliers increased to 1.25x from 1.2x.
+--CHANGES in Tellurian 2.8 (as of 08/07/2020):
 --
 --CHANGES TO OTHER NON-ATTRCOMBINER TUNING LUAS:
---Artillery projectile speeds increased to 35 from 25.
---Fence cap added; you can now build a limit of 100 fences.
---Creaturescalinginfo.lua modified to REMOVE SUBTILE UNITS.
+--Anti-air damage per tick upgraded to 15 from 10.
 
 
 -- * Global Tuning Values
@@ -186,11 +178,11 @@ Loner =
 	damageReductionModRank5		= 0.25,
 
 	-- Build speed modifier per creature rank (multiplies to base tick)
-	buildSpeedModRank1			= 4.0,
+	buildSpeedModRank1			= 2.0,
 	buildSpeedModRank2			= 2.0,
-	buildSpeedModRank3			= 3.0,
-	buildSpeedModRank4			= 4.0,
-	buildSpeedModRank5			= 4.0,
+	buildSpeedModRank3			= 2.0,
+	buildSpeedModRank4			= 2.0,
+	buildSpeedModRank5			= 2.0,
 	
 	-- Speed increase 
 	--This *is a multiplier*, e.g. a 50% bonus should be written as 1.5.
@@ -1319,7 +1311,7 @@ Jumping =
 	enduranceCost		= 75,
 	
 	-- Maximum jump distance 
-	maxDistance			= 200.0,
+	maxDistance			= 150.0,
 		
 	-- Speed while jumping, in meters per tick
 	speed				= 0.5,

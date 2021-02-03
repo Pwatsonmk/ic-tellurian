@@ -1,4 +1,4 @@
--- Rattlesnake
+-- Snail
 limbattributes = {
 isFromExcel = {1,1.0},
 ["endurance_bonus"]={1,0},
@@ -41,7 +41,6 @@ isFromExcel = {1,1.0},
 ["melee4_longdesc"]={4,36506},
 ["melee_damage"]={1,2.4},
 ["exp_melee4_damage"]={1,0.55},
-["slow"]={6,1},
 ["stink_attack"]={5,0},
 ["electric_burst"]={5,0},
 ["charge_attack"]={3,0},

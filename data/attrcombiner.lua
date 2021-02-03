@@ -1,16 +1,13 @@
 --Tellurian Attrcombiner (5/1/2019)
 
---Changelog for Tel 2.7
---Power is different for differnt types of ranged attacks dependent on range distance (using damager)
---Double range is no longer charged; unit is charged for its most powerful attack, at shortest range,
---for most expensive damagetype.
---Added ranged piercing ability for porcupine.
---Power used to calculate certain ability pricing. Abilities affected:
---Herding, Pack, Barrier Destroy, Horns, Camouflage, Ranged Piercing, Digging
---Extensive code changes to support this.
---Poplow cost fixed so that units with 150-299 power are not charged.
---Leap attack cost lowered by 5 elec since leap time got nerfed in tuning.lua
---Pure swimmer cost lowered.
+--Changelog for Tel 2.8
+--Costs for deflect modified to penalize high power units less.
+--Special case for flying deflect added to keep them expensive.
+--Speed is now slightly more expensive.
+--Cost exponent at levels 1, 2 and 3 changed to 1, to decrease spam cost. Base level costs adjusted accordingly.
+
+--Non-Attrcombiner Changes:
+--AA towers now have 30 sight radius and do 12.5 damage per tick for 4 ticks (up from 10).
 
 --Let's go!
 
@@ -196,14 +193,6 @@ AttackTypes =
 	damager,
 	damage
 };
-	
-
---Makes anglerflash free so ya don't get double charged!! wahey!!
-if (getgameattribute("headflashdisplay") == 1) then
-	flCost = 0.0;
-	else
-	flCost = 1.0;                          
-end
 
 --Overpop buildtime multiplier
 if (getgameattribute("overpopulation") == 1) then
@@ -298,7 +287,7 @@ rank5pow = 400;
 
 power = Power(damage, hitpoints, armour);
 
-speedCost = ((speed/22)^0.28);
+speedCost = ((speed/22)^0.35);
 
 sightCost = sight_radius1*0.4;
 
@@ -535,7 +524,6 @@ AbilityData =
 	{ ABT_Ability, 	"is_stealthy", 		0, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"stink_attack", 	0, 	50, 0, 	5 },
 	{ ABT_Ability, 	"stink",			0, 	50, 0, 	5 },
-	{ ABT_Ability, 	"flash", 			0, 	0, 	0, 	0 },
 	{ ABT_Ability, 	"end_bonus", 		0, 	10, 0,	0 },
  	{ ABT_Ability, 	"speed_boost", 		0, 	0, 	0, 	0 },
  	{ ABT_Ability, 	"overpopulation", 	2, 	0, 	0, 	0 },	--special
@@ -548,7 +536,7 @@ AbilityData =
 	{ ABT_Ability, 	"plague_attack", 	1, 	50, 0, 	5 },
 	{ ABT_Ability, 	"AutoDefense", 		1, 	15, 0, 	5 },
 	{ ABT_Ability, 	"assassinate", 		1, 	10, 10,	20 },
-	{ ABT_Ability, 	"can_SRF", 			1, 	15, 0, 	10 },
+	{ ABT_Ability, 	"can_SRF", 		2, 	25, 0, 	5 },
 	{ ABT_Ability, 	"quill_burst", 		2, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"leap_attack", 		2, 	10, 0, 	5 },
 	{ ABT_Ability, 	"is_swimmer", 		2, 	0, 	0,	0 },
@@ -575,7 +563,7 @@ AbilityData =
 
 	{ ABT_Melee, 	DT_BarrierDestroy, 	0, 	0, 	0, 	0},     --special
 	{ ABT_Melee, 	DT_HornNegateFull, 	2, 	30, 0, 	10 },
-	{ ABT_Melee, 	DT_HornNegateArmour,3, 	0, 	0, 	0 },	--special
+	{ ABT_Melee, 	DT_HornNegateArmour,2, 	0, 	0, 	0 },	--special
 	{ ABT_Melee, 	DT_Poison, 			3, 	0, 	0, 	0 },	--special
 };
 
@@ -656,7 +644,7 @@ if (CreatureRank == 1) then
 	CostGather = 60; 
 	elseif (CreatureRank == 2) then
 		max_power = rank3pow;
-		CostGather = 110;
+		CostGather = 100;
 		elseif (CreatureRank == 3) then
 		    max_power = rank4pow;
 		    CostGather = 170;
@@ -698,10 +686,21 @@ if (((getgameattribute("poplow") == 1) or (getgameattribute("poplowtorso") == 1)
 	CostRenew = CostRenew + ((power-popdivide)/popdivide*20);
 end
 
+-- Deflect cost; the 0.88 here is a rank efficiency number. We may expand the attrcombiner
+-- to use this number in more places in the future, in which case I'll declare it as a variable.
 if getgameattribute("deflection_armour") == 1 then
-	CostRenew = CostRenew+((hitpoints/(1-armour))/5.5);
+
+	-- I've elected to set up a special case for flying deflect, because range does bonus damage for fliers (and therefore deflect
+	-- does extra damage on the rebound hit). 
+	if getgameattribute("is_flyer") == 1 then
+		CostRenew = CostRenew + ((hitpoints/(1-armour))/3.8)*(0.88^(CreatureRank-3)) ;
+	else
+		CostRenew = CostRenew + ((hitpoints/(1-armour))/5.5)*(0.88^(CreatureRank-3)) ;
+end
+	
 end
 
+-- Overpopulation cost
 if getgameattribute("overpopulation") == 1 then
 	CostRenew = CostRenew+(power/5);
 end
@@ -727,9 +726,9 @@ build_time = (30 * CreatureRank)*((power*1.2/max_power)^1.2)*popMult;
 -- Let's build a table of exponents to allow us to control cost curve per level:
 CostExpo =
 {
-	0.8, -- Level 1 cost exponent
-	0.8, -- Level 2 cost exponent
-	0.8, -- Level 3 cost exponent
+	1, -- Level 1 cost exponent
+	1, -- Level 2 cost exponent
+	1, -- Level 3 cost exponent
 	0.8, -- Level 4 cost exponent
 	0.7, -- Level 5 cost exponent
 }
