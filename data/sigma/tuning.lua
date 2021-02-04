@@ -7,10 +7,11 @@
 -- (c) 2001 Relic Entertainment Inc.
 -- 
 
---CHANGES in Tellurian 2.6 (as of 29/04/2019):
---Plague duration reduced (duration is now 15 seconds).
---Attack ground error radius increased from 2 to 4.
---Frenzy endurance cost per second increased from 7.5 to 8.5.
+--CHANGES in Tellurian 2.8 (as of 08/07/2020):
+--
+--CHANGES TO OTHER NON-ATTRCOMBINER TUNING LUAS:
+--Anti-air damage per tick upgraded to 15 from 10.
+
 
 -- * Global Tuning Values
 
@@ -144,7 +145,7 @@ Loner =
 	meleeBonusBaseSize7		= 1.0,
 	meleeBonusBaseSize8		= 1.0,
 	meleeBonusBaseSize9		= 1.0,
-	meleeBonusBaseSize10		= 1.0,
+	meleeBonusBaseSize10	= 1.0,
 
 	-- Melee bonus modifier per creature rank (+/-)
 	-- This is a modifier to the above base percentage.
@@ -177,11 +178,11 @@ Loner =
 	damageReductionModRank5		= 0.25,
 
 	-- Build speed modifier per creature rank (multiplies to base tick)
-	buildSpeedModRank1			= 4.0,
+	buildSpeedModRank1			= 2.0,
 	buildSpeedModRank2			= 2.0,
-	buildSpeedModRank3			= 3.0,
-	buildSpeedModRank4			= 4.0,
-	buildSpeedModRank5			= 4.0,
+	buildSpeedModRank3			= 2.0,
+	buildSpeedModRank4			= 2.0,
+	buildSpeedModRank5			= 2.0,
 	
 	-- Speed increase 
 	--This *is a multiplier*, e.g. a 50% bonus should be written as 1.5.
@@ -407,7 +408,7 @@ StinkCloud =
 	duration5				= 144.0,
 
 	-- damage radius = radiusOffset + creature size (in meters) * radiusScale
-	radiusOffset			= 16.0,
+	radiusOffset			= 13.0,
 	radiusScale				= 0.0,
 
 	-- 
@@ -420,7 +421,7 @@ StinkCloud =
 	descentSpeed			= 8.0,	-- descend 8m per second	
 
 	--
-	reducedVictimSpeedTo	= 0.5,  -- 50% of full speed
+	reducedVictimSpeedTo	= 0.7,  -- 70% of full speed
 }
 
 ---------------------------------------------------------------------
@@ -471,11 +472,11 @@ QuillBurst =
 
 	-- damage per tick
 	-- new damage is this * duration (see above)
-	dmgPerTick1				= 1.5,
-	dmgPerTick2				= 2.5,
-	dmgPerTick3				= 5.0,
-	dmgPerTick4				= 7.5,
-	dmgPerTick5				= 10.0,
+	dmgPerTick1				= 3,
+	dmgPerTick2				= 5,
+	dmgPerTick3				= 10,
+	dmgPerTick4				= 15,
+	dmgPerTick5				= 20.0,
 
 	-- not used
 	dmgToBuilding			= 0
@@ -745,7 +746,7 @@ AttackBonus =
 	artilleryBuildingMult			= 1.0,
 
 	-- multiplier of damage applied to a flyer when it is attacked by a non-flyer unit using a direct ranged attack
-	nonFlyerToFlyerDirectRangeDamageMult	= 1.3,
+	nonFlyerToFlyerDirectRangeDamageMult	= 1.25,
 
 	-- fraction of a flyer's defense to remove when it is attacked by a non-flyer unit using a direct ranged attack
 	nonFlyerToFlyerDirectRangeDefenseMult	= 0.0,
@@ -861,7 +862,7 @@ LeapInfo =
 
 	-- how many seconds of damage a leap attack does.  
 	--	Used to determine the damage of a leap attack by multiplying the attackers damagePerSecond
-	secondsOfDamage		= 2.0
+	secondsOfDamage		= 1.0
 }
 
 ---------------------------------------------------------------------
@@ -919,7 +920,7 @@ Frenzy =
 	dmgIssuedMult		= 1.5,
 
 	-- Damage received multiplier, i.e. I take normal damage times x, when frenzied
-	dmgReceivedMult		= 1.5,
+	dmgReceivedMult		= 1.3,
 
 	-- When a creature is fenzied it's movement rate is multiplied by x,
 	moveRateMult		= 1.5,
@@ -1064,7 +1065,7 @@ Stance =
 
 Diplomacy =
 {
-	-- Radius that guys will attack within when in Territorial Stance
+	-- Percentage of donation received by recipient.
 	scrapDonationInc	= 100.0,
 	electricityDonationInc	= 100.0,
 }
@@ -1310,7 +1311,7 @@ Jumping =
 	enduranceCost		= 75,
 	
 	-- Maximum jump distance 
-	maxDistance			= 200.0,
+	maxDistance			= 150.0,
 		
 	-- Speed while jumping, in meters per tick
 	speed				= 0.5,

@@ -1,8 +1,13 @@
 --Tellurian Attrcombiner (5/1/2019)
 
---Changelog for Post-2.8 Public Beta
---Plague base cost reduced (to 15 from 50), cost per level up (to 15 from 5)
---Damager divisor for non-sonic range reduced to 25 from 28.
+--Changelog for Tel 2.8
+--Costs for deflect modified to penalize high power units less.
+--Special case for flying deflect added to keep them expensive.
+--Speed is now slightly more expensive.
+--Cost exponent at levels 1, 2 and 3 changed to 1, to decrease spam cost. Base level costs adjusted accordingly.
+
+--Non-Attrcombiner Changes:
+--AA towers now have 30 sight radius and do 12.5 damage per tick for 4 ticks (up from 10).
 
 --Let's go!
 
@@ -33,6 +38,18 @@ popdivide = 150;
 speed_max 	= getgameattribute( "speed_max" );
 airspeed_max 	= getgameattribute( "airspeed_max" );
 waterspeed_max 	= getgameattribute( "waterspeed_max" );
+
+---- We raise the speed if it's below min caps.
+
+if (speed_max < 15) then
+	speed_max = 15;
+end
+	
+if (waterspeed_max > 0 and waterspeed_max < 12) then
+	waterspeed_max = 12;
+end
+
+---- Now we calculate effective speed.
 
 if (getgameattribute("is_flyer") == 1) then
 	speed = airspeed_max*1.3;
@@ -68,8 +85,6 @@ damage3 	= getgameattribute( "range3_damage" );
 damage4 	= getgameattribute( "range4_damage" );
 damage5 	= getgameattribute( "range5_damage" );
 damage8 	= getgameattribute( "range8_damage" );
-
-RangeCostMult 	= 1.0;
 
 --Initialize damager
 damager = 0;
@@ -178,14 +193,6 @@ AttackTypes =
 	damager,
 	damage
 };
-	
-
---Makes anglerflash free so ya don't get double charged!! wahey!!
-if (getgameattribute("headflashdisplay") == 1) then
-	flCost = 0.0;
-	else
-	flCost = 1.0;                          
-end
 
 --Overpop buildtime multiplier
 if (getgameattribute("overpopulation") == 1) then
@@ -280,7 +287,7 @@ rank5pow = 400;
 
 power = Power(damage, hitpoints, armour);
 
-speedCost = ((speed/22)^0.28);
+speedCost = ((speed/22)^0.35);
 
 sightCost = sight_radius1*0.4;
 
@@ -318,7 +325,8 @@ AttributeData =
 	{ "speed_max", 1, 15, nil, {15.0, 21.0, 26.0, 31.0}, "landspeed", 1 },
 	{ "waterspeed_max", 1, 12, nil, {12.0, 20.0, 25.0, 30.0}, "waterspeed", 1 },
 	{ "airspeed_max", 1, 16, nil, {16.0, 20.0, 24.0, 28.0}, "airspeed", 1 },
-	{ "powerdisplay", nil, nil, nil, {rank2pow, rank3pow, rank4pow, rank5pow}, "sightradius", 1 },
+	{ "sight_radius1", nil, nil, nil, {20.0, 30.0, 35.0, 45.0}, "sightradius", 1 },
+	--{ "powerdisplay", nil, nil, nil, {rank2pow, rank3pow, rank4pow, rank5pow}, "sightradius", 1 },
 	{ "size", nil, 1, nil, {0, 3, 6, 9}, "size", 1},
 
 	{ "melee_damage", 1, 0, nil, {1.0, 10.0, 17.0, 26.0}, "damage", 1 },
@@ -516,7 +524,6 @@ AbilityData =
 	{ ABT_Ability, 	"is_stealthy", 		0, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"stink_attack", 	0, 	50, 0, 	5 },
 	{ ABT_Ability, 	"stink",			0, 	50, 0, 	5 },
-	{ ABT_Ability, 	"flash", 			0, 	0, 	0, 	0 },
 	{ ABT_Ability, 	"end_bonus", 		0, 	10, 0,	0 },
  	{ ABT_Ability, 	"speed_boost", 		0, 	0, 	0, 	0 },
  	{ ABT_Ability, 	"overpopulation", 	2, 	0, 	0, 	0 },	--special
@@ -529,7 +536,7 @@ AbilityData =
 	{ ABT_Ability, 	"plague_attack", 	1, 	20, 0, 	15 },
 	{ ABT_Ability, 	"AutoDefense", 		1, 	15, 0, 	5 },
 	{ ABT_Ability, 	"assassinate", 		1, 	10, 10,	20 },
-	{ ABT_Ability, 	"can_SRF", 			1, 	15, 0, 	10 },
+	{ ABT_Ability, 	"can_SRF", 			2, 	25, 0, 	5 },
 	{ ABT_Ability, 	"quill_burst", 		2, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"leap_attack", 		2, 	10, 0, 	5 },
 	{ ABT_Ability, 	"is_swimmer", 		2, 	0, 	0,	0 },
@@ -546,6 +553,8 @@ AbilityData =
 	{ ABT_Ability, 	"loner", 			2, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"soiled_land", 		3, 	50, 0, 	0 },
 	{ ABT_Ability, 	"ranged_piercing", 	2, 	0, 	0, 	0 }, --special
+	{ ABT_Ability, 	"flash", 			0, 	35, 0, 	5 },
+	{ ABT_Ability, 	"headflashdisplay", 0, 	35, 0, 	5 },
 
 	{ ABT_Range, 	DT_Electric, 		2, 	0, 	0,	0 },
 	{ ABT_Range, 	DT_Poison, 			3, 	0, 	0,	0 },
@@ -554,7 +563,7 @@ AbilityData =
 
 	{ ABT_Melee, 	DT_BarrierDestroy, 	0, 	0, 	0, 	0},     --special
 	{ ABT_Melee, 	DT_HornNegateFull, 	2, 	30, 0, 	10 },
-	{ ABT_Melee, 	DT_HornNegateArmour,3, 	0, 	0, 	0 },	--special
+	{ ABT_Melee, 	DT_HornNegateArmour,2, 	0, 	0, 	0 },	--special
 	{ ABT_Melee, 	DT_Poison, 			3, 	0, 	0, 	0 },	--special
 };
 
@@ -635,7 +644,7 @@ if (CreatureRank == 1) then
 	CostGather = 60; 
 	elseif (CreatureRank == 2) then
 		max_power = rank3pow;
-		CostGather = 110;
+		CostGather = 100;
 		elseif (CreatureRank == 3) then
 		    max_power = rank4pow;
 		    CostGather = 170;
@@ -677,18 +686,21 @@ if (((getgameattribute("poplow") == 1) or (getgameattribute("poplowtorso") == 1)
 	CostRenew = CostRenew + ((power-popdivide)/popdivide*20);
 end
 
-if getgameattribute("flash") == 1 then
-	CostRenew = CostRenew + (50+(10*CreatureRank))*flCost;
-end
-
-if getgameattribute("headflashdisplay") == 1 then
-	CostRenew = CostRenew + (50+(10*CreatureRank));
-end
-
+-- Deflect cost; the 0.88 here is a rank efficiency number. We may expand the attrcombiner
+-- to use this number in more places in the future, in which case I'll declare it as a variable.
 if getgameattribute("deflection_armour") == 1 then
-	CostRenew = CostRenew+((hitpoints/(1-armour))/5.5);
+
+	-- I've elected to set up a special case for flying deflect, because range does bonus damage for fliers (and therefore deflect
+	-- does extra damage on the rebound hit). 
+	if getgameattribute("is_flyer") == 1 then
+		CostRenew = CostRenew + ((hitpoints/(1-armour))/3.8)*(0.88^(CreatureRank-3)) ;
+	else
+		CostRenew = CostRenew + ((hitpoints/(1-armour))/5.5)*(0.88^(CreatureRank-3)) ;
+end
+	
 end
 
+-- Overpopulation cost
 if getgameattribute("overpopulation") == 1 then
 	CostRenew = CostRenew+(power/5);
 end
@@ -714,14 +726,14 @@ build_time = (30 * CreatureRank)*((power*1.2/max_power)^1.2)*popMult;
 -- Let's build a table of exponents to allow us to control cost curve per level:
 CostExpo =
 {
-	0.8, -- Level 1 cost exponent
-	0.8, -- Level 2 cost exponent
-	0.8, -- Level 3 cost exponent
+	1, -- Level 1 cost exponent
+	1, -- Level 2 cost exponent
+	1, -- Level 3 cost exponent
 	0.8, -- Level 4 cost exponent
 	0.7, -- Level 5 cost exponent
 }
 	
-CostGather = (CostGather)*speedCost*((power*1.3/max_power)^(CostExpo[CreatureRank]))*RangeCostMult*1.1+(2/CreatureRank)*1.25;
+CostGather = (CostGather)*speedCost*((power*1.3/max_power)^(CostExpo[CreatureRank]))*1.1;
 CostRenew = CostRenew*((power*1.3/max_power)^(CostExpo[CreatureRank]));
 
 
