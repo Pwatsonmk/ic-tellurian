@@ -1,13 +1,8 @@
---Tellurian Attrcombiner (5/1/2019)
+--Tellurian Attrcombiner (7/3/2019)
 
---Changelog for Tel 2.8
---Costs for deflect modified to penalize high power units less.
---Special case for flying deflect added to keep them expensive.
---Speed is now slightly more expensive.
---Cost exponent at levels 1, 2 and 3 changed to 1, to decrease spam cost. Base level costs adjusted accordingly.
-
---Non-Attrcombiner Changes:
---AA towers now have 30 sight radius and do 12.5 damage per tick for 4 ticks (up from 10).
+--Changelog for Tel 2.9.1
+--Artillery now pays more in electricity for longer range.
+--Perforate and overpopulation now min level 1.
 
 --Let's go!
 
@@ -30,9 +25,6 @@ MinRank = 0;
 herdCost = 0;
 popdivide = 150;
 
------------------
---uncapped vars--
------------------
 ---- Let's start by determining effective speed.
 
 speed_max 	= getgameattribute( "speed_max" );
@@ -49,22 +41,17 @@ if (waterspeed_max > 0 and waterspeed_max < 12) then
 	waterspeed_max = 12;
 end
 
----- Now we calculate effective speed.
+-- Let's initialize speed here. Default it to speed_max.
+speed = speed_max;
+
+---- Now we calculate effective speed. Note: only having landspeed is the default case (speed = speed_max).
 
 if (getgameattribute("is_flyer") == 1) then
-	speed = airspeed_max*1.3;
-end
-
-if (getgameattribute("is_swimmer") == 1 and getgameattribute("is_land") == 1) then
+	speed = airspeed_max*1.5;	
+elseif (getgameattribute("is_swimmer") == 1 and getgameattribute("is_land") == 1) then
 	speed = ((waterspeed_max^2)/(36+(speed_max*4))) + speed_max;
-end
-
-if (getgameattribute("is_swimmer") == 1 and getgameattribute("is_land") == 0) then
+elseif (getgameattribute("is_swimmer") == 1 and getgameattribute("is_land") == 0) then
 	speed = waterspeed_max*0.4;
-end
-
-if (getgameattribute("is_swimmer") == 0 and getgameattribute("is_land") == 1) then
-	speed = speed_max;
 end
 
 ---- End of speed section.
@@ -86,6 +73,48 @@ damage4 	= getgameattribute( "range4_damage" );
 damage5 	= getgameattribute( "range5_damage" );
 damage8 	= getgameattribute( "range8_damage" );
 
+---------------------------------------------------------
+---capped vars: ties certain variables down to a range---
+---------------------------------------------------------
+
+--Minimum SR of 20 and max of 50
+setgameattribute("sight_radius1", max(getgameattribute("sight_radius1"), 20));
+
+if getgameattribute("sight_radius1") > 50 then
+    setgameattribute("sight_radius1", 50);
+end
+
+maxArmour = 0.60;
+
+sight_radius1 = getgameattribute("sight_radius1" );
+armour = min(getgameattribute( "armour" ), maxArmour);
+
+setgameattribute("armour", armour);
+
+--Tie down flier range
+if ( getgameattribute("is_flyer") == 1 ) then		
+	if (getgameattribute("range2_max") > 24) then
+		setgameattribute("range2_max",24);
+	end
+	if (getgameattribute("range4_max") > 24) then
+		setgameattribute("range4_max",24);
+	end	
+	if (getgameattribute("range5_max") > 24) then
+		setgameattribute("range5_max",24);
+	end
+	if (getgameattribute("range8_max") > 24) then
+		setgameattribute("range8_max",24);
+	end
+	if (getgameattribute("range3_max") > 24) then
+		setgameattribute("range3_max",24);
+	end
+	range_max = min(range_max, 24);	
+end
+
+---------------------------------------------------------
+--------------------end capped vars----------------------
+---------------------------------------------------------
+
 --Initialize damager
 damager = 0;
 minRangeDist = 1000;
@@ -94,6 +123,9 @@ minRangeDist = 1000;
 has_direct = nil;
 has_artillery = nil;
 has_sonic = nil;
+
+-- This last field denotes if the unit has direct OR sonic. Used to add a cost multiplier for range.
+rCostMult = 1;
 
 --Ranged Costs and MinRank
 -- used to determine whether the range type is splash damage
@@ -135,9 +167,11 @@ for index, part in BodyPartsThatCanHaveRange do
 		
 		if ( range_artillerytype( part ) == 0 ) then
 			if ( part_dtype == 16 ) then --sonic attack identified
-				has_sonic = 1;								
+				has_sonic = 1;	
+				rCostMult = 1.1;			
 			else --directranged, non-sonic
-				has_direct = 1;					
+				has_direct = 1;		
+				rCostMult = 1.1;						
 			end
 			
 		else --artillery
@@ -146,28 +180,29 @@ for index, part in BodyPartsThatCanHaveRange do
 	end
 end
 
-
 -- Now we sort out power and costs on ranged attacks. The following code also
 -- determines how to charge multiple ranged attacks.
 -- NOTE: It is possible, using this method, that combining ranged attacks could
 -- result in unintended cost discounts for very exotic art/range combos.
  if ( damager > 0 ) then
-	 -- Ask if one of the range attacks is sonic.
-	 if ( has_sonic == 1 ) then
-		 damager = damager*(1+(minRangeDist/20));
-		 CostRenew = CostRenew + (damager * 3);
+	-- Ask if one of the range attacks is sonic.
+	if ( has_sonic == 1 ) then
+		damager = damager*(1+(minRangeDist/20));
+		CostRenew = CostRenew + (damager * 3);
 		
-	 else -- Ask if one of the range attacks is not artillery.
-		 if ( has_direct == 1 ) then
-			 damager = damager*(1+(minRangeDist/28));
-			 CostRenew = CostRenew + (damager * 1.5);
+	else -- Ask if one of the range attacks is not artillery.
+		if ( has_direct == 1 ) then
+			damager = damager*(1+(minRangeDist/25));
+			CostRenew = CostRenew + (damager * 1.5);
 			
-		 else -- Then we've got only an artillery attack.
-			 damager = damager*1.1*(1+(minRangeDist/35));
-			 CostRenew = CostRenew + (damager * 1.7);
-			
-		 end
-	 end
+		else -- Then we've got only an artillery attack.
+			-- Now artillery is a bit funny; we want to set and use damager to scale final costs,
+			-- but we also want to add an extra elec cost for range distance (as it can get so high).
+			-- So essentially we'll take damager as damage for elec cost and then change it for later scaling.
+			CostRenew = CostRenew + damager*2.2*(1+((minRangeDist^2.6)/10000));
+			damager = damager*1.1*(1+(minRangeDist/35));
+		end
+	end	 
  end
 
 if damager > damagem then
@@ -199,44 +234,6 @@ if (getgameattribute("overpopulation") == 1) then
 	popMult = 0.5;
 	else
 	popMult = 1.0;
-end
-
------------------
----capped vars---
------------------
-
---Minimum SR of 20 and max of 50
-setgameattribute("sight_radius1", max(getgameattribute("sight_radius1"), 20));
-
-if getgameattribute("sight_radius1") > 50 then
-    setgameattribute("sight_radius1", 50);
-end
-
-maxArmour = 0.60;
-
-sight_radius1 = getgameattribute("sight_radius1" );
-armour = min(getgameattribute( "armour" ), maxArmour);
-
-setgameattribute("armour", armour);
-
---Tie down flier range
-if ( getgameattribute("is_flyer") == 1 ) then		
-	if (getgameattribute("range2_max") > 24) then
-		setgameattribute("range2_max",24);
-	end
-	if (getgameattribute("range4_max") > 24) then
-		setgameattribute("range4_max",24);
-	end	
-	if (getgameattribute("range5_max") > 24) then
-		setgameattribute("range5_max",24);
-	end
-	if (getgameattribute("range8_max") > 24) then
-		setgameattribute("range8_max",24);
-	end
-	if (getgameattribute("range3_max") > 24) then
-		setgameattribute("range3_max",24);
-	end
-	range_max = min(range_max, 24);	
 end
 
 -----------------
@@ -286,6 +283,9 @@ rank4pow = 230;
 rank5pow = 400;
 
 power = Power(damage, hitpoints, armour);
+
+--costPower equation (power with a 10% rebate for defense, used for calculating costs).
+costPower = (((hitpoints/(1-(armour*0.9)))^(0.608))*((0.22*damage) + 2.8));
 
 speedCost = ((speed/22)^0.35);
 
@@ -526,17 +526,17 @@ AbilityData =
 	{ ABT_Ability, 	"stink",			0, 	50, 0, 	5 },
 	{ ABT_Ability, 	"end_bonus", 		0, 	10, 0,	0 },
  	{ ABT_Ability, 	"speed_boost", 		0, 	0, 	0, 	0 },
- 	{ ABT_Ability, 	"overpopulation", 	2, 	0, 	0, 	0 },	--special
+ 	{ ABT_Ability, 	"overpopulation", 	1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"poplow", 			1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"poplowtorso", 		1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"herding", 			1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"pack_hunter", 		1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"regeneration", 	1, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"frenzy_attack", 	1, 	0, 	0, 	0 },	--special
-	{ ABT_Ability, 	"plague_attack", 	1, 	50, 0, 	5 },
+	{ ABT_Ability, 	"plague_attack", 	1, 	20, 0, 	15 },
 	{ ABT_Ability, 	"AutoDefense", 		1, 	15, 0, 	5 },
 	{ ABT_Ability, 	"assassinate", 		1, 	10, 10,	20 },
-	{ ABT_Ability, 	"can_SRF", 		2, 	25, 0, 	5 },
+	{ ABT_Ability, 	"can_SRF", 			2, 	25, 0, 	5 },
 	{ ABT_Ability, 	"quill_burst", 		2, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"leap_attack", 		2, 	10, 0, 	5 },
 	{ ABT_Ability, 	"is_swimmer", 		2, 	0, 	0,	0 },
@@ -552,7 +552,7 @@ AbilityData =
 	{ ABT_Ability, 	"poison_pincers", 	3, 	0, 	0, 	0 },	--accounted for in damagetype
 	{ ABT_Ability, 	"loner", 			2, 	0, 	0, 	0 },	--special
 	{ ABT_Ability, 	"soiled_land", 		3, 	50, 0, 	0 },
-	{ ABT_Ability, 	"ranged_piercing", 	2, 	0, 	0, 	0 }, --special
+	{ ABT_Ability, 	"ranged_piercing", 	1, 	0, 	0, 	0 }, --special
 	{ ABT_Ability, 	"flash", 			0, 	35, 0, 	5 },
 	{ ABT_Ability, 	"headflashdisplay", 0, 	35, 0, 	5 },
 
@@ -733,8 +733,8 @@ CostExpo =
 	0.7, -- Level 5 cost exponent
 }
 	
-CostGather = (CostGather)*speedCost*((power*1.3/max_power)^(CostExpo[CreatureRank]))*1.1;
-CostRenew = CostRenew*((power*1.3/max_power)^(CostExpo[CreatureRank]));
+CostGather = (CostGather)*speedCost*((costPower*1.3/max_power)^(CostExpo[CreatureRank]))*1.1*rCostMult;
+CostRenew = CostRenew*((costPower*1.3/max_power)^(CostExpo[CreatureRank]));
 
 
 if getgameattribute("overpopulation") == 0 then

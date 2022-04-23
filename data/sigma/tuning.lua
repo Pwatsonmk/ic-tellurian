@@ -94,7 +94,7 @@ Loner =
 
 	-- Artillery ranged bonus per creature size
 	-- This *is a multiplier*, e.g. a 50% bonus should be written as 1.5.
-	artilleryBonusBaseSize1		= 20.0,
+	artilleryBonusBaseSize1		= 1.0,
 	artilleryBonusBaseSize2		= 1.0,
 	artilleryBonusBaseSize3		= 1.0,
 	artilleryBonusBaseSize4		= 1.0,
@@ -145,7 +145,7 @@ Loner =
 	meleeBonusBaseSize7		= 1.0,
 	meleeBonusBaseSize8		= 1.0,
 	meleeBonusBaseSize9		= 1.0,
-	meleeBonusBaseSize10		= 1.0,
+	meleeBonusBaseSize10	= 1.0,
 
 	-- Melee bonus modifier per creature rank (+/-)
 	-- This is a modifier to the above base percentage.
@@ -764,7 +764,7 @@ AttackBonus =
 SonicAttack =
 {
 	-- angle of the cone - should match up with effect
-	cone_angle		= 15,
+	cone_angle		= 18,
 	
 	-- duration of effect in seconds
 	duration		= 32,
@@ -773,13 +773,13 @@ SonicAttack =
 	speedReduction  = 0.05,
 
 	-- how much percent of your speed can be reduced to
-	speedMinPercentage = 0.3,
+	speedMinPercentage = 0.5,
 	
 	-- reduction per hit for loner unit
-	speedReductionForLoner  = 0.1,
+	speedReductionForLoner  = 0.5,
 
 	-- how much percent of loner's speed can be reduced to
-	speedMinPercentageForLoner = 0.1,
+	speedMinPercentageForLoner = 0.5,
 	
 	-- damage multiplier for loner unit (1.0 is par value)
 	dmgMultiplierForLoner = 2.0,

@@ -33,6 +33,9 @@ stock = {
 	"OSTRICH",
 	"GIANT_PACIFIC_OCTOPUS",
 	"GAZELLE",
+	"ALLIGATOR",
+	"LION",
+	"GIANT_SQUID",
 
 -- ICXP ANIMALS
 --	"KONG", 

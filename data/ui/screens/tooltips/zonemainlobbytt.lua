@@ -57,7 +57,7 @@ tooltips =
 	{ "friends_header",				"statusbar_helptext",	"statusbar_helptext", 0, 31867, 0, Point_Below },
 
 	{ "squelch_button",				"statusbar_helptext",	"statusbar_helptext", 0, 31868, 0, Point_Below },
-	{ "server_link",				"statusbar_helptext",	"statusbar_helptext", 0, 38015, 0, Point_Below },
+	{ "server_link",				"ig_generic_mouseover",	"", 38015, 0, 0, Self_CenteredBelow },
 	{ "score_header",				"statusbar_helptext",	"statusbar_helptext", 0, 38021, 0, Point_Below },
 
 	{ "command_label",				"statusbar_helptext",	"statusbar_helptext", 0, 38022, 0, Point_Below },

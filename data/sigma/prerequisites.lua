@@ -262,8 +262,8 @@ prerequisites =
 	{
 		newtype = TYPE_Research,
 		newitem = RESEARCH_StrengthenElectricalGrid,
-		reqtype = TYPE_Structure,
-		reqitem = ElectricGenerator_EC,
+		reqtype = TYPE_Research,
+		reqitem = RESEARCH_Rank2,
 	},
 
 	incbuildingintegrity_research = 

@@ -181,8 +181,8 @@ AbilitiesList =
 	{
 		gameattributename 	= "stink_attack",
 		bodypart		= part_tail,
-		name			= 6045,
-		shortdesc		= 6046,
+		name			= 37516,
+		shortdesc		= 37517,
 		showonlyincombiner	= 0,
 	},
 	PoisonTouch =

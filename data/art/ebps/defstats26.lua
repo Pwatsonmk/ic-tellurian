@@ -15,12 +15,12 @@ ext.costrenew = 25
 ext.constructionticks = 264
 
 -- sightextinfo
-ext.sight_radius1 = 30
+ext.sight_radius1 = 35
 ext.keen_sense = 1
 
 -- towerburstextinfo
 ext.burstRechargeTicks	= 400
-ext.burstRadius			= 20.0
+ext.burstRadius			= 25.0
 ext.burstDamage			= 250.0
 ext.burstDmgAirMult		= 1.0
 ext.burstDmgGroundMult	= 0.0
@@ -30,7 +30,7 @@ ext.burstCostGather		= 0
 -- antiairtowerextinfo
 ext.delayTicks = 4
 ext.attackDmgType = 8+4092 -- electric + full armour piercing
-ext.attackDmgPerTick = 12.5
+ext.attackDmgPerTick = 10
 ext.attackDuration = 1
 ext.attackRadius = 25.0
 ext.activateTime = 0.4

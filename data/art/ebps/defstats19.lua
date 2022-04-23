@@ -17,12 +17,12 @@ ext.attackDmg = 8		-- dmg to every one in beam
 ext.flyerDmgMult = 0.1	-- dmg to flyers = attackDmg * flyerDmgMult
 
 -- sightextinfo
-ext.sight_radius1 = 40
+ext.sight_radius1 = 35
 ext.keen_sense = 1
 
 -- towerburstextinfo
 ext.burstRechargeTicks	= 400
-ext.burstRadius			= 25.0
+ext.burstRadius			= 27.0
 ext.burstDamage			= 250.0
 ext.burstDmgAirMult		= 0.1
 ext.burstDmgGroundMult	= 1.0
